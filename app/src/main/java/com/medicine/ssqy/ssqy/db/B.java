@@ -6,5 +6,6 @@ package com.medicine.ssqy.ssqy.db;
 public class B {
     private String name;
     private int age;
+    private String home;
 }
 
