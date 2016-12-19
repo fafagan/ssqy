@@ -12,5 +12,6 @@ public class B {
     private void go(){
     }
     //123456
+    //123
 }
 
