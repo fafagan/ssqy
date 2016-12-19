@@ -8,5 +8,7 @@ public class B {
     private int age;
     private String home;
     private int sex;
+    private void go(){
+    }
 }
 
