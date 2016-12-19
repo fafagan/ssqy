@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.medicine.ssqy.ssqy.ui.views.DragLayout
+    android:id="@+id/dl_activity_home"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.HomeActivity">
+
+    <include
+        layout="@layout/layout_home_slide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </include>
+
+    <com.medicine.ssqy.ssqy.ui.views.CustomRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_home">
+
+        <RelativeLayout
+            android:background="#fbfaf6"
+            android:id="@+id/layout_home_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imgv_home_usercenter"
+                android:layout_width="@dimen/dimen_imgv_home_title_width"
+                android:layout_height="@dimen/dimen_imgv_home_title"
+                android:layout_centerVertical="true"
+                android:src="@drawable/home_usercenter"/>
+
+            <RadioGroup
+                android:id="@+id/rg_title_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:button="@null"
+                    android:id="@+id/rb_home_course"
+                    android:layout_width="@dimen/dimen_imgv_home_title_width"
+                    android:layout_height="@dimen/dimen_imgv_home_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toLeftOf="@+id/imgv_home_util"
+                    android:background="@drawable/home_course_selector"/>
+                
+                <RadioButton
+                    android:id="@+id/rb_home_util"
+                    android:layout_width="@dimen/dimen_imgv_home_title_width"
+                    android:layout_height="@dimen/dimen_imgv_home_title"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/home_util_selector"
+                    android:button="@null"/>
+
+                <RadioButton
+                    android:button="@null"
+                    android:id="@+id/rb_home_jc"
+                    android:layout_width="@dimen/dimen_imgv_home_title_width"
+                    android:layout_height="@dimen/dimen_imgv_home_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imgv_home_util"
+                    android:background="@drawable/home_jc_selector"/>
+            </RadioGroup>
+
+
+
+            <ImageView
+                android:id="@+id/imgv_home_history"
+                android:layout_width="@dimen/dimen_imgv_home_title"
+                android:layout_height="@dimen/dimen_imgv_home_title"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/home_history"/>
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_home_frags"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_home_title"></FrameLayout>
+    </com.medicine.ssqy.ssqy.ui.views.CustomRelativeLayout>
+</com.medicine.ssqy.ssqy.ui.views.DragLayout>

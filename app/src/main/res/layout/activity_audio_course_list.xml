@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_home">
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/layout_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/layout_google_hook_header"/>
+
+        <ListView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@null"/>
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/layout_google_hook_footer"/>
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+    <com.medicine.ssqy.ssqy.ui.views.ProgressWheel
+        android:id="@+id/pb_loading_course_list"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        ProgressWheel:barColor="#3f7bce"
+        ProgressWheel:barLengthPw="60dp"
+        ProgressWheel:barWidth="25dp"
+        ProgressWheel:rimColor="#443f7bce"
+        ProgressWheel:rimWidth="25dp"
+        ProgressWheel:spinSpeed="2dp"
+        ProgressWheel:text="努力获取中"
+        ProgressWheel:textColor="@color/text_common_default"
+        ProgressWheel:textSize="14sp"/>
+</RelativeLayout>

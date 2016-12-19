@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/fengexian"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="@dimen/left_right_margin"
+        android:layout_marginRight="@dimen/left_right_margin"
+        android:background="@mipmap/fengexian"/>
+    <TextView
+        android:id="@+id/tv_commentsnum_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fengexian"
+        android:layout_marginLeft="@dimen/left_right_margin"
+        android:layout_marginRight="@dimen/left_right_margin"
+        android:layout_marginTop="@dimen/content_content_space"
+        android:lineSpacingExtra="@dimen/content_content_space"
+        android:text="共20条评论"
+        android:textSize="@dimen/text_size_micro"/>
+    <ListView
+        android:id="@+id/lv_comments_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_commentsnum_comment"
+        android:layout_marginLeft="@dimen/left_right_margin"
+        android:layout_marginRight="@dimen/left_right_margin"
+        android:layout_marginTop="@dimen/content_content_space"></ListView>
+    <LinearLayout
+        android:id="@+id/ll_bottombar_comment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorGrey"
+        android:orientation="horizontal">
+        <LinearLayout android:id="@+id/ll_dianzan_comment"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:layout_weight="1"
+                      android:clickable="true">
+            <CheckBox android:id="@+id/cb_dianzan_comment"
+                      android:layout_width="20dp"
+                      android:layout_height="20dp"
+                      android:layout_marginLeft="50dp"
+                      android:layout_marginRight="5dp"
+                      android:background="@drawable/dianzan_selector"
+                      android:button="@null"/>
+            <TextView android:id="@+id/tv_zannum_comment"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="点赞（50）"
+                      android:textSize="@dimen/text_size_small"/>
+        </LinearLayout>
+        <TextView android:layout_width="1dp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="10dp"
+                  android:layout_marginTop="15dp"
+                  android:background="@color/colorLightBlack"/>
+        <LinearLayout android:id="@+id/bt_comment_comment"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:layout_weight="1">
+            <ImageView android:layout_width="20dp"
+                       android:layout_height="20dp"
+                       android:layout_marginLeft="50dp"
+                       android:layout_marginRight="5dp"
+                       android:src="@mipmap/pinglun"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="我要评论"
+                      android:textSize="@dimen/text_size_small"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

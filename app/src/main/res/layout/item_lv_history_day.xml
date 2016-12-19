@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:custom="http://schemas.android.com/apk/res-auto"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+    <!--
+  
+    -->
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/imgv_item_lv_history_day"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tv_title_item_lv_history_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:textColor="#fff"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="xxxxxxxxxx"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:layout_below="@+id/tv_title_item_lv_history_day"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/pb_item_lv_history_day"
+        android:layout_width="250dp"
+        android:layout_height="9dp"
+        custom:progress_unreached_color="#AA777777"
+        custom:progress_reached_color="#fe6c4f"
+        custom:progress_unreached_bar_height="8dp"
+        custom:progress_reached_bar_height="8dp"
+        custom:progress_text_size="10sp"
+        custom:progress_text_color="#ff3503"
+        custom:progress_text_offset="1dp"
+        custom:progress_text_visibility="visible"
+        />
+</RelativeLayout>

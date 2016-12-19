@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:padding="20dp"
+              android:background="@drawable/bg_jc2"
+              android:layout_height="wrap_content">
+        <TextView
+            android:textSize="16sp"
+            android:text="请填写您的血糖值："
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/text_color_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        
+        android:background="@color/text_color_red"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:hint="在此填写您的血糖值"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:gravity="center"
+            android:text="单位：mmol/L"
+            android:textColor="@color/text_common_default"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+ 
+    <Button
+        android:id="@+id/dig_confirm"
+        android:text="确定记录"
+        android:textColor="#fff"
+        android:background="@drawable/shape_first_login_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

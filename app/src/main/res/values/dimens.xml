@@ -1,0 +1,73 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="edt_text_size_common">16sp</dimen>
+    <dimen name="login_edt_height">40dp</dimen>
+    <dimen name="login_padding_side_edt">25dp</dimen>
+    <dimen name="imgv_item_slide">25dp</dimen>
+    <dimen name="layout_height_item_slide">35dp</dimen>
+    <dimen name="layout_padding_item_slide">35dp</dimen>
+    <dimen name="layout_margin_item_slide">15dp</dimen>
+    <dimen name="dimen_imgv_home_title">25dp</dimen>
+    <dimen name="dimen_imgv_home_title_width">30dp</dimen>
+    <dimen name="height_item_home_frag">200dp</dimen>
+    <dimen name="margin1_item_home_frag">15dp</dimen>
+    <dimen name="margin2_item_home_frag">0dp</dimen>
+    <dimen name="height_item_jc_frag">150dp</dimen>
+    <dimen name="margin_item_jc_frag">10dp</dimen>
+    <dimen name="margin_inner_jc_frag">30dp</dimen>
+    <dimen name="width_inner_jc_frag">80dp</dimen>
+    <dimen name="height_inner_jc_frag">90dp</dimen>
+    <dimen name="width_imgv_jc_frag">50dp</dimen>
+    <dimen name="height_imgv_jc_frag">50dp</dimen>
+    <dimen name="margin_imgv_jc_frag">10dp</dimen>
+    <dimen name="textsize_jc_frag">14sp</dimen>
+    <dimen name="dig_dk_main_height">315dp</dimen>
+    <dimen name="dig_dk_total_height">320dp</dimen>
+    <dimen name="height_pop_dk_back">100dp</dimen>
+    <dimen name="padding_first_login_top">100dp</dimen>
+    <dimen name="padding_first_login_left">30dp</dimen>
+    <dimen name="width_rg_first_login">300dp</dimen>
+    <dimen name="height_rg_out_first_login">120dp</dimen>
+    <dimen name="height_rg_inner_first_login">70dp</dimen>
+    <dimen name="text_size_rg_first_login">16sp</dimen>
+    <dimen name="width_imgv_first_login">30dp</dimen>
+    <dimen name="height_imgv_first_login">30dp</dimen>
+    <dimen name="padding_bottom_rg_first_login">10dp</dimen>
+    <dimen name="padding_left_rg_first_login">40dp</dimen>
+    <dimen name="padding_right_rg_first_login">10dp</dimen>
+    <dimen name="padding_top_rg_first_login">20dp</dimen>
+    <dimen name="margin_rg_first_login">20dp</dimen>
+
+    <!-- google -->
+    <dimen name="refresh_header_height_google">100dp</dimen>
+    <dimen name="refresh_trigger_offset_google">100dp</dimen>
+    <dimen name="refresh_final_offset_google">150dp</dimen>
+    <dimen name="refresh_drawable_size_google">40dp</dimen>
+
+    <dimen name="load_more_footer_height_google">72dp</dimen>
+    <dimen name="load_more_trigger_offset_google">88dp</dimen>
+    <dimen name="load_more_final_offset_google">120dp</dimen>
+    <dimen name="load_more_drawable_size_google">36dp</dimen>
+    <dimen name="margin_dk_tv">4dp</dimen>
+    <dimen name="text_size_dk_tv">12sp</dimen>
+    <dimen name="padding_dk_root">20dp</dimen>
+    <!-- google -->
+
+
+    <dimen name="load_more_footer_height_classic">60dp</dimen>
+
+    <dimen name="refresh_header_height_twitter">80dp</dimen>
+    <dimen name="load_more_footer_height_twitter">60dp</dimen>
+
+
+    <dimen name="text_size_large">22sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_micro">12sp</dimen>
+    <dimen name="left_right_margin">20dp</dimen>
+    <dimen name="title_content_space">20dp</dimen>
+    <dimen name="content_content_space">10dp</dimen>
+    <dimen name="padding_information">15dp</dimen>
+</resources>

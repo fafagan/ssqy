@@ -1,0 +1,233 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_gray"
+              android:orientation="vertical"
+              android:paddingBottom="60dp"
+              android:paddingLeft="@dimen/padding_first_login_left"
+              android:paddingRight="@dimen/padding_first_login_left"
+              android:paddingTop="@dimen/padding_first_login_top"
+              tools:context="com.medicine.ssqy.ssqy.ui.fragment.FirstLoginSexFragment">
+
+    <LinearLayout
+        android:layout_width="@dimen/width_rg_first_login"
+        android:layout_height="@dimen/height_rg_out_first_login"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="性别"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioGroup
+                android:id="@+id/rg_sex"
+                android:layout_width="@dimen/width_rg_first_login"
+                android:layout_height="@dimen/height_rg_inner_first_login"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_first_login_sex_man"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_first_login_left"
+                    android:button="@null"/>
+
+                <RadioButton
+                    android:id="@+id/rb_first_login_sex_woman"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_first_login_right"
+                    android:button="@null"/>
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/padding_bottom_rg_first_login"
+                    android:paddingLeft="@dimen/padding_left_rg_first_login"
+                    android:paddingRight="@dimen/padding_right_rg_first_login"
+                    android:paddingTop="@dimen/padding_top_rg_first_login">
+
+                    <ImageView
+                        android:id="@+id/imgv_first_login_sex_man"
+                        android:layout_width="@dimen/width_imgv_first_login"
+                        android:layout_height="@dimen/height_imgv_first_login"
+                        android:layout_marginRight="@dimen/margin_rg_first_login"
+                        android:src="@drawable/reg_sex_man_normal"/>
+
+                    <TextView
+                        android:id="@+id/tv_first_login_sex_man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="男"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/text_size_rg_first_login"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/padding_bottom_rg_first_login"
+                    android:paddingLeft="@dimen/padding_left_rg_first_login"
+                    android:paddingRight="@dimen/padding_right_rg_first_login"
+                    android:paddingTop="@dimen/padding_top_rg_first_login">
+
+                    <ImageView
+                        android:id="@+id/imgv_first_login_sex_woman"
+                        android:layout_width="@dimen/width_imgv_first_login"
+                        android:layout_height="@dimen/height_imgv_first_login"
+                        android:layout_marginRight="@dimen/margin_rg_first_login"
+                        android:src="@drawable/reg_sex_woman_normal"/>
+
+                    <TextView
+                        android:id="@+id/tv_first_login_sex_woman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="女"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/text_size_rg_first_login"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="@dimen/width_rg_first_login"
+        android:layout_height="@dimen/height_rg_out_first_login"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="婚姻状况"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioGroup
+                android:id="@+id/rg_marray"
+                android:layout_width="@dimen/width_rg_first_login"
+                android:layout_height="@dimen/height_rg_inner_first_login"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_first_login_marry_no"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_first_login_left"
+                    android:button="@null"/>
+
+                <RadioButton
+                    android:id="@+id/rb_first_login_marry_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_first_login_right"
+                    android:button="@null"/>
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/padding_bottom_rg_first_login"
+                    android:paddingLeft="@dimen/padding_left_rg_first_login"
+                    android:paddingRight="@dimen/padding_right_rg_first_login"
+                    android:paddingTop="@dimen/padding_top_rg_first_login">
+
+                    <ImageView
+                        android:id="@+id/imgv_first_login_marry_no"
+                        android:layout_width="@dimen/width_imgv_first_login"
+                        android:layout_height="@dimen/height_imgv_first_login"
+                        android:layout_marginRight="@dimen/margin_rg_first_login"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/reg_marry_no_normal"/>
+
+                    <TextView
+                        android:id="@+id/tv_first_login_sex_marry_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="未婚"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/text_size_rg_first_login"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/padding_bottom_rg_first_login"
+                    android:paddingLeft="@dimen/padding_left_rg_first_login"
+                    android:paddingRight="@dimen/padding_right_rg_first_login"
+                    android:paddingTop="@dimen/padding_top_rg_first_login">
+
+                    <ImageView
+                        android:id="@+id/imgv_first_login_marry_yes"
+                        android:layout_width="@dimen/width_imgv_first_login"
+                        android:layout_height="@dimen/height_imgv_first_login"
+                        android:layout_marginRight="@dimen/margin_rg_first_login"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/reg_marry_yes_normal"/>
+
+                    <TextView
+                        android:id="@+id/tv_first_login_sex_marry_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="已婚"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/text_size_rg_first_login"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="60dp"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:background="@drawable/shape_first_login_bt"
+        android:id="@+id/bt_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="下一步"/>
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:padding="20dp"
+
+              android:layout_width="match_parent"
+              android:layout_height="110dp">
+    <!--
+    item_lv_pic_course
+    -->
+    <ImageView
+        android:layout_marginRight="15dp"
+        android:id="@+id/imgv_item_lv_pic_course"
+        android:layout_centerVertical="true"
+        android:src="@drawable/item_pic"
+        android:scaleType="fitXY"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+    <TextView
+        android:layout_toLeftOf="@+id/imgv_learned_item_lv_pic_course"
+        android:id="@+id/tv_title_item_lv_pic_course"
+        android:textColor="@color/text_common_default"
+        android:textSize="16sp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="xxxx"
+        android:layout_toRightOf="@+id/imgv_item_lv_pic_course"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_toLeftOf="@+id/imgv_learned_item_lv_pic_course"
+        android:layout_below="@+id/tv_title_item_lv_pic_course"
+        android:id="@+id/tv_learned_item_lv_pic_course"
+        android:textColor="@color/text_common_default"
+        android:textSize="12sp"
+        android:ellipsize="end"
+        android:text="xxx"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/imgv_item_lv_pic_course"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/imgv_learned_item_lv_pic_course"
+        android:src="@drawable/item_learned"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="55dp"
+        android:layout_height="55dp"/>
+
+</RelativeLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.CourseHistoryActivity">
+
+    <RadioGroup
+        android:id="@+id/rg_course_history"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="25dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_course_history_today"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/course_left_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="今日"
+            android:textStyle="bold"
+            android:textColor="@color/text_common_default"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:textStyle="bold"
+            android:id="@+id/rb_course_history_week"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/course_center_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="本周"
+            android:textColor="@color/text_common_default"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:textStyle="bold"
+            android:id="@+id/rb_course_history_month"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/course_center_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="本月"
+            android:textColor="@color/text_common_default"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:textStyle="bold"
+            android:id="@+id/rb_course_history_all"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/course_right_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="总览"
+            android:textColor="@color/text_common_default"
+            android:textSize="18sp"/>
+    </RadioGroup>
+    
+    <FrameLayout
+        android:id="@+id/layout_course_history_frags"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+</LinearLayout>

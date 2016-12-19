@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="diganim">
+        <item name="android:windowEnterAnimation">@anim/dig_course_type_in</item>
+        <!--<item name="android:windowExitAnimation">@anim/dig_course_type_out</item>-->
+    </style>
+</resources>

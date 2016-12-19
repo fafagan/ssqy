@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:paddingRight="70dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+<LinearLayout 
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#fff"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/bg_slide"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:clickable="true"
+            android:id="@+id/imgv_head_activity_home"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+          />
+
+        <ImageView
+
+            android:src="@drawable/sex_woman"
+            android:id="@+id/imgv_sex_activity_home"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/imgv_head_activity_home"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/imgv_head_activity_home"
+            />
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:id="@+id/tv_username_activity_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/text_common_default"
+            android:textStyle="bold"
+            android:layout_toLeftOf="@+id/tv_userlevel_activity_home"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="16sp"/>
+
+
+        <TextView
+            android:id="@+id/tv_userlevel_activity_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgv_head_activity_home"
+            android:drawableLeft="@drawable/level"
+            android:ellipsize="end"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:gravity="bottom"
+            android:paddingBottom="2dp"
+            android:singleLine="true"
+            android:textColor="#fa920e"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/layout_item_userdetail_activity_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height_item_slide"
+        android:layout_marginTop="@dimen/layout_margin_item_slide"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layout_padding_item_slide"
+        android:paddingRight="@dimen/layout_padding_item_slide">
+
+        <ImageView
+            android:layout_width="@dimen/imgv_item_slide"
+            android:layout_height="@dimen/imgv_item_slide"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home_icon_user"/>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="我的基本资料"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/layout_item_userdoctor_activity_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height_item_slide"
+        android:layout_marginTop="@dimen/layout_margin_item_slide"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layout_padding_item_slide"
+        android:paddingRight="@dimen/layout_padding_item_slide">
+
+        <ImageView
+            android:layout_width="@dimen/imgv_item_slide"
+            android:layout_height="@dimen/imgv_item_slide"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home_icon_doctor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="我的医生"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+        
+        <TextView
+            android:id="@+id/tv_pop_doctor"
+            android:background="@drawable/shape_red_pop"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:text="7"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/layout_item_usercourse_activity_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height_item_slide"
+        android:layout_marginTop="@dimen/layout_margin_item_slide"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layout_padding_item_slide"
+        android:paddingRight="@dimen/layout_padding_item_slide">
+
+        <ImageView
+            android:layout_width="@dimen/imgv_item_slide"
+            android:layout_height="@dimen/imgv_item_slide"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home_icon_course"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="我的课程"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/layout_item_userbody_activity_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height_item_slide"
+        android:layout_marginTop="@dimen/layout_margin_item_slide"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layout_padding_item_slide"
+        android:paddingRight="@dimen/layout_padding_item_slide">
+
+        <ImageView
+            android:layout_width="@dimen/imgv_item_slide"
+            android:layout_height="@dimen/imgv_item_slide"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home_icon_tz"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="我的体质分析"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/layout_margin_item_slide"
+        android:background="#CCC"/>
+
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/layout_item_usermsg_activity_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height_item_slide"
+        android:layout_marginTop="@dimen/layout_margin_item_slide"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layout_padding_item_slide"
+        android:paddingRight="@dimen/layout_padding_item_slide">
+
+        <ImageView
+            android:layout_width="@dimen/imgv_item_slide"
+            android:layout_height="@dimen/imgv_item_slide"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home_icon_msg"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="系统消息"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tv_pop_system_msg"
+            android:background="@drawable/shape_red_pop"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:text="3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/layout_item_usersetting_activity_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height_item_slide"
+        android:layout_marginTop="@dimen/layout_margin_item_slide"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layout_padding_item_slide"
+        android:paddingRight="@dimen/layout_padding_item_slide">
+
+        <ImageView
+            android:layout_width="@dimen/imgv_item_slide"
+            android:layout_height="@dimen/imgv_item_slide"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home_icon_setting"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="设置"
+            android:textColor="@color/text_common_default"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    
+    </LinearLayout>
+    <!--  
+_activity_home
+             
+             -->
+</RelativeLayout>

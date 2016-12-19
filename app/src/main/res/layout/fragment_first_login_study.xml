@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#efefef"
+              android:orientation="vertical"
+              android:paddingBottom="60dp"
+              android:paddingLeft="@dimen/padding_first_login_left"
+              android:paddingRight="@dimen/padding_first_login_left"
+              android:paddingTop="@dimen/padding_first_login_top"
+              tools:context="com.medicine.ssqy.ssqy.ui.fragment.FirstLoginSexFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="您的学历"
+        android:textColor="@color/text_common_default"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_study_first_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="未选择"
+        android:textColor="@color/text_color_red"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_marginBottom="30dp"
+        android:background="@color/text_common_default"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wv_study_first_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_mengban_top"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/shape_mengban_bottom"/>
+    </FrameLayout>
+    <Button
+        android:id="@+id/bt_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/shape_first_login_bt"
+        android:text="下一步"
+        android:textColor="#fff"
+        android:textSize="16sp"/>
+</LinearLayout>
