@@ -123,6 +123,7 @@ public class MainActivity extends KBaseActivity implements View.OnClickListener 
                     goToActivity(HomeActivity.class);
                 } else {
                     //123
+                    
                     goToActivity(LoginActivity.class);
                 }
                 break;
