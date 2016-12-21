@@ -34,6 +34,7 @@
                   android:layout_height="wrap_content"
                   android:background="@drawable/input"
                   android:hint="请填写验证码"
+                  android:inputType="phone"
                   android:gravity="center_vertical"
                   android:textColor="@color/colorBlack"
                   android:textSize="@dimen/text_size_small"/>

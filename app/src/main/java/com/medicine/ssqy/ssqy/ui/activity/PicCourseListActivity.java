@@ -69,8 +69,11 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
         mLayoutRefresh.setOnRefreshListener(this);
         mLayoutRefresh.setOnLoadMoreListener(this);
         mLayoutRefresh.setSwipeStyle(SwipeToLoadLayout.STYLE.ABOVE);
-        setTitleCenter("今日图文课程");
-    
+        if (type==TYPE_ALL) {
+            setTitleCenter("全部图文课程");
+        }else {
+            setTitleCenter("今日图文课程");
+        }
         mSwipeTarget.setOnItemClickListener(new ItemTWClickListener());
     }
     

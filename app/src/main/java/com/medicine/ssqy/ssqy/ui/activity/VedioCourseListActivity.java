@@ -68,7 +68,11 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
         mLayoutRefresh.setOnRefreshListener(this);
         mLayoutRefresh.setOnLoadMoreListener(this);
         mLayoutRefresh.setSwipeStyle(SwipeToLoadLayout.STYLE.ABOVE);
-        setTitleCenter("今日视频课程");
+        if (type==TYPE_ALL) {
+            setTitleCenter("全部视频课程");
+        }else {
+            setTitleCenter("今日视频课程");
+        }
     
         mSwipeTarget.setOnItemClickListener(new ItemVedioClickListener());
     }

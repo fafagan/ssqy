@@ -66,7 +66,13 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
         mLayoutRefresh.setOnRefreshListener(this);
         mLayoutRefresh.setOnLoadMoreListener(this);
         mLayoutRefresh.setSwipeStyle(SwipeToLoadLayout.STYLE.ABOVE);
-        setTitleCenter("今日音频课程");
+    
+        if (type==TYPE_ALL) {
+            setTitleCenter("全部音频课程");
+        }else {
+            setTitleCenter("今日音频课程");
+        }
+     
         mSwipeTarget.setOnItemClickListener(new ItemAudioClickListener());
        
     }

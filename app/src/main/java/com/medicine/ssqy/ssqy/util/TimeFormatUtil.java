@@ -19,7 +19,12 @@ public class TimeFormatUtil {
             hour = minute / 60;
             minute = minute % 60;
         }
-        return (getTwoLength(hour) + ":" + getTwoLength(minute)  + ":"  + getTwoLength(second));
+        if (hour==0) {
+            return ( getTwoLength(minute)  + ":"  + getTwoLength(second));
+        }else {
+            return (getTwoLength(hour) + ":" + getTwoLength(minute)  + ":"  + getTwoLength(second));
+        }
+      
     }
     
     private static String getTwoLength(final int data) {

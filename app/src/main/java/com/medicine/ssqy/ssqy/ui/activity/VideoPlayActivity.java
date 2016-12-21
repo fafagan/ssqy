@@ -461,6 +461,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
 //                    setVideoLayoutParams(false);
                     setVideoParams(false);
                 }
+                break;
             //分享    
             case R.id.tv_share_activity_video_play:
                 ShareUtil.showShare(this);
