@@ -1,9 +1,23 @@
 package com.medicine.ssqy.ssqy.ui.fragment;
 
+import android.os.Handler;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
+import com.medicine.ssqy.ssqy.test.CourseData;
+import com.medicine.ssqy.ssqy.ui.adapter.ItemLvHistoryDayAdapter;
 
-public class HistoryWeekFragment extends KBaseFragment{
+public class HistoryWeekFragment extends KBaseFragment implements OnRefreshListener, OnLoadMoreListener {
+    private TextView mTvDaysWeek;
+    private SwipeToLoadLayout mSwipeToLoadLayout;
+    private ListView mSwipeTarget;
+    
+ 
     
     
     @Override
@@ -18,11 +32,39 @@ public class HistoryWeekFragment extends KBaseFragment{
     
     @Override
     public void initViews() {
-        
+        mTvDaysWeek = (TextView) findViewById(R.id.tv_days_week);
+        mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
+        mSwipeTarget = (ListView) findViewById(R.id.swipe_target);
+        mSwipeToLoadLayout.setOnRefreshListener(this);
+        mSwipeToLoadLayout.setOnLoadMoreListener(this);
+        mSwipeTarget.setAdapter(new ItemLvHistoryDayAdapter(mActivity, CourseData.getDatasToday()));
     }
     
     @Override
     public void initDatas() {
         
     }
+    
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeToLoadLayout.setRefreshing(false);
+                
+            }
+        },2500);
+    }
+    
+    @Override
+    public void onLoadMore() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeToLoadLayout.setLoadingMore(false);
+                
+            }
+        },2500);
+    }
 }
+

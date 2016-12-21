@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="10dp"
+                android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/imgv_head_item_discuss_lv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"/>
+    <TextView
+        android:ellipsize="end"
+        android:id="@+id/tv_name_item_discuss_lv"
+        android:singleLine="true"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_common_default"
+        android:text="xxxxxxxxxxxxxx"
+        android:layout_toRightOf="@+id/imgv_head_item_discuss_lv"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_content_item_discuss_lv"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        android:layout_toRightOf="@+id/imgv_head_item_discuss_lv"
+        android:layout_below="@+id/tv_name_item_discuss_lv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:singleLine="true"
+        android:gravity="right"
+        android:id="@+id/tv_time_item_discuss_lv"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:text="2016-10-10"
+        android:layout_toRightOf="@+id/imgv_head_item_discuss_lv"
+        android:layout_below="@+id/tv_content_item_discuss_lv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

@@ -12,6 +12,7 @@ import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePFirst;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.util.PermissionUtils;
+import com.orhanobut.logger.Logger;
 
 public class MainActivity extends KBaseActivity implements View.OnClickListener {
     private Button mBtLoginActivityWelcome;
@@ -21,7 +22,9 @@ public class MainActivity extends KBaseActivity implements View.OnClickListener 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            Logger.e("xx"+SharePLogin.isFree());
             switch (msg.what) {
+             
                 case 1:
                     if (!SharePFirst.isFirst()){
                         if (SharePLogin.isFree()){

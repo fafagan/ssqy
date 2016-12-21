@@ -31,14 +31,23 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.test.DiscussEntity;
+import com.medicine.ssqy.ssqy.ui.adapter.ItemDiscussLvAdapter;
+import com.medicine.ssqy.ssqy.ui.dialog.DigDiscuss;
 import com.medicine.ssqy.ssqy.ui.listener.MyPhoneStateListener;
 import com.medicine.ssqy.ssqy.util.BrightnessUtil;
 import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
+import com.medicine.ssqy.ssqy.util.UtilGetDiscussTime;
 
 import org.xutils.common.util.DensityUtil;
+
+import java.util.List;
 
 public class VideoPlayActivity extends KBaseActivity implements View.OnClickListener {
     private SurfaceView mSvActivityVideoPlay;
@@ -115,6 +124,9 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     };
     private AudioManager mAudioManager;
     private MyVolumeReceiver mMyVolumeReceiver;
+    private DigDiscuss mDigDiscuss;
+    private List<DiscussEntity> mTempDatas;
+    private ItemDiscussLvAdapter mItemDiscussLvAdapter;
     
     @Override
     public int setRootView() {
@@ -152,7 +164,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mLlSvbottombarActivityVideoPlay = (LinearLayout) findViewById(R.id.ll_svbottombar_activity_video_play);
         mRlContentActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_content_activity_video_play);
         mRlActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_activity_video_play);
-        
+     
         mBtPlayActivityVideoPlay.setOnClickListener(this);
         mCbPlayorstopActivityVideoPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -179,7 +191,40 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         });
         mBtBackActivityVideoPlay.setOnClickListener(this);
         mBtLandscapeActivityVideoPlay.setOnClickListener(this);
-        
+        mCbDianzanComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mTvZannumComment.setText("点赞（51）");
+                }else {
+                    mTvZannumComment.setText("点赞（50）");
+                }
+            }
+        });
+        mTempDatas = DiscussEntity.getTempDatas();
+        mItemDiscussLvAdapter = new ItemDiscussLvAdapter(this, mTempDatas);
+        mLvCommentsActivityVideoPlay.setAdapter(mItemDiscussLvAdapter);
+        mDigDiscuss=new DigDiscuss(this);
+        mDigDiscuss.setOnConfirmCallback(new DigDiscuss.OnConfirmCallback() {
+            @Override
+            public void onConfirm(String content) {
+                DiscussEntity discussEntity=new DiscussEntity();
+                discussEntity.setDetail(content);
+                discussEntity.setNickName(TempUser.getNowUser(SharePLogin.getUid()).getNickName());
+                discussEntity.setHeadUrl(TempUser.getNowUser(SharePLogin.getUid()).getHeadPicUrl());
+                discussEntity.setTime(UtilGetDiscussTime.getTimeNow());
+                mItemDiscussLvAdapter.insertToFirst(discussEntity);
+                Toast.makeText(mSelf, "评论成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mBtCommentComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDigDiscuss.show();
+            }
+        });
+    
+      
     }
     
     @Override

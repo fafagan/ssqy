@@ -22,7 +22,20 @@ public class TempUser {
         saveOrUpdateUser(nowUser);
     }
     
-    
+    public static void saveOrUpdatePhone(String phone) {
+        DbManager dbManager = x.getDb(CommonDaoConfig.getDaoConfig());
+        
+        try {
+            UserEntity entity = dbManager.selector(UserEntity.class).where("uid", "=", SharePLogin.getUid()).findFirst();
+            entity.setPhone(phone);
+            if (entity != null) {
+                dbManager.
+                        update(entity, "phone");
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    } 
     public static void saveOrUpdateUser(UserEntity userEntity) {
         DbManager dbManager = x.getDb(CommonDaoConfig.getDaoConfig());
         
@@ -54,5 +67,14 @@ public class TempUser {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public static  void reset(){
+        DbManager dbManager = x.getDb(CommonDaoConfig.getDaoConfig());
+        try {
+            dbManager.delete(UserEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 }

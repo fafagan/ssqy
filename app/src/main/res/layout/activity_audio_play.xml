@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/left_right_margin"
         android:layout_marginTop="@dimen/title_content_space"
         android:text="课程题目"
-        android:textSize="@dimen/text_size_large"
+        android:textSize="18sp"
         android:textStyle="bold"/>
     <LinearLayout android:id="@+id/ll_audiobar_activity_audio_play"
                   android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         android:layout_marginTop="@dimen/title_content_space"
         android:lineSpacingExtra="@dimen/content_content_space"
         android:text="课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容"
-        android:textSize="@dimen/text_size_medium"/>
+        android:textSize="14sp"/>
     <ImageView android:id="@+id/imgv_activity_audio_play"
                android:layout_width="match_parent"
                android:layout_height="120dp"

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gray"
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.SearchActivity">
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/layout_search_activity"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ssk"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/fdj"/>
+
+        <EditText
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:id="@+id/edt"
+            android:singleLine="true"
+            android:maxLength="12"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+          />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:src="@drawable/pp_starcoming_float_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+        <Button
+            android:id="@+id/bt_doSearch"
+            android:text="搜 索"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:background="@drawable/shape_first_login_bt"
+            android:layout_width="50dp"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="60dp"
+        android:layout_alignBottom="@+id/layout_search_activity"
+        android:background="@color/text_common_default"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <TextView
+        android:id="@+id/tv_cy"
+        android:text="常用搜索"
+        android:textSize="16sp"
+        android:textColor="@color/text_common_default"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_below="@+id/layout_search_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <GridLayout
+        android:layout_margin="10dp"
+        android:columnCount="3"
+        android:layout_below="@+id/tv_cy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_1"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="鸡 蛋"
+            />
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_2"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="大 米"
+            />
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_3"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="面 包"
+            />
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_4"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="猪 肉"
+            />
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_5"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="鸡 肉"
+            />
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_6"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="鱼 肉"
+            />
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_7"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="海 虾"
+            />
+        <Button
+            android:background="@drawable/shape_welcome_bt_login"
+            android:id="@+id/item_cy_8"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
+            android:textColor="@color/background_color_dark"
+            android:layout_margin="10dp"
+            android:text="螃 蟹"
+            />
+    </GridLayout>
+    
+</RelativeLayout>

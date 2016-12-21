@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:padding="10dp"
+              android:layout_width="300dp"
+              android:layout_height="200dp">
+    
+    <EditText
+        android:id="@+id/edt_discuss_dig"
+        android:padding="10dp"
+        android:hint="请输入评论内容："
+        android:lines="7"
+        android:gravity="top"
+        android:background="@drawable/shape_welcome_bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    
+    <Button
+        android:id="@+id/bt_discuss_dig"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="发 表"
+        android:background="@drawable/shape_first_login_bt"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:layout_width="70dp"
+        android:layout_height="40dp"/>
+</RelativeLayout>

@@ -9,11 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.ui.activity.AudioCourseListActivity;
 import com.medicine.ssqy.ssqy.ui.activity.PicCourseListActivity;
 import com.medicine.ssqy.ssqy.ui.activity.VedioCourseListActivity;
+import com.medicine.ssqy.ssqy.ui.dialog.DigPhoneOK;
+import com.medicine.ssqy.ssqy.ui.dialog.ModifyPhonenumberDig;
 import com.medicine.ssqy.ssqy.ui.pop.Pop_dk;
 
 /**
@@ -44,8 +50,13 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
     private RelativeLayout mItemAudioToday;
     private RelativeLayout mItemTwToday;
     private TextView mTvDaysFragCourse;
-    
+    private RelativeLayout mLayoutUnformllyFragHome;
+    private TextView mTvUnformllyFragCourse;
+    private ModifyPhonenumberDig mModifyPhonenumberDig;
 
+
+    
+    
     
     
     
@@ -82,13 +93,48 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
         mItemVedioToday = (RelativeLayout) findViewById(R.id.item_vedio_today);
         mItemAudioToday = (RelativeLayout) findViewById(R.id.item_audio_today);
         mItemTwToday = (RelativeLayout) findViewById(R.id.item_tw_today);
-        
-        
+    
+        mLayoutUnformllyFragHome = (RelativeLayout) findViewById(R.id.layout_unformlly_frag_home);
+        mTvUnformllyFragCourse = (TextView) findViewById(R.id.tv_unformlly_frag_course);
         mLayoutChiyaoFragHome.setOnClickListener(this);
         mItemVedioToday.setOnClickListener(this);
         mItemAudioToday.setOnClickListener(this);
         mItemTwToday.setOnClickListener(this);
+    
+    
+        mTvUnformllyFragCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mModifyPhonenumberDig==null){
+                    mModifyPhonenumberDig=new ModifyPhonenumberDig(mActivity);
+                    mModifyPhonenumberDig.setOnPhoneOKCallback(new ModifyPhonenumberDig.OnPhoneOKCallback() {
+                        @Override
+                        public void onOK() {
+                            mLayoutChiyaoFragHome.setVisibility(View.VISIBLE);
+                            mLayoutUnformllyFragHome.setVisibility(View.GONE);
+                            new DigPhoneOK(mActivity).show();
+                        }
+                    });
+                }
+                mModifyPhonenumberDig.showSelf();
+            }
+        });
         
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
+        if (StringEmptyUtil.isEmpty(nowUser.getPhone())){
+            mLayoutChiyaoFragHome.setVisibility(View.GONE);
+            mLayoutUnformllyFragHome.setVisibility(View.VISIBLE);
+    
+  
+        }else {
+            mLayoutChiyaoFragHome.setVisibility(View.VISIBLE);
+            mLayoutUnformllyFragHome.setVisibility(View.GONE);
+        }
     }
     
     @Override

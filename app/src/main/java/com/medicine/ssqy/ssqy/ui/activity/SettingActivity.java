@@ -6,12 +6,13 @@ import android.widget.TextView;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.ui.dialog.AccoutDig;
+import com.medicine.ssqy.ssqy.ui.dialog.LogoutDig;
 
 public class SettingActivity extends KBaseActivity implements View.OnClickListener {
     private TextView mTvAccountActivitySetting;
     private TextView mTvAboutusActivitySetting;
     private TextView mTvExitActivitySetting;
-    
+    private LogoutDig mDialogLogout;
     @Override
     public int setRootView() {
         return R.layout.activity_setting;
@@ -23,7 +24,7 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
         mTvAccountActivitySetting = (TextView) findViewById(R.id.tv_account_activity_setting);
         mTvAboutusActivitySetting = (TextView) findViewById(R.id.tv_aboutus_activity_setting);
         mTvExitActivitySetting = (TextView) findViewById(R.id.tv_exit_activity_setting);
-        
+        mDialogLogout=new LogoutDig(this);
     }
     
     @Override
@@ -44,7 +45,7 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
                 
                 break;
             case R.id.tv_exit_activity_setting:
-                
+                mDialogLogout.showSelf();
                 break;
         }
     }

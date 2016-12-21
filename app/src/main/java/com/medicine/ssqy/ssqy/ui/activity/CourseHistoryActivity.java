@@ -6,7 +6,11 @@ import android.widget.RadioGroup;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.base.KBaseFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.HistoryAllFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.HistoryDayFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.HistoryMonthFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.HistoryWeekFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +24,12 @@ public class CourseHistoryActivity extends KBaseActivity implements RadioGroup.O
     private FrameLayout mLayoutCourseHistoryFrags;
     
     private List<RadioButton> mRadioButtons=new ArrayList<>();
+    private HistoryDayFragment mHistoryDayFragment=new HistoryDayFragment();
+    private HistoryWeekFragment mHistoryWeekFragment=new HistoryWeekFragment();
+    private HistoryMonthFragment mHistoryMonthFragment=new HistoryMonthFragment();
+    private HistoryAllFragment mHistoryAllFragment=new HistoryAllFragment();
     
+    private KBaseFragment[] mKBaseFragments={mHistoryDayFragment,mHistoryWeekFragment,mHistoryMonthFragment,mHistoryAllFragment};
     
     
     @Override
@@ -44,7 +53,6 @@ public class CourseHistoryActivity extends KBaseActivity implements RadioGroup.O
         mRgCourseHistory.setOnCheckedChangeListener(this);
         mRbCourseHistoryToday.setChecked(true);
         
-        addFrag(R.id.layout_course_history_frags,new HistoryDayFragment());
     }
     
     @Override
@@ -55,20 +63,24 @@ public class CourseHistoryActivity extends KBaseActivity implements RadioGroup.O
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         RadioButton radioButton=null;
+        KBaseFragment nowFrag=null;
         switch (checkedId){
             case R.id.rb_course_history_today:
                 radioButton=mRbCourseHistoryToday;
+                nowFrag=mHistoryDayFragment;
                 break;
             case R.id.rb_course_history_week:
                 radioButton=mRbCourseHistoryWeek;
+                nowFrag=mHistoryWeekFragment;
                 break;
             case R.id.rb_course_history_month:
                 radioButton=mRbCourseHistoryMonth;
+                nowFrag=mHistoryMonthFragment;
                 break;
             case R.id.rb_course_history_all:
                 radioButton=mRbCourseHistoryAll;
+                nowFrag=mHistoryAllFragment;
                 break;
-            
         }
         if (radioButton.isChecked()) {
             radioButton.setTextColor(0xffffffff);
@@ -79,6 +91,22 @@ public class CourseHistoryActivity extends KBaseActivity implements RadioGroup.O
                 button.setTextColor(this.getResources().getColor(R.color.text_common_default)); 
             }
         } 
-        
+        changeHideAndShow(nowFrag);
+    }
+    
+    private void changeHideAndShow(KBaseFragment nowFrag) {
+        for (KBaseFragment kBaseFragment : mKBaseFragments) {
+            if (nowFrag==kBaseFragment){
+                if (!nowFrag.isAdded()){
+                    addFrag(R.id.layout_course_history_frags,nowFrag);
+                }
+                showFrag(nowFrag);
+                
+            }else {
+                if (nowFrag.isAdded()){
+                    hideFrag(kBaseFragment);
+                }
+            }
+        }
     }
 }

@@ -98,16 +98,16 @@ public class Pop_dk extends PopupWindow{
         setTvHeight(mTvDkDay5);
         setTvHeight(mTvDkDay6);
     
-        mTvDkDay1.setText("12.12");
-        mTvDkDay2.setText("12.13");
-        mTvDkDay3.setText("12.14");
-        mTvDkDay4.setText("12.15");
-        mTvDkDay5.setText("12.16");
-        mTvDkDay6.setText("12.19");
-        mTvDkToday.setText("12.18");
+        mTvDkDay1.setText("12.19");
+        mTvDkDay2.setText("12.20");
+        mTvDkDay3.setText("12.21");
+        mTvDkDay4.setText("12.22");
+        mTvDkDay5.setText("12.24");
+        mTvDkDay6.setText("12.25");
+        mTvDkToday.setText("12.23");
         setDKYES(mTvDkDay1);
         setDKYES(mTvDkDay4);
-        setDKYES(mTvDkDay5);
+//        setDKYES(mTvDkDay5);
         setDKNO(mTvDkDay2);
         setDKNO(mTvDkDay3);
         mTvDkToday.setOnClickListener(new View.OnClickListener() {

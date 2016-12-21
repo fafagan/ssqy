@@ -41,7 +41,7 @@ public class CourseData {
         List<CourseData> courseDatas=new ArrayList<>();
         for (int i = 1; i <=7; i++) {
             CourseData courseData=new CourseData();
-            courseData.setCourseTitle("今天学习的课程"+i);
+            courseData.setCourseTitle("本周学习课程"+i);
             if (i%2==0){
                 courseData.setCourseLearned(true);
             }else {

@@ -84,7 +84,7 @@ public class LoginBtClick extends BaseOnClick<LoginActivity> {
         loginEntity.setNickName("小飞侠");
         loginEntity.setHeadPicUrl("http://pic74.nipic.com/file/20150802/21532318_173943681365_2.jpg");
         loginEntity.setSex("woman");
-        loginEntity.setLevel(1);
+        loginEntity.setLevel(2);
         loginEntity.setFisrtLogin(true);
         
         SharePLogin.saveIsFree(true);
@@ -96,6 +96,7 @@ public class LoginBtClick extends BaseOnClick<LoginActivity> {
         userEntity.setState(loginEntity.isState());
         userEntity.setUid(loginEntity.getUid());
         userEntity.setUseraccount(loginEntity.getUseraccount());
+        userEntity.setPhone("13718454853");
         userEntity.setNickName(loginEntity.getNickName());
         userEntity.setHeadPicUrl(loginEntity.getHeadPicUrl());
         userEntity.setSex(loginEntity.getSex());

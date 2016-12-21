@@ -146,7 +146,7 @@
             android:layout_marginRight="@dimen/left_right_margin"
             android:layout_marginTop="@dimen/title_content_space"
             android:text="课程题目"
-            android:textSize="@dimen/text_size_large"
+            android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/tv_videocontent_activity_video_play"
@@ -159,7 +159,7 @@
             android:layout_marginBottom="@dimen/title_content_space"
             android:lineSpacingExtra="@dimen/content_content_space"
             android:text="课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容"
-            android:textSize="@dimen/text_size_medium"/>
+            android:textSize="14sp"/>
         <include layout="@layout/comments"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"

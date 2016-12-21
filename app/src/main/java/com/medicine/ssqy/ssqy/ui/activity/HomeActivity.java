@@ -74,6 +74,8 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     @Override
     public void initViews() {
         SharePFirst.saveIsFirst(false);
+        
+        
         mDlActivityHome = (DragLayout) findViewById(R.id.dl_activity_home);
         initDragLayout();
         initTitles();
@@ -114,7 +116,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         mRgTitleHome.setOnCheckedChangeListener(this);
         mRbHomeCourse.setChecked(true);
     
-    
+        
     
     }
     

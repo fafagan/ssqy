@@ -3,6 +3,7 @@ package com.medicine.ssqy.ssqy.ui.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -10,12 +11,19 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.eventBus.MusicSoldier;
 import com.medicine.ssqy.ssqy.service.MusicService;
+import com.medicine.ssqy.ssqy.test.DiscussEntity;
+import com.medicine.ssqy.ssqy.ui.adapter.ItemDiscussLvAdapter;
+import com.medicine.ssqy.ssqy.ui.dialog.DigDiscuss;
 import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
+import com.medicine.ssqy.ssqy.util.UtilGetDiscussTime;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -55,6 +63,9 @@ public class AudioPlayActivity extends KBaseActivity {
             }
         }
     };
+    private ItemDiscussLvAdapter mItemDiscussLvAdapter;
+    private DigDiscuss mDigDiscuss;
+    
     @Override
     public int setRootView() {
         return R.layout.activity_audio_play;
@@ -78,7 +89,38 @@ public class AudioPlayActivity extends KBaseActivity {
         mTvZannumComment = (TextView) findViewById(R.id.tv_zannum_comment);
         mBtCommentComment = (LinearLayout) findViewById(R.id.bt_comment_comment);
         setTitleCenter("音频课程");
-        
+        mCbDianzanComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mTvZannumComment.setText("点赞（51）");
+                }else {
+                    mTvZannumComment.setText("点赞（50）");
+                }
+            }
+        });
+        mItemDiscussLvAdapter = new ItemDiscussLvAdapter(this, DiscussEntity.getTempDatas());
+        mLvCommentsComment.setAdapter(mItemDiscussLvAdapter);
+    
+        mDigDiscuss=new DigDiscuss(this);
+        mDigDiscuss.setOnConfirmCallback(new DigDiscuss.OnConfirmCallback() {
+            @Override
+            public void onConfirm(String content) {
+                DiscussEntity discussEntity=new DiscussEntity();
+                discussEntity.setDetail(content);
+                discussEntity.setNickName(TempUser.getNowUser(SharePLogin.getUid()).getNickName());
+                discussEntity.setHeadUrl(TempUser.getNowUser(SharePLogin.getUid()).getHeadPicUrl());
+                discussEntity.setTime(UtilGetDiscussTime.getTimeNow());
+                mItemDiscussLvAdapter.insertToFirst(discussEntity);
+                Toast.makeText(mSelf, "评论成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mBtCommentComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDigDiscuss.show();
+            }
+        });
     }
     
     @Override

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
+import com.medicine.ssqy.ssqy.db.TempUser;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -28,12 +29,18 @@ public class ModifyPhonenumberDig extends Dialog implements View.OnClickListener
     private Button mBtnCancelDigModifyPhonenumber;
     private Button mBtnConfirmDigModifyPhonenumber;
     private Context mContext;
+    private OnPhoneOKCallback mOnPhoneOKCallback;
+    private String phone;
     private Handler mHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what==1){
-                Toast.makeText(mContext, "修改成功！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "绑定成功！", Toast.LENGTH_SHORT).show();
+                TempUser.saveOrUpdatePhone(phone);
+                if (mOnPhoneOKCallback != null) {
+                    mOnPhoneOKCallback.onOK();
+                }
                 SMSSDK.unregisterEventHandler(eh);
                 dismiss();
             }else {
@@ -65,6 +72,14 @@ public class ModifyPhonenumberDig extends Dialog implements View.OnClickListener
             }
         }
     };
+    
+    public  interface  OnPhoneOKCallback{
+        public void onOK();
+    }
+    
+    public void setOnPhoneOKCallback(OnPhoneOKCallback onPhoneOKCallback) {
+        mOnPhoneOKCallback = onPhoneOKCallback;
+    }
     
     public ModifyPhonenumberDig(Context context) {
         super(context);
@@ -107,7 +122,8 @@ public class ModifyPhonenumberDig extends Dialog implements View.OnClickListener
         switch (v.getId()) {
             case R.id.btn_get_verifycode_dig_modify_phonenumber:
                 Toast.makeText(mContext, "正在获取，请稍等", Toast.LENGTH_SHORT).show();
-                String phone=mEdtPhoneDigModifyPhonenumber.getText().toString().trim();
+                 phone=mEdtPhoneDigModifyPhonenumber.getText().toString().trim();
+                
                 if (!StringEmptyUtil.isEmpty(phone)){
                     SMSSDK.getVerificationCode("86",phone); 
                 }

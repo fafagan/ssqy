@@ -40,10 +40,10 @@ public class LoginPlatClick extends BaseOnClick<LoginActivity> {
             loginEntity.setUid(123456);
             loginEntity.setType("QQ");
             loginEntity.setUseraccount("123123");
-            loginEntity.setNickName("小飞侠");
-            loginEntity.setHeadPicUrl("http://pic74.nipic.com/file/20150802/21532318_173943681365_2.jpg");
-            loginEntity.setSex("woman");
-            loginEntity.setLevel(1);
+            loginEntity.setNickName(data.get("screen_name"));
+            loginEntity.setHeadPicUrl(data.get("profile_image_url"));
+            loginEntity.setSex(data.get("gender"));
+            loginEntity.setLevel(2);
             loginEntity.setFisrtLogin(true);
     
             SharePLogin.saveIsFree(true);

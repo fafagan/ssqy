@@ -1,6 +1,8 @@
 package com.medicine.ssqy.ssqy.ui.activity;
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.medicine.ssqy.ssqy.R;
@@ -15,7 +17,10 @@ public class TempActivity extends KBaseActivity {
     private ImageView mImgv6;
     private ImageView mImgv7;
     private ImageView mImgv8;
-   
+    private LinearLayout mLayoutSearchTemp;
+    
+
+    
     
     @Override
     public int setRootView() {
@@ -24,7 +29,7 @@ public class TempActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
-    
+        mLayoutSearchTemp = (LinearLayout) findViewById(R.id.layout_search_temp);
         mImgv1 = (ImageView) findViewById(R.id.imgv1);
         mImgv2 = (ImageView) findViewById(R.id.imgv2);
         mImgv3 = (ImageView) findViewById(R.id.imgv3);
@@ -34,6 +39,13 @@ public class TempActivity extends KBaseActivity {
         mImgv7 = (ImageView) findViewById(R.id.imgv7);
         mImgv8 = (ImageView) findViewById(R.id.imgv8);
         setTitleCenter("健康工具");
+    
+        mLayoutSearchTemp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToActivity(SearchActivity.class);
+            }
+        });
     }
     
     @Override
