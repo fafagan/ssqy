@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="记录您今天的情况"
+        android:text="您今天的情况"
         android:textColor="@color/text_color_red"
         android:textSize="16sp"
         android:textStyle="bold"/>

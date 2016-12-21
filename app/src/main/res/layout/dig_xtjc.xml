@@ -28,7 +28,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:hint="在此填写您的血糖值"
+            android:hint="您的血糖值"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>

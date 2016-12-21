@@ -7,7 +7,7 @@
               android:layout_height="wrap_content">
         <TextView
             android:textSize="16sp"
-            android:text="请填写您的血压值："
+            android:text="您的血压值："
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/text_color_red"
