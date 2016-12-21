@@ -42,6 +42,7 @@ import com.medicine.ssqy.ssqy.ui.adapter.ItemDiscussLvAdapter;
 import com.medicine.ssqy.ssqy.ui.dialog.DigDiscuss;
 import com.medicine.ssqy.ssqy.ui.listener.MyPhoneStateListener;
 import com.medicine.ssqy.ssqy.util.BrightnessUtil;
+import com.medicine.ssqy.ssqy.util.ShareUtil;
 import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
 import com.medicine.ssqy.ssqy.util.UtilGetDiscussTime;
 
@@ -67,13 +68,14 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private ProgressBar mPbVolumeActivityVideoPlay;
     private Button mBtBackActivityVideoPlay;
     private TextView mTvVedionameActivityVideoPlay;
-    private LinearLayout mLlSvtopbarActivityVideoPlay;
     private LinearLayout mLlSvbottombarActivityVideoPlay;
     private RelativeLayout mRlContentActivityVideoPlay;
     private RelativeLayout mRlActivityVideoPlay;
+    private RelativeLayout mRlSvtopbarActivityVideoPlay;
     private CheckBox mCbDianzanComment;
     private TextView mTvZannumComment;
     private LinearLayout mBtCommentComment;
+    private TextView mTvShareActivityVideoPlay;
     private GestureDetector mGestureDetector;
     //监听电话状态
     private MyPhoneStateListener mPhoneStateListener;
@@ -128,6 +130,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private List<DiscussEntity> mTempDatas;
     private ItemDiscussLvAdapter mItemDiscussLvAdapter;
     
+    
     @Override
     public int setRootView() {
         return R.layout.activity_video_play;
@@ -140,6 +143,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     
     @Override
     public void initViews() {
+        mTvShareActivityVideoPlay = (TextView) findViewById(R.id.tv_share_activity_video_play);
         mSvActivityVideoPlay = (SurfaceView) findViewById(R.id.sv_activity_video_play);
         mBtPlayActivityVideoPlay = (Button) findViewById(R.id.bt_play_activity_video_play);
         mTvPlaytimeActivityVideoPlay = (TextView) findViewById(R.id.tv_playtime_activity_video_play);
@@ -160,12 +164,13 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mPbVolumeActivityVideoPlay = (ProgressBar) findViewById(R.id.pb_volume_activity_video_play);
         mBtBackActivityVideoPlay = (Button) findViewById(R.id.bt_back_activity_video_play);
         mTvVedionameActivityVideoPlay = (TextView) findViewById(R.id.tv_vedioname_activity_video_play);
-        mLlSvtopbarActivityVideoPlay = (LinearLayout) findViewById(R.id.ll_svtopbar_activity_video_play);
+        mRlSvtopbarActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_svtopbar_activity_video_play);
         mLlSvbottombarActivityVideoPlay = (LinearLayout) findViewById(R.id.ll_svbottombar_activity_video_play);
         mRlContentActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_content_activity_video_play);
         mRlActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_activity_video_play);
      
         mBtPlayActivityVideoPlay.setOnClickListener(this);
+        mTvShareActivityVideoPlay.setOnClickListener(this);
         mCbPlayorstopActivityVideoPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -177,14 +182,14 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                         mBtPlayActivityVideoPlay.setVisibility(View.INVISIBLE);
                     } else {
                         mMediaPlayer.start();
-                        mLlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                        mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                         mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
                         mBtPlayActivityVideoPlay.setVisibility(View.INVISIBLE);
                     }
                     
                 } else {
                     mMediaPlayer.pause();
-                    mLlSvtopbarActivityVideoPlay.setVisibility(View.VISIBLE);
+                    mRlSvtopbarActivityVideoPlay.setVisibility(View.VISIBLE);
                 }
                 
             }
@@ -347,9 +352,9 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                     mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
                     mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
                     mMediaPlayer.start();
-                    mLlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                    mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                     mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
-                    mLlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                    mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                     mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
                 }
             });
@@ -456,8 +461,9 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
 //                    setVideoLayoutParams(false);
                     setVideoParams(false);
                 }
-            default:
-                
+            //分享    
+            case R.id.tv_share_activity_video_play:
+                ShareUtil.showShare(this);
                 break;
         }
     }
@@ -546,7 +552,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                     break;
                 case 1:
                     mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
-                    mLlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                    mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                     break;
                 default:
                     
@@ -609,13 +615,13 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     public class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if (mLlSvtopbarActivityVideoPlay.getVisibility() == View.VISIBLE) {
-                mLlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+            if (mRlSvtopbarActivityVideoPlay.getVisibility() == View.VISIBLE) {
+                mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                 mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
             } else {
                 mLlSvbottombarActivityVideoPlay.setVisibility(View.VISIBLE);
-                mLlSvtopbarActivityVideoPlay.setVisibility(View.VISIBLE);
-                mDismissHandler.sendEmptyMessageDelayed(1, 3000);
+                mRlSvtopbarActivityVideoPlay.setVisibility(View.VISIBLE);
+                mDismissHandler.sendEmptyMessageDelayed(1, 5000);
             }
             return true;
         }
