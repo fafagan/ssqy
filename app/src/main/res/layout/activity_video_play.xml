@@ -55,26 +55,36 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="5dp"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/ll_svtopbar_activity_video_play"
-                      android:layout_width="match_parent"
-                      android:layout_height="40dp"
-                      android:background="@color/colorTransBlack"
-                      android:orientation="horizontal"
-                      android:visibility="visible">
+        <RelativeLayout android:id="@+id/rl_svtopbar_activity_video_play"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/colorTransBlack"
+                        android:visibility="visible">
             <Button android:id="@+id/bt_back_activity_video_play"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
                     android:layout_margin="5dp"
                     android:background="@drawable/ppq_back"/>
             <TextView android:id="@+id/tv_vedioname_activity_video_play"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:layout_gravity="center_vertical"
+                      android:layout_centerVertical="true"
+                      android:layout_toRightOf="@+id/bt_back_activity_video_play"
                       android:text="标题"
                       android:textColor="@color/colorWhite"
                       android:textSize="@dimen/text_size_medium"/>
-        </LinearLayout>
+            <TextView android:id="@+id/tv_share_activity_video_play"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentRight="true"
+                      android:layout_centerVertical="true"
+                      android:text="分享"
+                      android:clickable="true"
+                      android:layout_marginRight="@dimen/left_right_margin"
+                      android:textColor="@color/colorWhite"
+                      android:textSize="@dimen/text_size_medium"/>
+        </RelativeLayout>
         <Button android:id="@+id/bt_play_activity_video_play"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -91,8 +101,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="6dp"
-                android:layout_marginLeft="@dimen/left_right_margin"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/play_pause"
                 android:button="@null"
@@ -102,8 +112,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
                 android:layout_weight="2"
-                android:text="18:50"
+                android:text="00:18:50"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_micro"/>
             <ProgressBar
@@ -112,6 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
                 android:layout_weight="8"
                 android:visibility="visible"/>
             <TextView
@@ -119,8 +131,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
                 android:layout_weight="2"
-                android:text="30:50"
+                android:text="00:30:50"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_micro"/>
             <ImageView
@@ -128,7 +141,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/left_right_margin"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:src="@mipmap/quanping"/>
         </LinearLayout>
@@ -153,10 +166,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_videotitle_activity_video_play"
+            android:layout_marginBottom="@dimen/title_content_space"
             android:layout_marginLeft="@dimen/left_right_margin"
             android:layout_marginRight="@dimen/left_right_margin"
             android:layout_marginTop="@dimen/title_content_space"
-            android:layout_marginBottom="@dimen/title_content_space"
             android:lineSpacingExtra="@dimen/content_content_space"
             android:text="课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容"
             android:textSize="@dimen/text_size_medium"/>

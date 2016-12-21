@@ -7,6 +7,7 @@ import com.medicine.ssqy.ssqy.R;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
+import cn.sharesdk.framework.ShareSDK;
 import cn.smssdk.SMSSDK;
 
 /**
@@ -25,6 +26,8 @@ public class KBaseApp extends BaseApplication {
         PlatformConfig.setSinaWeibo("3597239576", "5413f61575a155dc7075b65d00b903db");
         SMSSDK.initSDK(this, "19f417b016350", "edfccec959e6034d6656c41e50cd2ea7");
         UMShareAPI.get(this);
+    
+        ShareSDK.initSDK(this);
     }
     
     @Override

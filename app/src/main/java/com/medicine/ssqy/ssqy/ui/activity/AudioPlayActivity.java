@@ -3,6 +3,7 @@ package com.medicine.ssqy.ssqy.ui.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.eventBus.MusicSoldier;
 import com.medicine.ssqy.ssqy.service.MusicService;
+import com.medicine.ssqy.ssqy.util.ShareUtil;
 import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -84,7 +86,12 @@ public class AudioPlayActivity extends KBaseActivity {
     @Override
     public void initDatas() {
         EventBus.getDefault().register(this);
-        setTitleRight("分享",null);
+        setTitleRight("分享", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtil.showShare(AudioPlayActivity.this);
+            }
+        });
         mCbPlayorpauseActivityAudioPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
