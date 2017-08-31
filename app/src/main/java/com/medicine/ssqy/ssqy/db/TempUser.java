@@ -15,10 +15,10 @@ public class TempUser {
     public static void saveOrUpdateUserFirst(String sex,boolean isMarried,String birthDay,String job,String study){
         UserEntity nowUser = getNowUser(SharePLogin.getUid());
         nowUser.setSex(sex);
-        nowUser.setMarried(isMarried);
+        nowUser.setIsMarried(isMarried+"");
         nowUser.setBirthDay(birthDay);
         nowUser.setJob(job);
-        nowUser.setStudylevel(study);
+        nowUser.setStudyLevel(study);
         saveOrUpdateUser(nowUser);
     }
     
@@ -38,18 +38,15 @@ public class TempUser {
     } 
     public static void saveOrUpdateUser(UserEntity userEntity) {
         DbManager dbManager = x.getDb(CommonDaoConfig.getDaoConfig());
-        
         try {
             UserEntity entity = dbManager.selector(UserEntity.class).where("uid", "=", userEntity.getUid()).findFirst();
             if (entity != null) {
-                System.out.println("11111111");
+                System.out.println(entity);
                 dbManager.
                         update(userEntity, "birthDay", "headPicUrl", "job",
                                 "nickName", "phone", "regTime", "sex", "studylevel",
                                 "useraccount", "isMarried", "level", "state", "uid");
             } else {
-    
-                System.out.println("22222222");
                 dbManager.saveBindingId(userEntity);
             }
         } catch (DbException e) {
@@ -57,7 +54,7 @@ public class TempUser {
         }
     }
     
-    public static UserEntity getNowUser(int uid) {
+    public static UserEntity getNowUser(String uid) {
         DbManager dbManager = x.getDb(CommonDaoConfig.getDaoConfig());
         try {
             UserEntity entity = dbManager.selector(UserEntity.class).where("uid", "=", uid).findFirst();

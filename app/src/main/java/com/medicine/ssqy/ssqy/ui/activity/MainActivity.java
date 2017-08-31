@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 
+import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePFirst;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.util.PermissionUtils;
-import com.orhanobut.logger.Logger;
 
 public class MainActivity extends KBaseActivity implements View.OnClickListener {
     private Button mBtLoginActivityWelcome;
@@ -22,18 +24,29 @@ public class MainActivity extends KBaseActivity implements View.OnClickListener 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Logger.e("xx"+SharePLogin.isFree());
             switch (msg.what) {
              
                 case 1:
                     if (!SharePFirst.isFirst()){
-                        if (SharePLogin.isFree()){
-                          //  goToActivity(FirstLoginActivity.class);
-                       goToActivity(HomeActivity.class);
-                      //    goToActivity(LoginActivity.class);
-                        }else {
+    
+                        UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
+                        if (nowUser==null) {
                             goToActivity(LoginActivity.class);
+                        }else {
+                            if (SharePLogin.isFree()){
+                               if (!StringEmptyUtil.isEmpty(nowUser.isIsFisrtLogin())&&"false".equals(nowUser.isIsFisrtLogin())){
+                                   goToActivity(IndexActivity.class);
+                               }else {
+                                   goToActivity(IndexActivity.class);
+//                                   goToActivity(FirstLoginActivity.class);
+                               }
+//                                goToActivity(IndexActivity.class);
+                               
+                            }else {
+                                goToActivity(LoginActivity.class);
+                            }
                         }
+                     
                         killSelf();
                         return;
                     }
@@ -123,7 +136,7 @@ public class MainActivity extends KBaseActivity implements View.OnClickListener 
         switch (what) {
             case 1:
                 if (!SharePFirst.isFirst()&&SharePLogin.isFree()) {
-                    goToActivity(HomeActivity.class);
+                    goToActivity(IndexActivity.class);
                 } else {
                     //123
                     

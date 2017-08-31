@@ -4,29 +4,70 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 /**
- * Created by Administrator on 2016/12/9.
+ * Created by Administrator on 2017-08-31.
  */
-@Table(name = "UserEntity")
+@Table(name = "user")
 public class UserEntity {
     
     
     /**
-     * birthDay : 1966-5-5
-     * headPicUrl : http://xxxxxxxxx
-     * job : 工人
-     * nickName : Lily
-     * phone : 13112342234
-     * regTime : 注册时间2016-10-10
-     * sex : man
-     * studylevel : 博士
-     * useraccount : 123456765
-     * isMarried : true
-     * level : 5
+     * id : 53372dda9a4d46b7b7c067f4d1de1614
+     * isNewRecord : false
+     * remarks : null
+     * createDate : 2017-08-31 11:10:20
+     * updateDate : 2017-08-31 11:10:20
+     * uid : u201708311910200002
+     * realName : testuser2211
+     * usertype : 0
+     * headPicUrl : null
+     * nickName : testuser2211
+     * sex : null
+     * age : null
+     * password : 75da67209aec0e5f0ac4ab17695efa1a669b491680ca184f07139856
+     * type : null
+     * useraccount : 13718454853
+     * isFisrtLogin : true
+     * isformally : null
+     * level : 1
+     * regTime : null
+     * loginip : null
+     * loginteime : null
+     * sm : null
+     * bz : null
+     * phone : null
+     * job : null
+     * studyLevel : null
+     * birthDay : null
+     * isMarried : null
+     * tjbh : null
      * state : true
-     * uid : 10010
+     * doctorid : null
+     * tz : null
+     * tzs : null
      */
     @Column(name="id",isId = true)
-    private int id;
+    private String id;
+    private boolean isNewRecord;
+    private String remarks;
+    private String createDate;
+    private String updateDate;
+    private String realName;
+    private String usertype;
+    private String age;
+    private String password;
+    private String type;
+    private String isFisrtLogin;
+    private String isformally;
+    private String loginip;
+    private String loginteime;
+    private String sm;
+    private String bz;
+    private String studyLevel;
+    private String tjbh;
+    private String doctorid;
+    private String tz;
+    private String tzs;
+    
     
     @Column(name="birthDay")
     private String birthDay;
@@ -56,7 +97,7 @@ public class UserEntity {
     private String useraccount;
     
     @Column(name="isMarried")
-    private boolean isMarried;
+    private String isMarried;
     
     @Column(name="level")
     private int level;
@@ -68,57 +109,74 @@ public class UserEntity {
     private boolean isFirstLogin;
     
     @Column(name="uid")
-    private int uid;
+    private String uid;
+    
+    
     private String errorInfo;
     private int errno;
     
-    
-    public boolean isFirstLogin() {
-        return isFirstLogin;
-    }
-    
-    public void setFirstLogin(boolean firstLogin) {
-        isFirstLogin = firstLogin;
-    }
-    
-    public int getId() {
+    public String getId() {
         return id;
     }
     
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     
-    public boolean isMarried() {
-        return isMarried;
+    public boolean isIsNewRecord() {
+        return isNewRecord;
     }
     
-    public void setMarried(boolean married) {
-        isMarried = married;
+    public void setIsNewRecord(boolean isNewRecord) {
+        this.isNewRecord = isNewRecord;
     }
     
-    public String getErrorInfo() {
-        return errorInfo;
+    public String getRemarks() {
+        return remarks;
     }
     
-    public void setErrorInfo(String errorInfo) {
-        this.errorInfo = errorInfo;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
     
-    public int getErrno() {
-        return errno;
+    public String getCreateDate() {
+        return createDate;
     }
     
-    public void setErrno(int errno) {
-        this.errno = errno;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
     
-    public String getBirthDay() {
-        return birthDay;
+    public String getUpdateDate() {
+        return updateDate;
     }
     
-    public void setBirthDay(String birthDay) {
-        this.birthDay = birthDay;
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
+    
+    public String getUid() {
+        return uid;
+    }
+    
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+    
+    public String getRealName() {
+        return realName;
+    }
+    
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+    
+    public String getUsertype() {
+        return usertype;
+    }
+    
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
     }
     
     public String getHeadPicUrl() {
@@ -129,36 +187,12 @@ public class UserEntity {
         this.headPicUrl = headPicUrl;
     }
     
-    public String getJob() {
-        return job;
-    }
-    
-    public void setJob(String job) {
-        this.job = job;
-    }
-    
     public String getNickName() {
         return nickName;
     }
     
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-    
-    public String getPhone() {
-        return phone;
-    }
-    
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    
-    public String getRegTime() {
-        return regTime;
-    }
-    
-    public void setRegTime(String regTime) {
-        this.regTime = regTime;
     }
     
     public String getSex() {
@@ -169,12 +203,28 @@ public class UserEntity {
         this.sex = sex;
     }
     
-    public String getStudylevel() {
-        return studylevel;
+    public String getAge() {
+        return age;
     }
     
-    public void setStudylevel(String studylevel) {
-        this.studylevel = studylevel;
+    public void setAge(String age) {
+        this.age = age;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
     }
     
     public String getUseraccount() {
@@ -185,12 +235,20 @@ public class UserEntity {
         this.useraccount = useraccount;
     }
     
-    public boolean isIsMarried() {
-        return isMarried;
+    public String isIsFisrtLogin() {
+        return isFisrtLogin;
     }
     
-    public void setIsMarried(boolean isMarried) {
-        this.isMarried = isMarried;
+    public void setIsFisrtLogin(String isFisrtLogin) {
+        this.isFisrtLogin = isFisrtLogin;
+    }
+    
+    public String getIsformally() {
+        return isformally;
+    }
+    
+    public void setIsformally(String isformally) {
+        this.isformally = isformally;
     }
     
     public int getLevel() {
@@ -201,6 +259,94 @@ public class UserEntity {
         this.level = level;
     }
     
+    public String getRegTime() {
+        return regTime;
+    }
+    
+    public void setRegTime(String regTime) {
+        this.regTime = regTime;
+    }
+    
+    public String getLoginip() {
+        return loginip;
+    }
+    
+    public void setLoginip(String loginip) {
+        this.loginip = loginip;
+    }
+    
+    public String getLoginteime() {
+        return loginteime;
+    }
+    
+    public void setLoginteime(String loginteime) {
+        this.loginteime = loginteime;
+    }
+    
+    public String getSm() {
+        return sm;
+    }
+    
+    public void setSm(String sm) {
+        this.sm = sm;
+    }
+    
+    public String getBz() {
+        return bz;
+    }
+    
+    public void setBz(String bz) {
+        this.bz = bz;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+    
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    public String getJob() {
+        return job;
+    }
+    
+    public void setJob(String job) {
+        this.job = job;
+    }
+    
+    public String getStudyLevel() {
+        return studyLevel;
+    }
+    
+    public void setStudyLevel(String studyLevel) {
+        this.studyLevel = studyLevel;
+    }
+    
+    public String getBirthDay() {
+        return birthDay;
+    }
+    
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+    
+    public String getIsMarried() {
+        return isMarried;
+    }
+    
+    public void setIsMarried(String isMarried) {
+        this.isMarried = isMarried;
+    }
+    
+    public String getTjbh() {
+        return tjbh;
+    }
+    
+    public void setTjbh(String tjbh) {
+        this.tjbh = tjbh;
+    }
+    
     public boolean isState() {
         return state;
     }
@@ -209,11 +355,71 @@ public class UserEntity {
         this.state = state;
     }
     
-    public int getUid() {
-        return uid;
+    public String getDoctorid() {
+        return doctorid;
     }
     
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setDoctorid(String doctorid) {
+        this.doctorid = doctorid;
     }
-}
+    
+    public String getTz() {
+        return tz;
+    }
+    
+    public void setTz(String tz) {
+        this.tz = tz;
+    }
+    
+    public String getTzs() {
+        return tzs;
+    }
+    
+    public void setTzs(String tzs) {
+        this.tzs = tzs;
+    }
+    
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("UserEntity{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", isNewRecord=").append(isNewRecord);
+        sb.append(", remarks='").append(remarks).append('\'');
+        sb.append(", createDate='").append(createDate).append('\'');
+        sb.append(", updateDate='").append(updateDate).append('\'');
+        sb.append(", realName='").append(realName).append('\'');
+        sb.append(", usertype='").append(usertype).append('\'');
+        sb.append(", age='").append(age).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", type='").append(type).append('\'');
+        sb.append(", isFisrtLogin='").append(isFisrtLogin).append('\'');
+        sb.append(", isformally='").append(isformally).append('\'');
+        sb.append(", loginip='").append(loginip).append('\'');
+        sb.append(", loginteime='").append(loginteime).append('\'');
+        sb.append(", sm='").append(sm).append('\'');
+        sb.append(", bz='").append(bz).append('\'');
+        sb.append(", studyLevel='").append(studyLevel).append('\'');
+        sb.append(", tjbh='").append(tjbh).append('\'');
+        sb.append(", doctorid='").append(doctorid).append('\'');
+        sb.append(", tz='").append(tz).append('\'');
+        sb.append(", tzs='").append(tzs).append('\'');
+        sb.append(", birthDay='").append(birthDay).append('\'');
+        sb.append(", headPicUrl='").append(headPicUrl).append('\'');
+        sb.append(", job='").append(job).append('\'');
+        sb.append(", nickName='").append(nickName).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", regTime='").append(regTime).append('\'');
+        sb.append(", sex='").append(sex).append('\'');
+        sb.append(", studylevel='").append(studylevel).append('\'');
+        sb.append(", useraccount='").append(useraccount).append('\'');
+        sb.append(", isMarried='").append(isMarried).append('\'');
+        sb.append(", level=").append(level);
+        sb.append(", state=").append(state);
+        sb.append(", isFirstLogin=").append(isFirstLogin);
+        sb.append(", uid='").append(uid).append('\'');
+        sb.append(", errorInfo='").append(errorInfo).append('\'');
+        sb.append(", errno=").append(errno);
+        sb.append('}');
+        return sb.toString();
+    }
+}   

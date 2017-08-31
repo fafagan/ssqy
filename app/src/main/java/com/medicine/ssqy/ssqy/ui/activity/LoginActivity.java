@@ -9,11 +9,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.EdtJava;
 import com.example.sj.mylibrary.util.EdtUtil;
+import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.ui.listener.LoginBtClick;
 import com.medicine.ssqy.ssqy.ui.listener.LoginPlatClick;
 import com.umeng.socialize.UMShareAPI;
@@ -35,7 +43,7 @@ public class LoginActivity extends KBaseActivity {
     private LoginPlatClick mLoginPlatClick;
     private boolean mIsLoging;
     public UMShareAPI mShareAPI ;
-    
+    private NetForJson mNetForJson;
     
     @Override
     public int setRootView() {
@@ -90,6 +98,7 @@ public class LoginActivity extends KBaseActivity {
                     EdtJava.makeEdtJava(mEdtPwdLogin);
                     mImgvShowPwd.setImageResource(R.drawable.pwd_state_false);
                 }
+                
                 mEdtPwdLogin.setSelection(EdtUtil.getEdtText(mEdtPwdLogin).length());
             }
         });
@@ -125,10 +134,74 @@ public class LoginActivity extends KBaseActivity {
         mEdtPhoneLogin.setOnFocusChangeListener(mOnEdtFocusChange);
         mEdtPwdLogin.setOnFocusChangeListener(mOnEdtFocusChange);
     }
-    
+    public void doNet(){
+        mNetForJson.addParam("type","phone");
+        mNetForJson.addParam("usercount",EdtUtil.getEdtText(mEdtPhoneLogin));
+        mNetForJson.addParam("userpwd",EdtUtil.getEdtText(mEdtPwdLogin));
+        mNetForJson.excute();
+    }
     @Override
     public void initDatas() {
         mShareAPI=UMShareAPI.get(this);
+        mNetForJson=new NetForJson(URLConstant.LOGIN_URL, new NetCallback<UserEntity>() {
+            @Override
+            public void onSuccess(UserEntity entity) {
+                Toast.makeText(mSelf, "登录成功！", Toast.LENGTH_SHORT).show();
+//                LoginEntity loginEntity=new LoginEntity();
+//                loginEntity.setFisrtLogin(true);
+//                loginEntity.setState(true);
+//                loginEntity.setIsformally(true);
+//                loginEntity.setUid(123456);
+//                loginEntity.setType("phone");
+//                loginEntity.setUseraccount("13718454853");
+//                loginEntity.setNickName("绽放的朝阳");
+//                loginEntity.setHeadPicUrl("http://img.taopic.com/uploads/allimg/120417/6597-12041F940198.jpg");
+//                loginEntity.setSex("woman");
+//                loginEntity.setLevel(2);
+//                loginEntity.setFisrtLogin(true);
+//    
+//                SharePLogin.saveIsFree(true);
+//                SharePLogin.saveUsername(loginEntity.getUseraccount());
+//                SharePLogin.saveUserpwd(EdtUtil.getEdtText(mEdtPwdLogin));
+//                SharePLogin.saveUid(loginEntity.getUid());
+//    
+//                UserEntity userEntity=new UserEntity();
+//                userEntity.setState(loginEntity.isState());
+//                userEntity.setUid(loginEntity.getUid());
+//                userEntity.setUseraccount(loginEntity.getUseraccount());
+//                userEntity.setPhone("13718454853");
+//                userEntity.setNickName(loginEntity.getNickName());
+//                userEntity.setHeadPicUrl(loginEntity.getHeadPicUrl());
+//                userEntity.setSex(loginEntity.getSex());
+//                userEntity.setLevel(loginEntity.getLevel());
+//                userEntity.setFirstLogin(loginEntity.isFisrtLogin());
+//              
+    
+//                Bundle bundle=new Bundle();
+//                bundle.putSerializable("entity",loginEntity);
+    
+                TempUser.saveOrUpdateUser(entity);
+                SharePLogin.saveUid(entity.getUid());
+                if (StringEmptyUtil.isEmpty(entity.isIsFisrtLogin())){
+                    mSelf.goToActivity(FirstLoginActivity.class);
+                }else if (!StringEmptyUtil.isEmpty(entity.isIsFisrtLogin())&&"true".equals(entity.isIsFisrtLogin())){
+                    mSelf.goToActivity(FirstLoginActivity.class); 
+                }else {
+                    mSelf.goToActivity(IndexActivity.class);
+                }
+                mSelf.finish();
+            }
+    
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "登录失败", Toast.LENGTH_SHORT).show();
+            }
+    
+            @Override
+            public void onFinish() {
+                setLoging(false);
+            }
+        },true);
     }
     public boolean isLoging() {
         return mIsLoging;
@@ -138,7 +211,6 @@ public class LoginActivity extends KBaseActivity {
         mIsLoging = loging;
     }
     private class OnEdtFocusChange implements View.OnFocusChangeListener {
-        
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
             if (v == mEdtPhoneLogin) {

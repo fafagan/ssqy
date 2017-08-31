@@ -7,8 +7,11 @@ import com.medicine.ssqy.ssqy.R;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
 import cn.smssdk.SMSSDK;
+
+//import com.hyphenate.chat.EMOptions;
 
 /**
  * Created by Administrator on 2016/11/9.
@@ -28,8 +31,33 @@ public class KBaseApp extends BaseApplication {
         UMShareAPI.get(this);
     
         ShareSDK.initSDK(this);
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
-    
+//    private EMOptions initChatOptions(){
+//        
+//        EMOptions options = new EMOptions();
+//        // set if accept the invitation automatically
+//        options.setAcceptInvitationAlways(false);
+//        // set if you need read ack
+//        options.setRequireAck(true);
+//        // set if you need delivery ack
+//        options.setRequireDeliveryAck(false);
+//        
+//        //you need apply & set your own id if you want to use google cloud messaging.
+//        options.setGCMNumber("324169311137");
+//        //you need apply & set your own id if you want to use Mi push notification
+//        options.setMipushConfig("2882303761517426801", "5381742660801");
+//        //you need apply & set your own id if you want to use Huawei push notification
+//        options.setHuaweiPushAppId("10492024");
+//        
+//        
+//        options.allowChatroomOwnerLeave(true);
+//        options.setDeleteMessagesAsExitGroup(true);
+//        options.setAutoAcceptGroupInvitation(true);
+//        
+//        return options;
+//    }
     @Override
     protected boolean isDebug() {
         return true;

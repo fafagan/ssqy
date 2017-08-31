@@ -27,7 +27,7 @@ public class UtilTimeConvertS {
  
     
     public static String formatTime(long timeInS) {
-        
+        timeInS=timeInS/1000;
         long hour=timeInS/HOUR;
         long time1=timeInS%HOUR;
     

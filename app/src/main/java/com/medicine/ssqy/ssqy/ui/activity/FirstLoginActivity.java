@@ -7,16 +7,23 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.UserEntity;
+import com.medicine.ssqy.ssqy.entity.UsersetEntity;
 import com.medicine.ssqy.ssqy.eventBus.FirstLoginMsg;
 import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginBirthFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginJobFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginSexFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginStudyLevelFragment;
 import com.medicine.ssqy.ssqy.ui.pop.LoadingPopWindow;
+import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,6 +41,7 @@ public class FirstLoginActivity extends KBaseActivity {
     public String birthDay;
     public String job;
     public String studyLevel;
+    NetForJson mNetForJson;
     @Override
     public int setRootView() {
         return R.layout.activity_first_login;
@@ -66,14 +74,30 @@ public class FirstLoginActivity extends KBaseActivity {
     @Override
     public void initDatas() {
         EventBus.getDefault().register(this);
-        
+        mNetForJson=new NetForJson(URLConstant.USERSET_URL, new NetCallback<UsersetEntity>() {
+            @Override
+            public void onSuccess(UsersetEntity entity) {
+                onSaveOk();
+            }
+    
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "保存失败，请重试！", Toast.LENGTH_SHORT).show();
+            }
+    
+            @Override
+            public void onFinish() {
+                loadingPopWindow.dismiss();
+            }
+        },true);
     }
     @Subscribe
     public void onReceive(FirstLoginMsg firstLoginMsg){
         switch (firstLoginMsg.action) {
             case FirstLoginMsg.ACTION_DONE_1:
                 sex=firstLoginMsg.sex;
-                isMarried=firstLoginMsg.isMarried;
+                isMarried=firstLoginMsg.
+                        isMarried;
                 mVpFirstLogin.setCurrentItem(1);
                 break;
             case FirstLoginMsg.ACTION_DONE_2:
@@ -101,17 +125,30 @@ public class FirstLoginActivity extends KBaseActivity {
             public void run() {
                 synchServer();
             }
-        },700);
+        },300);
       
     }
     
     private void synchServer() {
-        onSaveOk();
+        UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
+        Logger.e(nowUser.toString());
+        Logger.e(birthDay+"  "+nowUser.getPhone());
+        mNetForJson.addParam("nickName",nowUser.getNickName());
+        mNetForJson.addParam("sex","man".equals(sex)?1:2);
+        mNetForJson.addParam("marry",isMarried?0:1);
+        mNetForJson.addParam("birth",birthDay);
+        mNetForJson.addParam("phone",nowUser.getUseraccount());
+        mNetForJson.addParam("job",job);
+        mNetForJson.addParam("studylevel",studyLevel);
+        mNetForJson.addParam("level",1);
+        mNetForJson.excute();
+        
+      
     }
     
     private void onSaveOk(){
         TempUser.saveOrUpdateUserFirst(sex,isMarried,birthDay,job,studyLevel);
-        goToActivity(HomeActivity.class);
+        goToActivity(IndexActivity.class);
         finish();
     }
     

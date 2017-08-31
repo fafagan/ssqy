@@ -25,13 +25,13 @@ public class SharePLogin {
         return SharedPrefrencesUtil.getData(KBaseApp.mContextGlobal,"ssqylogin","username","");
         
     }
-    public static void saveUid(int uid){
+    public static void saveUid(String uid){
         SharedPrefrencesUtil.saveData(KBaseApp.mContextGlobal,"ssqylogin","uid",uid);
         saveIsFree(true);
         
     }
-    public static int getUid(){
-        return SharedPrefrencesUtil.getData(KBaseApp.mContextGlobal,"ssqylogin","uid",-1);
+    public static String getUid(){
+        return SharedPrefrencesUtil.getData(KBaseApp.mContextGlobal,"ssqylogin","uid","");
         
     }
     public static void saveUserpwd(String userpwd){

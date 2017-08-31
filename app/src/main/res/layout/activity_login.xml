@@ -30,7 +30,7 @@
             android:digits="0123456789"
             android:maxLength="16"
             android:hint="请输入手机号"
-            android:text="13718454853"
+            android:text="18293105137"
             android:textSize="@dimen/edt_text_size_common"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_edt_height"/>

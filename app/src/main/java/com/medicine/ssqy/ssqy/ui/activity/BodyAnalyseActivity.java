@@ -12,7 +12,7 @@ public class BodyAnalyseActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
-        setTitleCenter("我的体质分析");
+        setTitleCenter("\"四时七养\"体质分析");
     }
     
     @Override

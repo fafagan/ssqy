@@ -1,6 +1,5 @@
 package com.medicine.ssqy.ssqy.ui.listener;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -11,12 +10,6 @@ import com.example.sj.mylibrary.util.AvoidDouble;
 import com.example.sj.mylibrary.util.EdtUtil;
 import com.example.sj.mylibrary.util.PhoneCheckUtil;
 import com.example.sj.mylibrary.util.StringEmptyUtil;
-import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
-import com.medicine.ssqy.ssqy.db.TempUser;
-import com.medicine.ssqy.ssqy.entity.LoginEntity;
-import com.medicine.ssqy.ssqy.entity.UserEntity;
-import com.medicine.ssqy.ssqy.ui.activity.FirstLoginActivity;
-import com.medicine.ssqy.ssqy.ui.activity.HomeActivity;
 import com.medicine.ssqy.ssqy.ui.activity.LoginActivity;
 
 /**
@@ -74,46 +67,7 @@ public class LoginBtClick extends BaseOnClick<LoginActivity> {
     }
     
     private void doLoginOK() {
-        LoginEntity loginEntity=new LoginEntity();
-        loginEntity.setFisrtLogin(true);
-        loginEntity.setState(true);
-        loginEntity.setIsformally(true);
-        loginEntity.setUid(123456);
-        loginEntity.setType("phone");
-        loginEntity.setUseraccount("13718454853");
-        loginEntity.setNickName("小飞侠");
-        loginEntity.setHeadPicUrl("http://pic74.nipic.com/file/20150802/21532318_173943681365_2.jpg");
-        loginEntity.setSex("woman");
-        loginEntity.setLevel(2);
-        loginEntity.setFisrtLogin(true);
-        
-        SharePLogin.saveIsFree(true);
-        SharePLogin.saveUsername(loginEntity.getUseraccount());
-        SharePLogin.saveUserpwd(pwd);
-        SharePLogin.saveUid(loginEntity.getUid());
-    
-        UserEntity userEntity=new UserEntity();
-        userEntity.setState(loginEntity.isState());
-        userEntity.setUid(loginEntity.getUid());
-        userEntity.setUseraccount(loginEntity.getUseraccount());
-        userEntity.setPhone("13718454853");
-        userEntity.setNickName(loginEntity.getNickName());
-        userEntity.setHeadPicUrl(loginEntity.getHeadPicUrl());
-        userEntity.setSex(loginEntity.getSex());
-        userEntity.setLevel(loginEntity.getLevel());
-        userEntity.setFirstLogin(loginEntity.isFisrtLogin());
-        TempUser.saveOrUpdateUser(userEntity);
-    
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("entity",loginEntity);
-    
-      
-        if (loginEntity.isFisrtLogin()){
-            mParent.goToActivity(FirstLoginActivity.class);
-        }else {
-            mParent.goToActivity(HomeActivity.class);
-        }
-        mParent.finish();
+  
     }
     
     private void startChangeText() {
@@ -125,6 +79,7 @@ public class LoginBtClick extends BaseOnClick<LoginActivity> {
         if (!mParent.isLoging()){
             startChangeText();
             mParent.setLoging(true);
+            mParent.doNet();
 //            xxx
         }else {
             Toast.makeText(mContext, "正在努力登录中，请稍等。。", Toast.LENGTH_SHORT).show();

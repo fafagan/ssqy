@@ -1,50 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:background="@drawable/bg_jc2"
-    tools:context="com.medicine.ssqy.ssqy.ui.activity.BodyAnalyseActivity">
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/icon_fjyy"
-        android:layout_marginBottom="20dp"
-        android:layout_width="70dp"
-        android:layout_height="70dp"/>
-    <TextView
-        android:text="针对您的体质，基本资料，医生为您得出如下体质分析报告："
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:textSize="16sp"
-        android:textColor="@color/text_color_red"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:textSize="16sp"
-        android:textColor="@color/text_color_red"
-        android:text="您的整体身体状况：  良好"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.BodyAnalyseActivity"
+    >
 
-    <TextView
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/text_color_red"
-        android:text="具体说明："
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_jc2"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/icon_fjyy"/>
+
         <TextView
-            android:text="@string/tz"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="针对您的体质，基本资料，医生为您得出如下体质分析报告："
+            android:textColor="@color/text_color_red"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="您的整体身体状况：  良好"
+            android:textColor="@color/text_color_red"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="具体说明："
+            android:textColor="@color/text_color_red"
+            android:textStyle="bold"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tz"/>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/title_index"/>
+</RelativeLayout>

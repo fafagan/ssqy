@@ -260,4 +260,12 @@
 _activity_home
              
              -->
+    <ImageView
+        android:scaleType="fitCenter"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="35dp"
+        android:src="@drawable/title_index"
+        android:layout_width="70dp"
+        android:layout_height="150dp"/>
 </RelativeLayout>

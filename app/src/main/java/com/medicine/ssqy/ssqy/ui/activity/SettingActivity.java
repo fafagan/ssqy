@@ -13,6 +13,12 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
     private TextView mTvAboutusActivitySetting;
     private TextView mTvExitActivitySetting;
     private LogoutDig mDialogLogout;
+    
+    private TextView mTvUsercenterActivitySetting;
+    
+ 
+    
+    
     @Override
     public int setRootView() {
         return R.layout.activity_setting;
@@ -25,6 +31,7 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
         mTvAboutusActivitySetting = (TextView) findViewById(R.id.tv_aboutus_activity_setting);
         mTvExitActivitySetting = (TextView) findViewById(R.id.tv_exit_activity_setting);
         mDialogLogout=new LogoutDig(this);
+        mTvUsercenterActivitySetting = (TextView) findViewById(R.id.tv_usercenter_activity_setting);
     }
     
     @Override
@@ -32,6 +39,7 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
         mTvAccountActivitySetting.setOnClickListener(this);
         mTvAboutusActivitySetting.setOnClickListener(this);
         mTvExitActivitySetting.setOnClickListener(this);
+        mTvUsercenterActivitySetting.setOnClickListener(this);
     }
     
     @Override
@@ -46,6 +54,9 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
                 break;
             case R.id.tv_exit_activity_setting:
                 mDialogLogout.showSelf();
+                break;
+            case R.id.tv_usercenter_activity_setting:
+                goToActivity(MyInformationActivity.class);
                 break;
         }
     }

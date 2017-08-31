@@ -9,5 +9,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.medicine.ssqy.ssqy.ui.activity.PWDFindActivity">
-
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/title_index"
+        android:layout_width="70dp"
+        android:layout_height="150dp"/>
 </RelativeLayout>

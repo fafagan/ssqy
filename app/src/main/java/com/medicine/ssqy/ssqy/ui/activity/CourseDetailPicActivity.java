@@ -13,7 +13,7 @@ import com.medicine.ssqy.ssqy.base.KBaseActivity;
 
 //http://3g.163.com/touch/article.html?channel=jiankang&offset=20&docid=C85SNS4P0038804V
 public class CourseDetailPicActivity extends KBaseActivity {
-    private String url="http://3g.163.com/touch/article.html?channel=jiankang&offset=20&docid=C85SNS4P0038804V";
+    private String url;
     private ProgressBar mProgressBar;
     private WebView mWv;
     private WebSettings mSettings;
@@ -31,7 +31,7 @@ public class CourseDetailPicActivity extends KBaseActivity {
                 Toast.makeText(mSelf, "分享该课程", Toast.LENGTH_SHORT).show();
             }
         });
-    
+        url=this.getIntent().getStringExtra("newsUrl");
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
     
         mWv = (WebView) findViewById(R.id.wv);

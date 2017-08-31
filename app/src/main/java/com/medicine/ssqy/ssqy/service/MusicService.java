@@ -13,6 +13,7 @@ import android.telephony.TelephonyManager;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.eventBus.MusicSoldier;
 import com.medicine.ssqy.ssqy.ui.listener.MyPhoneStateListener;
+import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,6 +31,7 @@ public class MusicService extends Service {
     MusicSoldier soldier = new MusicSoldier();
     Timer timer = new Timer();
     private MyPhoneStateListener mPhoneStateListener;
+    private String mCourseUrl;
     
     public MusicService() {
     }
@@ -45,7 +47,9 @@ public class MusicService extends Service {
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        mCourseUrl = intent.getStringExtra("courseUrl");
         playMusic();
+        
         return super.onStartCommand(intent, flags, startId);
     }
     
@@ -120,8 +124,9 @@ public class MusicService extends Service {
                 mp.reset();
                 mp.setLooping(true);
                 mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(),
-                        file.getLength());
+//                mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(),
+//                        file.getLength());
+                mp.setDataSource(mCourseUrl);
                 mp.prepareAsync();
                 mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
@@ -161,9 +166,13 @@ public class MusicService extends Service {
         @Override
         public void run() {
             if (mp != null && mp.isPlaying()) {
+                
+                
                 curIndex = (int) (mp.getCurrentPosition());
+                Logger.e("curIndex: "+curIndex);
                 soldier.setAction(MusicSoldier.ACTION_UPDATE_SEEKBAR_PROGRESS);
                 soldier.setCurIndex(curIndex);
+                soldier.setTotalTime(totalTime);
                 EventBus.getDefault().post(soldier);
             }
         }

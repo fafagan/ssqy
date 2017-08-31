@@ -22,6 +22,8 @@
         android:layout_height="1dp"/>
     
     <RelativeLayout
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
        <LinearLayout
@@ -46,6 +48,7 @@
        </LinearLayout>
 
         <LinearLayout
+            android:layout_alignParentRight="true"
             android:clickable="true"
             android:orientation="vertical"
             android:layout_centerHorizontal="true"
@@ -67,26 +70,26 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:orientation="vertical"
-            android:id="@+id/layout_dig_course_tw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/pic_tw"
-                android:layout_width="70dp"
-                android:layout_height="70dp"/>
-            <TextView
-                android:textSize="12sp"
-                android:textColor="@color/text_common_default"
-                android:text="全部图文课程"
-                android:layout_width="100dp"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:clickable="true"-->
+            <!--android:orientation="vertical"-->
+            <!--android:id="@+id/layout_dig_course_tw"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<ImageView-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:src="@drawable/pic_tw"-->
+                <!--android:layout_width="70dp"-->
+                <!--android:layout_height="70dp"/>-->
+            <!--<TextView-->
+                <!--android:textSize="12sp"-->
+                <!--android:textColor="@color/text_common_default"-->
+                <!--android:text="全部图文课程"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_height="wrap_content"/>-->
+        <!--</LinearLayout>-->
     </RelativeLayout>
 </LinearLayout>

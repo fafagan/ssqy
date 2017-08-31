@@ -9,7 +9,7 @@ import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.entity.LoginEntity;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
-import com.medicine.ssqy.ssqy.ui.activity.HomeActivity;
+import com.medicine.ssqy.ssqy.ui.activity.IndexActivity;
 import com.medicine.ssqy.ssqy.ui.activity.LoginActivity;
 import com.medicine.ssqy.ssqy.ui.pop.LoadingPopWindow;
 import com.umeng.socialize.UMAuthListener;
@@ -28,7 +28,7 @@ public class LoginPlatClick extends BaseOnClick<LoginActivity> {
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
             Toast.makeText(mParent, "授权成功！", Toast.LENGTH_SHORT).show();
             mPopWindow.dismiss();
-            mParent.goToActivity(HomeActivity.class);
+            mParent.goToActivity(IndexActivity.class);
             Set<String> strings = data.keySet();
             for (String string : strings) {
                 System.out.println(data.get(string));
@@ -46,19 +46,22 @@ public class LoginPlatClick extends BaseOnClick<LoginActivity> {
             loginEntity.setLevel(2);
             loginEntity.setFisrtLogin(true);
     
-            SharePLogin.saveIsFree(true);
-            SharePLogin.saveUsername(loginEntity.getUseraccount());
-            SharePLogin.saveUid(loginEntity.getUid());
+          
     
             UserEntity userEntity=new UserEntity();
+            
+            SharePLogin.saveIsFree(true);
+            SharePLogin.saveUsername(userEntity.getUseraccount());
+            SharePLogin.saveUid(userEntity.getUid());
+            
             userEntity.setState(loginEntity.isState());
-            userEntity.setUid(loginEntity.getUid());
+            userEntity.setUid(loginEntity.getUid()+"");
             userEntity.setUseraccount(loginEntity.getUseraccount());
             userEntity.setNickName(loginEntity.getNickName());
             userEntity.setHeadPicUrl(loginEntity.getHeadPicUrl());
             userEntity.setSex(loginEntity.getSex());
             userEntity.setLevel(loginEntity.getLevel());
-            userEntity.setFirstLogin(loginEntity.isFisrtLogin());
+            userEntity.setIsFisrtLogin(loginEntity.isFisrtLogin()+"");
             TempUser.saveOrUpdateUser(userEntity);
             mParent.finish();
       

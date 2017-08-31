@@ -1,6 +1,7 @@
 package com.example.sj.mylibrary.net;
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -81,7 +82,9 @@ public class NetForJson implements Callback.CommonCallback<String> {
     
     //加参数
     public void addParam(String key,Object value){
+        requestParams.removeParameter(key);
         if (isPost){
+           
             requestParams.addBodyParameter(key,value+"");
             
         }else {
@@ -113,6 +116,7 @@ public class NetForJson implements Callback.CommonCallback<String> {
     @Override
     public void onSuccess(String result) {
         Gson gson=new Gson();
+        Logger.e(result);
         mNetCallback.onSuccess(gson.fromJson(result,clazz));
     }
     

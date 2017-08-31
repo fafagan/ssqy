@@ -16,7 +16,6 @@ import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.ui.activity.AudioCourseListActivity;
-import com.medicine.ssqy.ssqy.ui.activity.PicCourseListActivity;
 import com.medicine.ssqy.ssqy.ui.activity.VedioCourseListActivity;
 import com.medicine.ssqy.ssqy.ui.dialog.DigPhoneOK;
 import com.medicine.ssqy.ssqy.ui.dialog.ModifyPhonenumberDig;
@@ -38,17 +37,17 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
     private ImageView mImgvDkAudio;
     private TextView mTvLearnCountAudioFragHome;
     private TextView mTvTotalCountAudioFragHome;
-    private LinearLayout mLayoutImgTw;
-    private TextView mTvTitleTwFragHome;
-    private ImageView mImgvDkTw;
-    private TextView mTvLearnCountTwFragHome;
-    private TextView mTvTotalCountTwFragHome;
+//    private LinearLayout mLayoutImgTw;
+//    private TextView mTvTitleTwFragHome;
+//    private ImageView mImgvDkTw;
+//    private TextView mTvLearnCountTwFragHome;
+//    private TextView mTvTotalCountTwFragHome;
     private ObjectAnimator mObjectAnimatorOpen,mObjectAnimatorClose;
     private View mTop;
     private Pop_dk mPop_dk;
     private RelativeLayout mItemVedioToday;
     private RelativeLayout mItemAudioToday;
-    private RelativeLayout mItemTwToday;
+//    private RelativeLayout mItemTwToday;
     private TextView mTvDaysFragCourse;
     private RelativeLayout mLayoutUnformllyFragHome;
     private TextView mTvUnformllyFragCourse;
@@ -84,22 +83,22 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
         mImgvDkAudio = (ImageView) findViewById(R.id.imgv_dk_audio);
         mTvLearnCountAudioFragHome = (TextView) findViewById(R.id.tv_learn_count_audio_frag_home);
         mTvTotalCountAudioFragHome = (TextView) findViewById(R.id.tv_total_count_audio_frag_home);
-        mLayoutImgTw = (LinearLayout) findViewById(R.id.layout_img_tw);
-        mTvTitleTwFragHome = (TextView) findViewById(R.id.tv_title_tw_frag_home);
-        mImgvDkTw = (ImageView) findViewById(R.id.imgv_dk_tw);
-        mTvLearnCountTwFragHome = (TextView) findViewById(R.id.tv_learn_count_tw_frag_home);
-        mTvTotalCountTwFragHome = (TextView) findViewById(R.id.tv_total_count_tw_frag_home);
+//        mLayoutImgTw = (LinearLayout) findViewById(R.id.layout_img_tw);
+//        mTvTitleTwFragHome = (TextView) findViewById(R.id.tv_title_tw_frag_home);
+//        mImgvDkTw = (ImageView) findViewById(R.id.imgv_dk_tw);
+//        mTvLearnCountTwFragHome = (TextView) findViewById(R.id.tv_learn_count_tw_frag_home);
+//        mTvTotalCountTwFragHome = (TextView) findViewById(R.id.tv_total_count_tw_frag_home);
         mTop = (View) findViewById(R.id.top);
         mItemVedioToday = (RelativeLayout) findViewById(R.id.item_vedio_today);
         mItemAudioToday = (RelativeLayout) findViewById(R.id.item_audio_today);
-        mItemTwToday = (RelativeLayout) findViewById(R.id.item_tw_today);
+       // mItemTwToday = (RelativeLayout) findViewById(R.id.item_tw_today);
     
         mLayoutUnformllyFragHome = (RelativeLayout) findViewById(R.id.layout_unformlly_frag_home);
         mTvUnformllyFragCourse = (TextView) findViewById(R.id.tv_unformlly_frag_course);
         mLayoutChiyaoFragHome.setOnClickListener(this);
         mItemVedioToday.setOnClickListener(this);
         mItemAudioToday.setOnClickListener(this);
-        mItemTwToday.setOnClickListener(this);
+       // mItemTwToday.setOnClickListener(this);
     
     
         mTvUnformllyFragCourse.setOnClickListener(new View.OnClickListener() {
@@ -156,10 +155,10 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
                 AudioCourseListActivity.showToday(mActivity);
                
                 break;
-            case R.id.item_tw_today:
-                PicCourseListActivity.showToday(mActivity);
-               
-                break;
+//            case R.id.item_tw_today:
+//                PicCourseListActivity.showToday(mActivity);
+//               
+//                break;
         }
         
     }

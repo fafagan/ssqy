@@ -8,15 +8,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
-import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.course.CourseAudioEntity;
+import com.medicine.ssqy.ssqy.entity.course.CourseAudioListEntity;
 import com.medicine.ssqy.ssqy.eventBus.MusicSoldier;
 import com.medicine.ssqy.ssqy.service.MusicService;
 import com.medicine.ssqy.ssqy.test.DiscussEntity;
@@ -24,13 +26,14 @@ import com.medicine.ssqy.ssqy.ui.adapter.ItemDiscussLvAdapter;
 import com.medicine.ssqy.ssqy.ui.dialog.DigDiscuss;
 import com.medicine.ssqy.ssqy.util.ShareUtil;
 import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
-import com.medicine.ssqy.ssqy.util.UtilGetDiscussTime;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+
+import static com.medicine.ssqy.ssqy.common.URLConstant.AUDIO_DETAIL_URL;
 
 
 public class AudioPlayActivity extends KBaseActivity {
@@ -41,14 +44,14 @@ public class AudioPlayActivity extends KBaseActivity {
     private TextView mTvTotaltimeActivityAudioPlay;
     private TextView mTvAudiocontentActivityAudioPlay;
     private ImageView mImgvActivityAudioPlay;
-    private ImageView mFengexian;
-    private TextView mTvCommentsnumComment;
-    private ListView mLvCommentsComment;
-    private LinearLayout mLlBottombarComment;
-    private LinearLayout mLlDianzanComment;
-    private CheckBox mCbDianzanComment;
-    private TextView mTvZannumComment;
-    private LinearLayout mBtCommentComment;
+//    private ImageView mFengexian;
+//    private TextView mTvCommentsnumComment;
+//    private ListView mLvCommentsComment;0
+//    private LinearLayout mLlBottombarComment;
+//    private LinearLayout mLlDianzanComment;
+//    private CheckBox mCbDianzanComment;
+//    private TextView mTvZannumComment;
+//    private LinearLayout mBtCommentComment;
     private MusicSoldier soldier = new MusicSoldier();
     private boolean firstPlay = true;
     private int curIndex = 0;
@@ -69,7 +72,10 @@ public class AudioPlayActivity extends KBaseActivity {
     private List<DiscussEntity> mTempDatas;
     private ItemDiscussLvAdapter mItemDiscussLvAdapter;
     private DigDiscuss mDigDiscuss;
-    
+    private NetForJson mNetForJson;
+    private CourseAudioListEntity.AudioCourseDataEntity mCourse;
+    private boolean mNetOk=false;
+    private CourseAudioEntity mEntity;
     @Override
     public int setRootView() {
         return R.layout.activity_audio_play;
@@ -84,49 +90,51 @@ public class AudioPlayActivity extends KBaseActivity {
         mTvTotaltimeActivityAudioPlay = (TextView) findViewById(R.id.tv_totaltime_activity_audio_play);
         mTvAudiocontentActivityAudioPlay = (TextView) findViewById(R.id.tv_audiocontent_activity_audio_play);
         mImgvActivityAudioPlay = (ImageView) findViewById(R.id.imgv_activity_audio_play);
-        mFengexian = (ImageView) findViewById(R.id.fengexian);
-        mTvCommentsnumComment = (TextView) findViewById(R.id.tv_commentsnum_comment);
-        mLvCommentsComment = (ListView) findViewById(R.id.lv_comments_comment);
-        mLlBottombarComment = (LinearLayout) findViewById(R.id.ll_bottombar_comment);
-        mLlDianzanComment = (LinearLayout) findViewById(R.id.ll_dianzan_comment);
-        mCbDianzanComment = (CheckBox) findViewById(R.id.cb_dianzan_comment);
-        mTvZannumComment = (TextView) findViewById(R.id.tv_zannum_comment);
-        mBtCommentComment = (LinearLayout) findViewById(R.id.bt_comment_comment);
+        
+//        mFengexian = (ImageView) findViewById(R.id.fengexian);
+//        mTvCommentsnumComment = (TextView) findViewById(R.id.tv_commentsnum_comment);
+//        mLvCommentsComment = (ListView) findViewById(R.id.lv_comments_comment);
+//        mLlBottombarComment = (LinearLayout) findViewById(R.id.ll_bottombar_comment);
+//        mLlDianzanComment = (LinearLayout) findViewById(R.id.ll_dianzan_comment);
+//        mCbDianzanComment = (CheckBox) findViewById(R.id.cb_dianzan_comment);
+//        mTvZannumComment = (TextView) findViewById(R.id.tv_zannum_comment);
+//        mBtCommentComment = (LinearLayout) findViewById(R.id.bt_comment_comment);
         setTitleCenter("音频课程");
-        mCbDianzanComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    mTvZannumComment.setText("点赞（51）");
-                }else {
-                    mTvZannumComment.setText("点赞（50）");
-                }
-            }
-        });
-        mTempDatas = DiscussEntity.getTempDatas();
-        mItemDiscussLvAdapter = new ItemDiscussLvAdapter(this, mTempDatas);
-        mLvCommentsComment.setAdapter(mItemDiscussLvAdapter);
-        mDigDiscuss=new DigDiscuss(this);
-        mDigDiscuss.setOnConfirmCallback(new DigDiscuss.OnConfirmCallback() {
-            @Override
-            public void onConfirm(String content) {
-                DiscussEntity discussEntity=new DiscussEntity();
-                discussEntity.setDetail(content);
-                discussEntity.setNickName(TempUser.getNowUser(SharePLogin.getUid()).getNickName());
-                discussEntity.setHeadUrl(TempUser.getNowUser(SharePLogin.getUid()).getHeadPicUrl());
-                discussEntity.setTime(UtilGetDiscussTime.getTimeNow());
-                mItemDiscussLvAdapter.insertToFirst(discussEntity);
-                Toast.makeText(mSelf, "评论成功", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mBtCommentComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDigDiscuss.show();
-            }
-        });
-        
-        
+//        mCbDianzanComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked){
+//                    mTvZannumComment.setText("点赞（51）");
+//                }else {
+//                    mTvZannumComment.setText("点赞（50）");
+//                }
+//            }
+//        });
+  //      mTempDatas = DiscussEntity.getTempDatas();
+ //       mItemDiscussLvAdapter = new ItemDiscussLvAdapter(this, mTempDatas);
+ //       mLvCommentsComment.setAdapter(mItemDiscussLvAdapter);
+//        mDigDiscuss=new DigDiscuss(this);
+//        mDigDiscuss.setOnConfirmCallback(new DigDiscuss.OnConfirmCallback() {
+//            @Override
+//            public void onConfirm(String content) {
+//                DiscussEntity discussEntity=new DiscussEntity();
+//                discussEntity.setDetail(content);
+//                discussEntity.setNickName(TempUser.getNowUser(SharePLogin.getUid()).getNickName());
+//                discussEntity.setHeadUrl(TempUser.getNowUser(SharePLogin.getUid()).getHeadPicUrl());
+//                discussEntity.setTime(UtilGetDiscussTime.getTimeNow());
+//                mItemDiscussLvAdapter.insertToFirst(discussEntity);
+//                Toast.makeText(mSelf, "评论成功", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+ //       mBtCommentComment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDigDiscuss.show();
+//            }
+//        });
+    
+        mCourse = (CourseAudioListEntity.AudioCourseDataEntity) this.getIntent().getSerializableExtra("course");
+        mTvAudiocontentActivityAudioPlay.setText("当前正在播放："+mCourse.getCourseTitle());
     
     }
     
@@ -139,12 +147,43 @@ public class AudioPlayActivity extends KBaseActivity {
                 ShareUtil.showShare(mSelf);
             }
         });
+    
+        mNetForJson=new NetForJson(AUDIO_DETAIL_URL, new NetCallback<CourseAudioEntity>() {
+
+    
+            @Override
+            public void onSuccess(CourseAudioEntity entity) {
+                mNetOk=true;
+                mEntity = entity;
+    
+                mTvTotaltimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) entity.getCourseLength()));
+                mSbActivityAudioPlay.setMax(entity.getCourseLength());
+            }
+    
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "网络异常！", Toast.LENGTH_SHORT).show();
+                mNetOk=false;
+            }
+    
+            @Override
+            public void onFinish() {
+        
+            }
+        });
+        mNetForJson.addParam("uid", SharePLogin.getUid());
+        mNetForJson.addParam("courseID", mCourse.getCourseID());
+        mNetForJson.addParam("type", "audio");
+        mNetForJson.excute();
         mCbPlayorpauseActivityAudioPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             
                 if (firstPlay) {
                     Intent intent = new Intent(AudioPlayActivity.this, MusicService.class);
+                    String courseUrl = mEntity.getCourseUrl();
+                    String replace = courseUrl.replace("http://192.168.1.25:10086/jeesite/", "http://192.168.1.102:10086/jeesite/");
+                    intent.putExtra("courseUrl",replace);
                     startService(intent);
                     firstPlay = false;
                 } else {
@@ -174,6 +213,7 @@ public class AudioPlayActivity extends KBaseActivity {
             
             }
         });
+//        mNetForJson=new NetForJson(URLConstant.AUDIO_LIST_URL,new );
         
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -181,8 +221,8 @@ public class AudioPlayActivity extends KBaseActivity {
         int action = event.getAction();
         switch (action) {
             case MusicSoldier.ACTION_UPDATE_TIMEDATA:
-                mTvTotaltimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) event.getTotalTime()));
-                mSbActivityAudioPlay.setMax(event.getTotalTime());
+//                mTvTotaltimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) event.getTotalTime()));
+//                mSbActivityAudioPlay.setMax(event.getTotalTime());
                 break;
             case MusicSoldier.ACTION_UPDATE_SEEKBAR_PROGRESS:
                 curIndex = event.getCurIndex();

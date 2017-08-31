@@ -151,11 +151,11 @@ public class FirstLoginBirthFragment extends KBaseFragment {
     public void setTvText() {
         stringBuilder.delete(0, stringBuilder.length());
         stringBuilder.append(mYear);
-        stringBuilder.append("年");
+        stringBuilder.append("-");
         stringBuilder.append(mMonth);
-        stringBuilder.append("月");
+        stringBuilder.append("-");
         stringBuilder.append(mDay);
-        stringBuilder.append("日");
+        stringBuilder.append("-");
         mTvBirthFirstLogin.setText(stringBuilder.toString());
     }
     

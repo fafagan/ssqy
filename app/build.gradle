@@ -9,12 +9,12 @@ android {
             storePassword 'shijian'
         }
     }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "com.medicine.ssqy.ssqy"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
@@ -41,11 +41,9 @@ dependencies {
     compile files('libs/umeng_social_net.jar')
     compile files('libs/umeng_social_view.jar')
     compile files('libs/wheelview_1.3.3.jar')
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:23.4.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
     compile name: 'SMSSDK-2.1.3', ext: 'aar'
@@ -58,7 +56,8 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.7.10.jar')
     compile files('libs/ShareSDK-Wechat-Favorite-2.7.10.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.10.jar')
-   
+    compile files('libs/jcore-android-1.1.6.jar')
+    compile files('libs/jpush-android-3.0.8.jar')
 }
 repositories{
     flatDir{

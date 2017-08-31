@@ -66,9 +66,9 @@
                android:layout_marginTop="@dimen/title_content_space"
                android:scaleType="centerCrop"
                android:src="@drawable/img"/>
-    <include layout="@layout/comments"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_below="@+id/imgv_activity_audio_play"
-             android:layout_marginTop="@dimen/title_content_space"/>
+    <!--<include layout="@layout/comments"-->
+             <!--android:layout_width="match_parent"-->
+             <!--android:layout_height="wrap_content"-->
+             <!--android:layout_below="@+id/imgv_activity_audio_play"-->
+             <!--android:layout_marginTop="@dimen/title_content_space"/>-->
 </RelativeLayout>

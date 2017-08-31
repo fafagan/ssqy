@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gray"
     tools:context="com.medicine.ssqy.ssqy.ui.activity.SearchActivity">
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/title_index"
+        android:layout_width="70dp"
+        android:layout_height="150dp"/>
     <LinearLayout
         android:padding="5dp"
         android:layout_marginBottom="20dp"

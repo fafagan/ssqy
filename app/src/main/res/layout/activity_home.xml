@@ -5,20 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/bg_home"
     tools:context="com.medicine.ssqy.ssqy.ui.activity.HomeActivity">
-
     <include
-        layout="@layout/layout_home_slide"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    layout="@layout/layout_home_slide"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     </include>
-
     <com.medicine.ssqy.ssqy.ui.views.CustomRelativeLayout
+        android:id="@+id/activity_index"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_home">
+        android:background="@drawable/bg_home"
+        tools:context="com.medicine.ssqy.ssqy.ui.activity.IndexActivity">
 
         <RelativeLayout
             android:background="#fbfaf6"
@@ -69,7 +69,6 @@
                     android:layout_toRightOf="@+id/imgv_home_util"
                     android:background="@drawable/home_jc_selector"/>
             </RadioGroup>
-
 
 
             <ImageView

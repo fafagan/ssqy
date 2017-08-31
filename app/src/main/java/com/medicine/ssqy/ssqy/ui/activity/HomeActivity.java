@@ -14,7 +14,6 @@ import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
-import com.medicine.ssqy.ssqy.common.utils.sp.SharePFirst;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
@@ -28,21 +27,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private DragLayout mDlActivityHome;
-    private DragLayout mDragLayout;
-    
-    private CircleImageView mImgvHeadActivityHome;
-    private ImageView mImgvSexActivityHome;
-    private TextView mTvUsernameActivityHome;
-    private TextView mTvUserlevelActivityHome;
-    private LinearLayout mLayoutItemUserdetailActivityHome;
-    private LinearLayout mLayoutItemUserdoctorActivityHome;
-    private LinearLayout mLayoutItemUsercourseActivityHome;
-    private LinearLayout mLayoutItemUserbodyActivityHome;
-    private LinearLayout mLayoutItemUsermsgActivityHome;
-    private LinearLayout mLayoutItemUsersettingActivityHome;
-
-//    private LoginEntity mLoginEntity;
-    private UserEntity mUserEntity;
     
     
     private ImageView mImgvHomeUsercenter;
@@ -61,6 +45,19 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     private KBaseFragment[] mFragmentHome={mHomeCourseFragment,mHomeUtilFragment,mHomeJCFragment};
     private DigCourseType mDigCourseType;
     
+    
+    private CircleImageView mImgvHeadActivityHome;
+    private ImageView mImgvSexActivityHome;
+    private TextView mTvUsernameActivityHome;
+    private TextView mTvUserlevelActivityHome;
+    private LinearLayout mLayoutItemUserdetailActivityHome;
+    private LinearLayout mLayoutItemUserdoctorActivityHome;
+    private LinearLayout mLayoutItemUsercourseActivityHome;
+    private LinearLayout mLayoutItemUserbodyActivityHome;
+    private LinearLayout mLayoutItemUsermsgActivityHome;
+    private LinearLayout mLayoutItemUsersettingActivityHome;
+    private UserEntity mUserEntity;
+    
     @Override
     public int setRootView() {
         return R.layout.activity_home;
@@ -73,55 +70,16 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     
     @Override
     public void initViews() {
-        SharePFirst.saveIsFirst(false);
-        
-        
-        mDlActivityHome = (DragLayout) findViewById(R.id.dl_activity_home);
-        initDragLayout();
-        initTitles();
 
         
         
+        mDlActivityHome = (DragLayout) findViewById(R.id.dl_activity_home);
+        initTitles();
         mUserEntity= TempUser.getNowUser(SharePLogin.getUid());
-//        if (!SharePLogin.isFree()){
-//            mLoginEntity= (LoginEntity) getDatas().getSerializable("entity");
-//        }
         initSlide();
-    }
-    
-    private void initTitles() {
-    
-    
-        mImgvHomeUsercenter = (ImageView) findViewById(R.id.imgv_home_usercenter);
-        mRgTitleHome = (RadioGroup) findViewById(R.id.rg_title_home);
-        mRbHomeCourse = (RadioButton) findViewById(R.id.rb_home_course);
-        mRbHomeUtil = (RadioButton) findViewById(R.id.rb_home_util);
-        mRbHomeJc = (RadioButton) findViewById(R.id.rb_home_jc);
-        mImgvHomeHistory = (ImageView) findViewById(R.id.imgv_home_history);
-        mLayoutHomeFrags = (FrameLayout) findViewById(R.id.layout_home_frags);
-    
-        mImgvHomeUsercenter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDragLayout.open();
-            }
-        });
-    
-        mImgvHomeHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToActivity(CourseHistoryActivity.class);
-            }
-        });
-        mRgTitleHome.setOnCheckedChangeListener(this);
-        mRbHomeCourse.setChecked(true);
-    
         
-    
     }
-    
     private void initSlide() {
-    
         mImgvHeadActivityHome = (CircleImageView) findViewById(R.id.imgv_head_activity_home);
         mImgvSexActivityHome = (ImageView) findViewById(R.id.imgv_sex_activity_home);
         mTvUsernameActivityHome = (TextView) findViewById(R.id.tv_username_activity_home);
@@ -133,15 +91,15 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         mLayoutItemUsermsgActivityHome = (LinearLayout) findViewById(R.id.layout_item_usermsg_activity_home);
         mLayoutItemUsersettingActivityHome = (LinearLayout) findViewById(R.id.layout_item_usersetting_activity_home);
         
-       
+        
         if (!StringEmptyUtil.isEmpty(mUserEntity.getHeadPicUrl())) {
             Glide.with(this).load(mUserEntity.getHeadPicUrl()).dontAnimate().placeholder(R.drawable.avatar).into(mImgvHeadActivityHome);
         }
-    
+        
         if (!StringEmptyUtil.isEmpty(mUserEntity.getSex())) {
             if (mUserEntity.getSex().equals("woman")){
                 mImgvSexActivityHome.setImageResource(R.drawable.sex_woman);
-            
+                
             }else {
                 mImgvSexActivityHome.setImageResource(R.drawable.sex_man);
             }
@@ -158,46 +116,52 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         }else {
             mTvUsernameActivityHome.setText("美丽人生");
         }
-    
-    
+        
+        
         mLayoutItemUserdetailActivityHome.setOnClickListener(this);
         mLayoutItemUserdoctorActivityHome.setOnClickListener(this);
         mLayoutItemUsercourseActivityHome.setOnClickListener(this);
         mLayoutItemUserbodyActivityHome.setOnClickListener(this);
         mLayoutItemUsermsgActivityHome.setOnClickListener(this);
         mLayoutItemUsersettingActivityHome.setOnClickListener(this);
-    
-    
+        
+        
     }
+    private void initTitles() {
     
-    private void initDragLayout() {
     
-        mDragLayout = (DragLayout) findViewById(R.id.dl_activity_home);
-//        mDragLayout.setDragListener(new DragLayout.DragListener() {
-//            //界面打开的时候
-//            @Override
-//            public void onOpen() {
-//                mBtOverlayActivityHome.setVisibility(View.VISIBLE);
-//            }
-//            //界面关闭的时候
-//            @Override
-//            public void onClose() {
-//                mBtOverlayActivityHome.setVisibility(View.GONE);
-//            }
-//        
-//            //界面滑动的时候
-//            @Override
-//            public void onDrag(float percent) {
-//                System.out.println(percent);
-//                mBtOverlayActivityHome.setAlpha(percent);
-//                if (percent!=0){
-//                    mBtOverlayActivityHome.setVisibility(View.VISIBLE);
-//                }else {
-//                    mBtOverlayActivityHome.setVisibility(View.GONE);
+        mRgTitleHome = (RadioGroup) findViewById(R.id.rg_title_home);
+        mRbHomeCourse = (RadioButton) findViewById(R.id.rb_home_course);
+        mRbHomeUtil = (RadioButton) findViewById(R.id.rb_home_util);
+        mRbHomeJc = (RadioButton) findViewById(R.id.rb_home_jc);
+        mImgvHomeHistory = (ImageView) findViewById(R.id.imgv_home_history);
+        mLayoutHomeFrags = (FrameLayout) findViewById(R.id.layout_home_frags);
+        mImgvHomeUsercenter= (ImageView) findViewById(R.id.imgv_home_usercenter);
+        mImgvHomeUsercenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (mDigCourseType==null) {
+//                    mDigCourseType = new DigCourseType(mSelf);
 //                }
-//            }
-//        });
+//                mDigCourseType.showSelf();
+                mDlActivityHome.open();
+            }
+        });
+    
+        mImgvHomeHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToActivity(CourseHistoryActivity.class);
+            }
+        });
+        mRgTitleHome.setOnCheckedChangeListener(this);
+        mRbHomeCourse.setChecked(true);
+    
+        
+    
     }
+    
+    
     
     @Override
     public void initDatas() {
@@ -254,7 +218,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
                 }
                 mDigCourseType.showSelf();
                 break;
-    
+            
             case R.id.layout_item_userbody_activity_home:
                 goToActivity(BodyAnalyseActivity.class);
                 break;
