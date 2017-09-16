@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.sj.mylibrary.net.NetCallback;
 import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.EdtUtil;
+import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.common.URLConstant;
@@ -26,8 +27,8 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
     private TextView mTvXyReg;
     private EditText mEdtNickNameReg;
     private EditText mEdtPhoneReg;
-//    private EditText mEdtVerifycodeReg;
-//    private Button mBtGetVerifycodeReg;
+    private EditText mEdtVerifycodeReg;
+    private Button mBtGetVerifycodeReg;
     private Button mBtConfirmReg;
     private NetForJson mNetForJson;
 
@@ -37,10 +38,10 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
             super.handleMessage(msg);
             if (msg.what==1){
 //                Toast.makeText(mSelf, "注册成功！", Toast.LENGTH_SHORT).show();
-              
-            
+                doNet();
+    
             }else {
-                Toast.makeText(mSelf, "验证异常，请确认信息并重试！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mSelf, "验证码错误！！", Toast.LENGTH_SHORT).show();
                 
                 
             }
@@ -82,13 +83,19 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
         mTvXyReg = (TextView) findViewById(R.id.tv_xy_reg);
         mEdtNickNameReg = (EditText) findViewById(R.id.edt_nick_name_reg);
         mEdtPhoneReg = (EditText) findViewById(R.id.edt_phone_reg);
-//        mEdtVerifycodeReg = (EditText) findViewById(R.id.edt_verifycode_reg);
-//        mBtGetVerifycodeReg = (Button) findViewById(R.id.bt_get_verifycode_reg);
+        mEdtVerifycodeReg = (EditText) findViewById(R.id.edt_verifycode_reg);
+        mBtGetVerifycodeReg = (Button) findViewById(R.id.bt_get_verifycode_reg);
         mBtConfirmReg = (Button) findViewById(R.id.bt_confirm_reg);
     
         SMSSDK.registerEventHandler(eh); //注册短信回调
         mBtConfirmReg.setOnClickListener(this);
-//        mBtGetVerifycodeReg.setOnClickListener(this);
+        mBtGetVerifycodeReg.setOnClickListener(this);
+        mTvXyReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToActivity(XYActivity.class);
+            }
+        });
     }
     
     @Override
@@ -97,7 +104,7 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
             @Override
             public void onSuccess(UserEntity entity) {
                 System.out.println(entity);
-                Toast.makeText(mSelf, entity.getUseraccount(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mSelf, "注册成功，您的账号是："+entity.getUseraccount()+",请牢记您的信息", Toast.LENGTH_SHORT).show();
                 SMSSDK.unregisterEventHandler(eh);
                 goToActivity(LoginActivity.class);
                 finish();
@@ -119,19 +126,41 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.bt_get_verifycode_reg:
-//                Toast.makeText(mSelf, "正在获取，请稍等", Toast.LENGTH_SHORT).show();
-//                String phone=mEdtPhoneReg.getText().toString().trim();
-//                if (!StringEmptyUtil.isEmpty(phone)){
-//                    SMSSDK.getVerificationCode("86",phone);
-//                }
-//                break;
+            case R.id.bt_get_verifycode_reg:
+                if (StringEmptyUtil.isEmpty(mEdtPhoneReg.getText().toString())) {
+                    Toast.makeText(mSelf, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(mSelf, "正在获取，请稍等", Toast.LENGTH_SHORT).show();
+                String phone=mEdtPhoneReg.getText().toString().trim();
+                if (!StringEmptyUtil.isEmpty(phone)){
+                    SMSSDK.getVerificationCode("86",phone);
+                }
+                break;
             case R.id.bt_confirm_reg:
+                if (StringEmptyUtil.isEmpty(mEdtPhoneReg.getText().toString())) {
+                    Toast.makeText(mSelf, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (StringEmptyUtil.isEmpty(mEdtNickNameReg.getText().toString())) {
+                    Toast.makeText(mSelf, "昵称不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (StringEmptyUtil.isEmpty(mEdtVerifycodeReg.getText().toString())) {
+                    Toast.makeText(mSelf, "验证码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (StringEmptyUtil.isEmpty(mEdtPwdReg.getText().toString())) {
+                    Toast.makeText(mSelf, "密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                
                 //确定
                 Toast.makeText(mSelf, "验证中，请稍等", Toast.LENGTH_SHORT).show();
                 String phone1=mEdtPhoneReg.getText().toString().trim();
-                //SMSSDK. submitVerificationCode("86",phone1,mEdtVerifycodeReg.getText().toString());
-                doNet(); 
+                SMSSDK. submitVerificationCode("86",phone1,mEdtVerifycodeReg.getText().toString());
+               
                 
                 break;
         

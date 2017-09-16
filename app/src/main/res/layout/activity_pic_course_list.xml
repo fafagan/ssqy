@@ -40,7 +40,6 @@
 
 
 </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
-
     <com.medicine.ssqy.ssqy.ui.views.ProgressWheel
         android:id="@+id/pb_loading_course_list"
         android:layout_width="200dp"

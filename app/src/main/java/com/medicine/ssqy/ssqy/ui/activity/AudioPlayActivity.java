@@ -76,6 +76,8 @@ public class AudioPlayActivity extends KBaseActivity {
     private CourseAudioListEntity.AudioCourseDataEntity mCourse;
     private boolean mNetOk=false;
     private CourseAudioEntity mEntity;
+    
+ 
     @Override
     public int setRootView() {
         return R.layout.activity_audio_play;
@@ -99,7 +101,7 @@ public class AudioPlayActivity extends KBaseActivity {
 //        mCbDianzanComment = (CheckBox) findViewById(R.id.cb_dianzan_comment);
 //        mTvZannumComment = (TextView) findViewById(R.id.tv_zannum_comment);
 //        mBtCommentComment = (LinearLayout) findViewById(R.id.bt_comment_comment);
-        setTitleCenter("音频课程");
+        setTitleCenter("养生音频");
 //        mCbDianzanComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -134,7 +136,7 @@ public class AudioPlayActivity extends KBaseActivity {
 //        });
     
         mCourse = (CourseAudioListEntity.AudioCourseDataEntity) this.getIntent().getSerializableExtra("course");
-        mTvAudiocontentActivityAudioPlay.setText("当前正在播放："+mCourse.getCourseTitle());
+        mTvAudiotitleActivityAudioPlay.setText("当前正在播放："+mCourse.getCourseTitle());
     
     }
     
@@ -158,6 +160,7 @@ public class AudioPlayActivity extends KBaseActivity {
     
                 mTvTotaltimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) entity.getCourseLength()));
                 mSbActivityAudioPlay.setMax(entity.getCourseLength());
+                mTvAudiocontentActivityAudioPlay.setText(mEntity.getCourseDetail());
             }
     
             @Override
@@ -178,12 +181,22 @@ public class AudioPlayActivity extends KBaseActivity {
         mCbPlayorpauseActivityAudioPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            
+                if (mCbPlayorpauseActivityAudioPlay.isChecked()){
+                    if (mEntity==null||mCourse==null){
+                        Toast.makeText(mSelf, "网络异常，请退出重试！", Toast.LENGTH_SHORT).show();
+                        mCbPlayorpauseActivityAudioPlay.setChecked(false);
+                        return;
+                    }
+                 
+                }
                 if (firstPlay) {
                     Intent intent = new Intent(AudioPlayActivity.this, MusicService.class);
                     String courseUrl = mEntity.getCourseUrl();
-                    String replace = courseUrl.replace("http://192.168.1.25:10086/jeesite/", "http://192.168.1.102:10086/jeesite/");
+                    String replace = courseUrl.replace("http://192.168.1.25:10086", "http://106.3.41.199:8066");
+//                    intent.putExtra("courseUrl",replace);
                     intent.putExtra("courseUrl",replace);
+                    intent.putExtra("courseID",mEntity.getCourseID());
+                    intent.putExtra("courseStudy",mEntity.getCourseStudy());
                     startService(intent);
                     firstPlay = false;
                 } else {
@@ -197,9 +210,11 @@ public class AudioPlayActivity extends KBaseActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    soldier.setAction(MusicSoldier.ACTION_UPDATE_PLAY_PROGRESS);
-                    soldier.setProgress(progress);
-                    EventBus.getDefault().post(soldier);
+                    Toast.makeText(mSelf, "安心听歌，不允许快进或者快退呦！", Toast.LENGTH_SHORT).show();
+                    return;
+//                    soldier.setAction(MusicSoldier.ACTION_UPDATE_PLAY_PROGRESS);
+//                    soldier.setProgress(progress);
+//                    EventBus.getDefault().post(soldier);
                 }
             }
         

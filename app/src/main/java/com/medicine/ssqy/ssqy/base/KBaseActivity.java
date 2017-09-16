@@ -3,6 +3,7 @@ package com.medicine.ssqy.ssqy.base;
 import android.view.View;
 
 import com.example.sj.mylibrary.base.BaseActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Administrator on 2016/11/9.
@@ -16,5 +17,14 @@ public abstract class KBaseActivity extends BaseActivity{
                 killSelf();
             }
         });
+    }
+    
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

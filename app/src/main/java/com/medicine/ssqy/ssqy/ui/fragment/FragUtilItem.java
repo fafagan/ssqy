@@ -17,7 +17,7 @@ public class FragUtilItem {
         mFragUtilItems.add(new FragUtilItem("食物嘌呤速查", R.drawable.icon_swpl));
         mFragUtilItems.add(new FragUtilItem("食物含钙量速查", R.drawable.icon_swhgl));
         mFragUtilItems.add(new FragUtilItem("运动消耗速查", R.drawable.icon_ydxh));
-        mFragUtilItems.add(new FragUtilItem("常用药物速查", R.drawable.icon_cyyw));
+//        mFragUtilItems.add(new FragUtilItem("常用药物速查", R.drawable.icon_cyyw));
         
     }
     

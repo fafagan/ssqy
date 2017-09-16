@@ -18,7 +18,7 @@ import com.medicine.ssqy.ssqy.ui.activity.VedioCourseListActivity;
 public class DigCourseType extends Dialog implements View.OnClickListener {
     private LinearLayout mLayoutDigCourseVedio;
     private LinearLayout mLayoutDigCourseAudio;
-//    private LinearLayout mLayoutDigCourseTw;
+    private LinearLayout mLayoutDigCourseTw;
     private Context mContext;
 
     
@@ -32,11 +32,11 @@ public class DigCourseType extends Dialog implements View.OnClickListener {
     
         mLayoutDigCourseVedio = (LinearLayout) findViewById(R.id.layout_dig_course_vedio);
         mLayoutDigCourseAudio = (LinearLayout) findViewById(R.id.layout_dig_course_audio);
-  //      mLayoutDigCourseTw = (LinearLayout) findViewById(R.id.layout_dig_course_tw);
+        mLayoutDigCourseTw = (LinearLayout) findViewById(R.id.layout_dig_course_tw);
     
         mLayoutDigCourseVedio.setOnClickListener(this);
         mLayoutDigCourseAudio.setOnClickListener(this);
-    //    mLayoutDigCourseTw.setOnClickListener(this);
+        mLayoutDigCourseTw.setOnClickListener(this);
     }
     
     

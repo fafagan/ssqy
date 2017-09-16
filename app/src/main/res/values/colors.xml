@@ -24,4 +24,13 @@
     <color name="textColorGrey">#646464</color>
     <color name="colorTransBlack">#66000000</color>
     <color name="colorTransWhite">#00ffffff</color>
+
+
+    <color name="date_pre_color">#44010101</color>
+    <color name="date_select_color">#66d8ec</color>
+    <color name="date_text_color">#010101</color>
+    <color name="date_other_text_color">#dd918d8d</color>
+    <color name="date_today_text_color">#f1d3d1</color>
+
+    <color name="date_weekend_text_color">#f27e9d</color>
 </resources>

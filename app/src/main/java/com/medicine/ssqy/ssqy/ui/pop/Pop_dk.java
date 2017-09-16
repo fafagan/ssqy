@@ -98,13 +98,13 @@ public class Pop_dk extends PopupWindow{
         setTvHeight(mTvDkDay5);
         setTvHeight(mTvDkDay6);
     
-        mTvDkDay1.setText("12.19");
-        mTvDkDay2.setText("12.20");
-        mTvDkDay3.setText("12.21");
-        mTvDkDay4.setText("12.22");
-        mTvDkDay5.setText("12.24");
-        mTvDkDay6.setText("12.25");
-        mTvDkToday.setText("12.23");
+        mTvDkDay1.setText("9.07");
+        mTvDkDay2.setText("9.08");
+        mTvDkDay3.setText("9.09");
+        mTvDkDay4.setText("9.10");
+        mTvDkDay5.setText("9.12");
+        mTvDkDay6.setText("9.13");
+        mTvDkToday.setText("9.11");
         setDKYES(mTvDkDay1);
         setDKYES(mTvDkDay4);
 //        setDKYES(mTvDkDay5);

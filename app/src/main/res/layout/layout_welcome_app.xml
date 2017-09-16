@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@drawable/cbg"
+                android:padding="50dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="120dp"
+        android:id="@+id/tv_app_introduce"
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:lineSpacingExtra="8dp"
+        android:layout_marginBottom="20dp"
+        android:text="     此APP是北京市科委科普专项，北京中医药大学东直门医院研究研发的“四时七养”中医健康管理方案。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_below="@+id/tv_app_introduce"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/imgv_logo2"
+        android:src="@drawable/logo_dzm"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+    <ImageView
+        android:layout_alignBottom="@+id/imgv_logo2"
+        android:layout_toLeftOf="@+id/imgv_logo2"
+        android:layout_marginRight="20dp"
+        android:id="@+id/imgv_logo1"
+        android:src="@drawable/logo_kpzx"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <TextView
+        android:gravity="center"
+        android:text="四时七养--中医养生"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="85dp"
+        android:id="@+id/textView"/>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:scaleType="fitXY"
+        android:id="@+id/imgv_index_welcome"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

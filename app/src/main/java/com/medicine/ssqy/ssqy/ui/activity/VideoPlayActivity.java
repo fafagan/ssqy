@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.telephony.PhoneStateListener;
@@ -27,16 +25,23 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
+import com.ksyun.media.player.IMediaPlayer;
+import com.ksyun.media.player.KSYMediaPlayer;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.course.CourseVedioDetailEntity;
+import com.medicine.ssqy.ssqy.entity.course.CourseVedioEntity;
+import com.medicine.ssqy.ssqy.entity.course.CourseVideoProgressEntity;
 import com.medicine.ssqy.ssqy.test.DiscussEntity;
 import com.medicine.ssqy.ssqy.ui.adapter.ItemDiscussLvAdapter;
 import com.medicine.ssqy.ssqy.ui.dialog.DigDiscuss;
@@ -49,6 +54,8 @@ import com.medicine.ssqy.ssqy.util.UtilGetDiscussTime;
 import org.xutils.common.util.DensityUtil;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class VideoPlayActivity extends KBaseActivity implements View.OnClickListener {
     private SurfaceView mSvActivityVideoPlay;
@@ -59,8 +66,8 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private ImageView mBtLandscapeActivityVideoPlay;
     private TextView mTvVideotitleActivityVideoPlay;
     private TextView mTvVideocontentActivityVideoPlay;
-    private TextView mTvCommentsnumActivityVideoPlay;
-    private ListView mLvCommentsActivityVideoPlay;
+    //    private TextView mTvCommentsnumActivityVideoPlay;
+//    private ListView mLvCommentsActivityVideoPlay;
     private CheckBox mCbPlayorstopActivityVideoPlay;
     private LinearLayout mLlLightbarActivityVideoPlay;
     private ProgressBar mPbLightActivityVideoPlay;
@@ -72,9 +79,9 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private RelativeLayout mRlContentActivityVideoPlay;
     private RelativeLayout mRlActivityVideoPlay;
     private RelativeLayout mRlSvtopbarActivityVideoPlay;
-    private CheckBox mCbDianzanComment;
-    private TextView mTvZannumComment;
-    private LinearLayout mBtCommentComment;
+    //    private CheckBox mCbDianzanComment;
+//    private TextView mTvZannumComment;
+//    private LinearLayout mBtCommentComment;
     private TextView mTvShareActivityVideoPlay;
     private GestureDetector mGestureDetector;
     //监听电话状态
@@ -95,7 +102,8 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     boolean scrolling = false;
     
     private boolean firstPlay = true;
-    private MediaPlayer mMediaPlayer;
+//    private MediaPlayer mMediaPlayer;
+        private KSYMediaPlayer mMediaPlayer;
     private SurfaceHolder mSurfaceHolder;
     private boolean isSurfaceCreated = false;        //surface是否已经创建好
     //视频进度
@@ -103,7 +111,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     int totalTime;
     public static final int PlAYTIME_CHANGE = 1;
     public static final int BRIGHTNESS_CHANGE = 2;
-    
+    private boolean mPrepareOk = false;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -112,10 +120,10 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             switch (msg.what) {
                 case PlAYTIME_CHANGE:
                     if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                        int currentPosition = mMediaPlayer.getCurrentPosition();
+                        long currentPosition = mMediaPlayer.getCurrentPosition();
                         String timeStr = TimeFormatUtil.formatLongToTimeStr((long) currentPosition);
                         mTvPlaytimeActivityVideoPlay.setText(timeStr);
-                        mPbActivityVideoPlay.setProgress(currentPosition);
+                        mPbActivityVideoPlay.setProgress((int) currentPosition);
                         mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
                     }
                     break;
@@ -129,8 +137,117 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private DigDiscuss mDigDiscuss;
     private List<DiscussEntity> mTempDatas;
     private ItemDiscussLvAdapter mItemDiscussLvAdapter;
+    private NetForJson mNetForJson;
+    private boolean mLoadOk = false;
+    private boolean mHasStart = false;
+    private CourseVedioDetailEntity mEntityNow;
     
+    private IMediaPlayer.OnSeekCompleteListener mOnSeekCompletedListener = new IMediaPlayer.OnSeekCompleteListener() {
+        @Override
+        public void onSeekComplete(IMediaPlayer mp) {
+        }
+    };
     
+    private IMediaPlayer.OnCompletionListener mOnCompletionListener = new IMediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(IMediaPlayer mp) {
+            Toast.makeText(mSelf, "当前养生视频播放完毕。", Toast.LENGTH_LONG).show();
+           videoPlayEnd();
+        }
+    };
+    private void videoPlayEnd() {
+        if(mMediaPlayer != null)
+        {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+        
+    }
+    private IMediaPlayer.OnErrorListener mOnErrorListener = new IMediaPlayer.OnErrorListener() {
+        @Override
+        public boolean onError(IMediaPlayer mp, int what, int extra) {
+//            switch (what)
+//            {
+//                case KSYMediaPlayer.MEDIA_ERROR_UNKNOWN:
+//                    Log.e(TAG, "OnErrorListener, Error Unknown:" + what + ",extra:" + extra);
+//                    break;
+//                default:
+//                    Log.e(TAG, "OnErrorListener, Error:" + what + ",extra:" + extra);
+//            }
+//            
+//            videoPlayEnd();
+//            
+    
+            Toast.makeText(mSelf, "网络异常，请检查您的网络状态！", Toast.LENGTH_LONG).show();
+            if(mMediaPlayer != null)
+            {
+                mMediaPlayer.release();
+                mMediaPlayer = null;
+            }
+            return false;
+        }
+    };
+    public IMediaPlayer.OnInfoListener mOnInfoListener = new IMediaPlayer.OnInfoListener() {
+        @Override
+        public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
+            switch (i) {
+                case KSYMediaPlayer.MEDIA_INFO_BUFFERING_START:
+//                    Log.d(TAG, "Buffering Start.");
+                    break;
+                case KSYMediaPlayer.MEDIA_INFO_BUFFERING_END:
+                    //         Log.d(TAG, "Buffering End.");
+//                    Toast.makeText(mSelf, "xx", Toast.LENGTH_SHORT).show();
+                    break;
+                case KSYMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START:
+                    //       Toast.makeText(mContext, "Audio Rendering Start", Toast.LENGTH_SHORT).show();
+                    break;
+                case KSYMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
+                    //         Toast.makeText(mContext, "Video Rendering Start", Toast.LENGTH_SHORT).show();
+                    break;
+                case KSYMediaPlayer.MEDIA_INFO_SUGGEST_RELOAD:
+                    // Player find a new stream(video or audio), and we could reload the video.
+//                    if(ksyMediaPlayer != null)
+//                        ksyMediaPlayer.reload(mDataSource, false, KSYMediaPlayer.KSYReloadMode.KSY_RELOAD_MODE_ACCURATE);
+                    break;
+                case KSYMediaPlayer.MEDIA_INFO_RELOADED:
+//                    Toast.makeText(mContext, "Succeed to reload video.", Toast.LENGTH_SHORT).show();
+//                    Log.d(TAG, "Succeed to reload video.");
+                    return false;
+            }
+            return false;
+        }
+    };
+    
+    private Button mBtReplayVedio;
+    
+    private Timer mTimerSyncLearnProgress=new Timer();
+    private TimerTask mTimerTaskSyncLearnProgress=new TimerTask() {
+        @Override
+        public void run() {
+            mNetForJsonSyncLearnProgress.addParam("uid",SharePLogin.getUid());
+            mNetForJsonSyncLearnProgress.addParam("type","vedio");
+            mNetForJsonSyncLearnProgress.addParam("courseID",mEntityNow.getCourseID());
+            mNetForJsonSyncLearnProgress.addParam("learnProgress",mMediaPlayer.getCurrentPosition());
+            mNetForJsonSyncLearnProgress.excute();
+        }
+    };
+    private boolean mHasBeginSycn=false;
+    private NetForJson mNetForJsonSyncLearnProgress=new NetForJson(URLConstant.VIDEO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
+        @Override
+        public void onSuccess(CourseVideoProgressEntity entity) {
+        
+        }
+    
+        @Override
+        public void onError() {
+        
+        }
+    
+        @Override
+        public void onFinish() {
+        
+        }
+    },true);
     @Override
     public int setRootView() {
         return R.layout.activity_video_play;
@@ -152,11 +269,11 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mBtLandscapeActivityVideoPlay = (ImageView) findViewById(R.id.bt_landscape_activity_video_play);
         mTvVideotitleActivityVideoPlay = (TextView) findViewById(R.id.tv_videotitle_activity_video_play);
         mTvVideocontentActivityVideoPlay = (TextView) findViewById(R.id.tv_videocontent_activity_video_play);
-        mTvCommentsnumActivityVideoPlay = (TextView) findViewById(R.id.tv_commentsnum_comment);
-        mLvCommentsActivityVideoPlay = (ListView) findViewById(R.id.lv_comments_comment);
-        mCbDianzanComment = (CheckBox) findViewById(R.id.cb_dianzan_comment);
-        mTvZannumComment = (TextView) findViewById(R.id.tv_zannum_comment);
-        mBtCommentComment = (LinearLayout) findViewById(R.id.bt_comment_comment);
+//        mTvCommentsnumActivityVideoPlay = (TextView) findViewById(R.id.tv_commentsnum_comment);
+//        mLvCommentsActivityVideoPlay = (ListView) findViewById(R.id.lv_comments_comment);
+//        mCbDianzanComment = (CheckBox) findViewById(R.id.cb_dianzan_comment);
+//        mTvZannumComment = (TextView) findViewById(R.id.tv_zannum_comment);
+//        mBtCommentComment = (LinearLayout) findViewById(R.id.bt_comment_comment);
         mCbPlayorstopActivityVideoPlay = (CheckBox) findViewById(R.id.cb_playorstop_activity_video_play);
         mLlLightbarActivityVideoPlay = (LinearLayout) findViewById(R.id.ll_lightbar_activity_video_play);
         mPbLightActivityVideoPlay = (ProgressBar) findViewById(R.id.pb_light_activity_video_play);
@@ -168,7 +285,8 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mLlSvbottombarActivityVideoPlay = (LinearLayout) findViewById(R.id.ll_svbottombar_activity_video_play);
         mRlContentActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_content_activity_video_play);
         mRlActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_activity_video_play);
-     
+    
+        mBtReplayVedio = (Button) findViewById(R.id.bt_replay_vedio);
         mBtPlayActivityVideoPlay.setOnClickListener(this);
         mTvShareActivityVideoPlay.setOnClickListener(this);
         mCbPlayorstopActivityVideoPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -194,26 +312,40 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 
             }
         });
-        mBtBackActivityVideoPlay.setOnClickListener(this);
-        mBtLandscapeActivityVideoPlay.setOnClickListener(this);
-        mCbDianzanComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    
+        mBtReplayVedio.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    mTvZannumComment.setText("点赞（51）");
-                }else {
-                    mTvZannumComment.setText("点赞（50）");
+            public void onClick(View v) {
+                if (mMediaPlayer!=null) {
+                    try {
+                        mMediaPlayer.seekTo(0);
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    }
+    
                 }
             }
         });
+        mBtBackActivityVideoPlay.setOnClickListener(this);
+        mBtLandscapeActivityVideoPlay.setOnClickListener(this);
+//        mCbDianzanComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked){
+//                    mTvZannumComment.setText("点赞（51）");
+//                }else {
+//                    mTvZannumComment.setText("点赞（50）");
+//                }
+//            }
+//        });
         mTempDatas = DiscussEntity.getTempDatas();
-        mItemDiscussLvAdapter = new ItemDiscussLvAdapter(this, mTempDatas);
-        mLvCommentsActivityVideoPlay.setAdapter(mItemDiscussLvAdapter);
-        mDigDiscuss=new DigDiscuss(this);
+//        mItemDiscussLvAdapter = new ItemDiscussLvAdapter(this, mTempDatas);
+//        mLvCommentsActivityVideoPlay.setAdapter(mItemDiscussLvAdapter);
+        mDigDiscuss = new DigDiscuss(this);
         mDigDiscuss.setOnConfirmCallback(new DigDiscuss.OnConfirmCallback() {
             @Override
             public void onConfirm(String content) {
-                DiscussEntity discussEntity=new DiscussEntity();
+                DiscussEntity discussEntity = new DiscussEntity();
                 discussEntity.setDetail(content);
                 discussEntity.setNickName(TempUser.getNowUser(SharePLogin.getUid()).getNickName());
                 discussEntity.setHeadUrl(TempUser.getNowUser(SharePLogin.getUid()).getHeadPicUrl());
@@ -222,19 +354,33 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 Toast.makeText(mSelf, "评论成功", Toast.LENGTH_SHORT).show();
             }
         });
-        mBtCommentComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDigDiscuss.show();
-            }
-        });
-    
-      
+//        mBtCommentComment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDigDiscuss.show();
+//            }
+//        });
+        
+        
     }
     
     @Override
     public void initDatas() {
-        mMediaPlayer = new MediaPlayer();
+        
+        
+//        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer = new KSYMediaPlayer.Builder(this).build();
+//        mMediaPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
+        mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+//        mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
+        mMediaPlayer.setOnInfoListener(mOnInfoListener);
+//        mMediaPlayer.setOnVideoSizeChangedListener(mOnVideoSizeChangeListener);
+        mMediaPlayer.setOnErrorListener(mOnErrorListener);
+        mMediaPlayer.setOnSeekCompleteListener(mOnSeekCompletedListener);
+        mMediaPlayer.setScreenOnWhilePlaying(true);
+        mMediaPlayer.setBufferTimeMax(3.0f);
+        mMediaPlayer.setTimeout(500, 3000);
+        mMediaPlayer.setDecodeMode(KSYMediaPlayer.KSYDecodeMode.KSY_DECODE_MODE_AUTO);
         mPhoneStateListener = new MyPhoneStateListener(this, mMediaPlayer);
         TelephonyManager tmgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         tmgr.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -248,6 +394,41 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         
         mMyVolumeReceiver = new MyVolumeReceiver();
         registerReceiver(mMyVolumeReceiver, new IntentFilter("android.media.VOLUME_CHANGED_ACTION"));
+        
+        CourseVedioEntity.VideoCourseDataEntity videoCourseDataEntity = (CourseVedioEntity.VideoCourseDataEntity) this.getIntent().getSerializableExtra("vd");
+        mTvVideotitleActivityVideoPlay.setText("四时七养--"+videoCourseDataEntity.getCourseTitle());
+        mTvTotaltimeActivityVideoPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) videoCourseDataEntity.getCourseLength()));
+        mTvVedionameActivityVideoPlay.setText("四时七养--"+videoCourseDataEntity.getCourseTitle());
+//        mTvVedionameActivityVideoPlay.setText();
+        mNetForJson = new NetForJson(URLConstant.VIDEO_DETAIL_URL, new NetCallback<CourseVedioDetailEntity>() {
+            
+            
+            @Override
+            public void onSuccess(CourseVedioDetailEntity entity) {
+                mLoadOk = true;
+                mEntityNow = entity;
+                mTvVideocontentActivityVideoPlay.setText(entity.getCourseDetail());
+                if (!mPrepareOk) {
+                    prepareMP();
+                }
+            }
+            
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "加载失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
+                mLoadOk = false;
+            }
+            
+            @Override
+            public void onFinish() {
+                
+            }
+        }, true);
+        
+        mNetForJson.addParam("courseID", videoCourseDataEntity.getCourseID());
+        mNetForJson.addParam("uid", SharePLogin.getUid());
+        mNetForJson.addParam("type", "video");
+        mNetForJson.excute();
     }
     
     private void initGestureDetector() {
@@ -307,8 +488,9 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                     curIndex = mPhoneStateListener.getCurPosition();
                 } else {
                     if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                        curIndex = mMediaPlayer.getCurrentPosition();
+                        curIndex = (int) mMediaPlayer.getCurrentPosition();
                         mMediaPlayer.stop();
+                        mPrepareOk = false;
                     }
                 }
                 
@@ -317,7 +499,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 isSurfaceCreated = true;
-                mMediaPlayer.seekTo(curIndex);
+//                mMediaPlayer.seekTo(curIndex);
                 mMediaPlayer.setDisplay(mSurfaceHolder);//页面创建好了以后再展示  
             }
             
@@ -331,27 +513,64 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     }
     
     private void play(final int currentPosition) {
+
+        mHasStart = !mHasStart;
+        if (!mLoadOk) {
+            return;
+        }
+        if (!mPrepareOk) {
+            Toast.makeText(mSelf, "正在缓冲视频，请稍等", Toast.LENGTH_SHORT).show();
+            prepareMP();
+           
+        }else {
+            mMediaPlayer.start();
+            if (!mHasBeginSycn) {
+                mHasBeginSycn=true;
+                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+            }
+        }
+    }
+    
+    private void prepareMP() {
+        if (mEntityNow == null) {
+            return;
+        }
         //获取res/raw文件夹下面的视频文件
-        AssetFileDescriptor fileDescriptor = this.getResources().openRawResourceFd(R.raw.test);
+//        AssetFileDescriptor fileDescriptor = this.getResources().openRawResourceFd(R.raw.test);
         try {
             mMediaPlayer.reset();
-            mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+//            mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+            mMediaPlayer.setDataSource(mEntityNow.getCourseUrl());
             mMediaPlayer.setDisplay(mSurfaceHolder);
             mMediaPlayer.setLooping(true);
             mMediaPlayer.prepareAsync();
-            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
                 
                 @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mMediaPlayer.seekTo(currentPosition);
+                public void onPrepared(IMediaPlayer mp) {
+                    mPrepareOk = true;
+//                    mMediaPlayer.seekTo(currentPosition);
                     //准备完成，可以播放了
                     setVideoParams(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
-                    totalTime = mMediaPlayer.getDuration();
+                    totalTime = mEntityNow.getCourseLength();
+//                    totalTime = mMediaPlayer.getDuration();
                     String totalTimeStr = TimeFormatUtil.formatLongToTimeStr((long) totalTime);
-                    
-                    mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
+
+//                    mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
+                    mPbActivityVideoPlay.setMax(mEntityNow.getCourseLength());
                     mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
                     mMediaPlayer.start();
+                    if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
+                        mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
+                    }
+                    if (mHasStart) {
+                        if (!mHasBeginSycn) {
+                            mHasBeginSycn=true;
+                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                        }
+                      
+                    }
+//                   
                     mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                     mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
                     mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
@@ -359,16 +578,18 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 }
             });
             
-            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                
-                @Override
-                public boolean onError(MediaPlayer mp, int what, int extra) {
-                    
-                    return false;
-                }
-            });
+//            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//                
+//                @Override
+//                public boolean onError(MediaPlayer mp, int what, int extra) {
+//                    mPrepareOk = false;
+////                    Toast.makeText(mSelf, "网络异常，请退出重试！", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+//            });
         } catch (Exception e) {
             Log.e("VideoPlayActivity", "line:210--VideoPlayActivity--Play--error");
+            mPrepareOk = false;
         }
     }
     
@@ -388,7 +609,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
      */
     private void Pause() {
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-            curIndex = mMediaPlayer.getCurrentPosition();
+            curIndex = (int) mMediaPlayer.getCurrentPosition();
             mMediaPlayer.pause();
         }
     }
@@ -411,6 +632,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = DensityUtil.dip2px(220);
             mRlActivityVideoPlay.setLayoutParams(layoutParams);
+            screenHeight=DensityUtil.dip2px(220);
         }
         float videoWidth = mMediaPlayer.getVideoWidth();
         float videoHeight = mMediaPlayer.getVideoHeight();
@@ -528,6 +750,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         tmgr.listen(mPhoneStateListener, 0);
         releasePlayer();
         this.unregisterReceiver(mMyVolumeReceiver);
+        mTimerSyncLearnProgress.cancel();
     }
     
     /**
@@ -616,6 +839,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     public class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
+            mDismissHandler.removeMessages(1);
             if (mRlSvtopbarActivityVideoPlay.getVisibility() == View.VISIBLE) {
                 mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                 mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);

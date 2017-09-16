@@ -10,33 +10,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.medicine.ssqy.ssqy.R;
-import com.medicine.ssqy.ssqy.entity.course.CoursePicEntity;
 import com.medicine.ssqy.ssqy.entity.course.CoursePicListEntity;
 
 import java.util.List;
 
 public class ItemLvPicCourseAdapter extends BaseAdapter {
 
-    private  List<CoursePicListEntity> mEntities;
+    private  List<CoursePicListEntity.PicCourseDataEntity> mEntities;
 
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public ItemLvPicCourseAdapter(Context context, List<CoursePicListEntity> entities) {
+    public ItemLvPicCourseAdapter(Context context, List<CoursePicListEntity.PicCourseDataEntity> entities) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.mEntities=entities;
     }
     
-    @Override
-    public int getViewTypeCount() {
-        return 2;
+    public void setEntities(List<CoursePicListEntity.PicCourseDataEntity> entities) {
+        mEntities = entities;
+        notifyDataSetChanged();
     }
     
-    @Override
-    public int getItemViewType(int position) {
-        return getItem(position).getType();
-    }
+//    @Override
+//    public int getViewTypeCount() {
+//        return 2;
+//    }
+//    
+//    @Override
+//    public int getItemViewType(int position) {
+//        return getItem(position).getType();
+//    }
     
     @Override
     public int getCount() {
@@ -44,7 +48,7 @@ public class ItemLvPicCourseAdapter extends BaseAdapter {
     }
 
     @Override
-    public CoursePicListEntity getItem(int position) {
+    public CoursePicListEntity.PicCourseDataEntity getItem(int position) {
         return mEntities.get(position);
     }
 
@@ -56,18 +60,18 @@ public class ItemLvPicCourseAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder=null;
-        int itemViewType = getItemViewType(position);
+//        int itemViewType = getItemViewType(position);
       
     
       
             if (convertView == null) {
-                if (itemViewType==CoursePicListEntity.TYPE_TIME){
-                    convertView = layoutInflater.inflate(R.layout.item_lv_pic_time, parent,false);
-                }
-    
-                if (itemViewType==CoursePicListEntity.TYPE_COURSE){
+//                if (itemViewType==CoursePicListEntity.PicCourseDataEntity.TYPE_TIME){
+//                    convertView = layoutInflater.inflate(R.layout.item_lv_pic_time, parent,false);
+//                }
+//    
+             //   if (itemViewType==CoursePicListEntity.PicCourseDataEntity.TYPE_COURSE){
                     convertView = layoutInflater.inflate(R.layout.item_lv_pic_course, parent,false);
-                }
+            //    }
              
                 viewHolder=new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
@@ -75,25 +79,22 @@ public class ItemLvPicCourseAdapter extends BaseAdapter {
                 viewHolder= (ViewHolder) convertView.getTag();
             }
     
-        CoursePicListEntity entity = getItem(position);
-        if (itemViewType==CoursePicListEntity.TYPE_TIME){
-            viewHolder.mTextViewDivider.setText(entity.getTime());
-            
-        }
-        if (itemViewType==CoursePicListEntity.TYPE_COURSE){
+        CoursePicListEntity.PicCourseDataEntity entity = getItem(position);
+//        if (itemViewType==CoursePicListEntity.PicCourseDataEntity.TYPE_TIME){
+//            viewHolder.mTextViewDivider.setText(entity.getTime());
+//            
+//        }
+       // if (itemViewType==CoursePicListEntity.PicCourseDataEntity.TYPE_COURSE){
 //            viewHolder.imgvItemLvPicCourse
-            CoursePicEntity.PicCourseDataEntity coursePicEntity = entity.getCoursePicEntity();
-            viewHolder.tvTitleItemLvPicCourse.setText(coursePicEntity.getCourseTitle());
-            if (coursePicEntity.isCourseLearned()){
+       ;
+            viewHolder.tvTitleItemLvPicCourse.setText(entity.getCourseTitle());
+            if (entity.isCourseLearned()){
                 viewHolder.tvLearnedItemLvPicCourse.setText("已学过！");
                 viewHolder.imgvItemLvLearned.setVisibility(View.VISIBLE);
             }else {
                 viewHolder.tvLearnedItemLvPicCourse.setText("该课程您尚未学习呦！！");
                 viewHolder.imgvItemLvLearned.setVisibility(View.GONE);
             }
-          
-        }
-       
  
         return convertView;
     }

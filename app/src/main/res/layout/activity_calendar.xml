@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.medicine.ssqy.ssqy.ui.views.calendar.CalendarView
+        android:id="@+id/calender"
+        android:background="#CCC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.medicine.ssqy.ssqy.ui.views.calendar.CalendarView>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:id="@+id/imgv_logo_index"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/title_index"/>
+
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

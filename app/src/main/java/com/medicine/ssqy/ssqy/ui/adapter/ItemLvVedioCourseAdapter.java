@@ -12,33 +12,37 @@ import android.widget.TextView;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.entity.course.CourseVedioEntity;
-import com.medicine.ssqy.ssqy.entity.course.CourseVedioListEntity;
 import com.medicine.ssqy.ssqy.util.UtilTimeConvertS;
 
 import java.util.List;
 
 public class ItemLvVedioCourseAdapter extends BaseAdapter {
 
-    private  List<CourseVedioListEntity> mEntities;
+    private  List<CourseVedioEntity.VideoCourseDataEntity> mEntities;
 
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public ItemLvVedioCourseAdapter(Context context, List<CourseVedioListEntity> entities) {
+    public ItemLvVedioCourseAdapter(Context context, List<CourseVedioEntity.VideoCourseDataEntity> entities) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.mEntities=entities;
     }
     
-    @Override
-    public int getViewTypeCount() {
-        return 2;
+    public void setEntities(List<CourseVedioEntity.VideoCourseDataEntity> entities) {
+        mEntities = entities;
+        notifyDataSetChanged();
     }
     
-    @Override
-    public int getItemViewType(int position) {
-        return getItem(position).getType();
-    }
+    //    @Override
+//    public int getViewTypeCount() {
+//        return 2;
+//    }
+//    
+//    @Override
+//    public int getItemViewType(int position) {
+//        return getItem(position).getType();
+//    }
     
     @Override
     public int getCount() {
@@ -46,7 +50,7 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
     }
 
     @Override
-    public CourseVedioListEntity getItem(int position) {
+    public CourseVedioEntity.VideoCourseDataEntity getItem(int position) {
         return mEntities.get(position);
     }
 
@@ -58,18 +62,18 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder=null;
-        int itemViewType = getItemViewType(position);
+//        int itemViewType = getItemViewType(position);
       
     
       
             if (convertView == null) {
-                if (itemViewType==CourseVedioListEntity.TYPE_TIME){
-                    convertView = layoutInflater.inflate(R.layout.item_lv_vedio_time, parent,false);
-                }
+//                if (itemViewType==CourseVedioEntity.VideoCourseDataEntity.TYPE_TIME){
+//                    convertView = layoutInflater.inflate(R.layout.item_lv_vedio_time, parent,false);
+//                }
     
-                if (itemViewType==CourseVedioListEntity.TYPE_COURSE){
+               // if (itemViewType==CourseVedioEntity.VideoCourseDataEntity.TYPE_COURSE){
                     convertView = layoutInflater.inflate(R.layout.item_lv_vedio_course, parent,false);
-                }
+              //  }
              
                 viewHolder=new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
@@ -77,19 +81,21 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
                 viewHolder= (ViewHolder) convertView.getTag();
             }
     
-        CourseVedioListEntity entity = getItem(position);
-        if (itemViewType==CourseVedioListEntity.TYPE_TIME){
-            viewHolder.mTextViewDivider.setText(entity.getTime());
-            
-        }
-        if (itemViewType==CourseVedioListEntity.TYPE_COURSE){
+        CourseVedioEntity.VideoCourseDataEntity entity = getItem(position);
+//        if (itemViewType==CourseVedioEntity.VideoCourseDataEntity.TYPE_TIME){
+//            viewHolder.mTextViewDivider.setText(entity.getTime());
+//            
+//        }
+//        if (itemViewType==CourseVedioEntity.VideoCourseDataEntity.TYPE_COURSE){
 //            viewHolder.imgvItemLvVedioCourse
-            CourseVedioEntity.VedioCourseDataEntity courseVedioEntity = entity.getCourseVedioEntity();
+          CourseVedioEntity.VideoCourseDataEntity courseVedioEntity = getItem(position);
             viewHolder.tvTimeItemLvVedioCourse.setText(UtilTimeConvertS.formatTime(courseVedioEntity.getCourseLength()));
             viewHolder.tvTitleItemLvVedioCourse.setText(courseVedioEntity.getCourseTitle());
-            viewHolder.pbItemLvVedioCourse.setMax(courseVedioEntity.getCourseLength());
-            viewHolder.pbItemLvVedioCourse.setProgress(courseVedioEntity.getCourseStudy());
-        }
+//            viewHolder.pbItemLvVedioCourse.setMax(courseVedioEntity.getCourseLength());
+            viewHolder.pbItemLvVedioCourse.setMax(100);
+//            viewHolder.pbItemLvVedioCourse.setProgress(courseVedioEntity.getCourseStudy());
+            viewHolder.pbItemLvVedioCourse.setProgress(16);
+//        }
        
  
         return convertView;
@@ -109,7 +115,7 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
                 tvTitleItemLvVedioCourse = (TextView) view.findViewById(R.id.tv_title_item_lv_vedio_course);
                 tvTimeItemLvVedioCourse = (TextView) view.findViewById(R.id.tv_time_item_lv_vedio_course);
                 pbItemLvVedioCourse = (NumberProgressBar) view.findViewById(R.id.pb_item_lv_vedio_course);
-                mTextViewDivider= (TextView) view.findViewById(R.id.tv_time_divider_vedio);
+//                mTextViewDivider= (TextView) view.findViewById(R.id.tv_time_divider_vedio);
             } catch (Exception e) {
             }
         }

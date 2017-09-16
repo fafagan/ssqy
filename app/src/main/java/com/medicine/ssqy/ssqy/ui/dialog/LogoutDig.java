@@ -13,6 +13,7 @@ import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.ui.activity.HomeActivity;
+import com.medicine.ssqy.ssqy.ui.activity.IndexActivity;
 import com.medicine.ssqy.ssqy.ui.activity.LoginActivity;
 import com.medicine.ssqy.ssqy.ui.activity.SettingActivity;
 import com.orhanobut.logger.Logger;
@@ -75,9 +76,23 @@ public class LogoutDig extends Dialog implements View.OnClickListener {
         TempUser.reset();
         Intent intent = new Intent(mContext, LoginActivity.class);
         mContext.startActivity(intent);
-        SettingActivity settingActivity = ActivityController.getActivity(SettingActivity.class);
-        settingActivity.finish();
-        HomeActivity homeActivity = ActivityController.getActivity(HomeActivity.class);
-        homeActivity.finish();
+        try {
+            SettingActivity settingActivity = ActivityController.getActivity(SettingActivity.class);
+            settingActivity.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            HomeActivity homeActivity = ActivityController.getActivity(HomeActivity.class);
+            homeActivity.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            IndexActivity indexActivity = ActivityController.getActivity(IndexActivity.class);
+            indexActivity.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

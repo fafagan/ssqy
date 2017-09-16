@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,17 +26,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/tv_time_divider_audio"
+                android:layout_toLeftOf="@+id/tv_time_divider_audio1"
                 android:background="#bbb"/>
 
             <TextView
-                android:id="@+id/tv_time_divider_audio"
+                android:id="@+id/tv_time_divider_audio1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="2016-12-18"
+                android:text="2017-09-11"
                 android:textColor="#777"
                 android:textStyle="bold"/>
 
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_time_divider_audio"
+                android:layout_toRightOf="@+id/tv_time_divider_audio1"
                 android:background="#bbb"/>
         </RelativeLayout>
 
@@ -108,7 +108,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="2016-12-17"
+                android:text="2017-09-11"
                 android:textColor="#777"
                 android:textStyle="bold"/>
 
@@ -148,4 +148,4 @@
         android:background="@drawable/title_index"
         android:layout_width="35dp"
         android:layout_height="70dp"/>
-</RelativeLayout>
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

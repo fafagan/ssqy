@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/activity_record_date"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/note_background"
+    >
+  <RelativeLayout
+      android:padding="5dp"
+      android:id="@+id/layout_title_record"
+      android:background="@drawable/title_bar_background"
+      android:layout_width="match_parent"
+      android:layout_height="60dp">
+      <Button
+          android:text="返回"
+          android:id="@+id/bt_back_record"
+          android:background="@drawable/record_title_back_bt"
+          android:textColor="#fff"
+          android:layout_centerVertical="true"
+          android:layout_width="75dp"
+          android:layout_height="45dp"/>
+      <TextView
+          android:textStyle="bold"
+          android:layout_centerInParent="true"
+          android:textColor="#fff"
+          android:textSize="16sp"
+          android:id="@+id/tv_time_record"
+          android:text="2017年8月5日"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <ImageButton
+          android:src="@drawable/insert_done"
+          android:layout_toLeftOf="@+id/bt_delete_record"
+          android:layout_marginRight="7dp"
+          android:id="@+id/bt_save_record"
+          android:background="@drawable/record_title_common"
+          android:textColor="#fff"
+          android:layout_centerVertical="true"
+          android:layout_width="50dp"
+          android:layout_height="40dp"/>
+      <Button
+          android:id="@+id/bt_delete_record"
+          android:layout_alignParentRight="true"
+          android:background="@drawable/record_title_delete"
+          android:textColor="#fff"
+          android:layout_centerVertical="true"
+          android:layout_width="50dp"
+          android:layout_height="40dp"/>
+      
+  </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:id="@+id/tv_welcome_record"
+        android:layout_below="@+id/layout_title_record"
+        android:text="今天有什么养生心得？快记录养生日记吧："
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
+        android:layout_below="@+id/tv_welcome_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_margin="8dp">
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_count_record"
+            android:textSize="12sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:text="已100字 / 最多500字"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_below="@+id/tv_count_record"
+            android:maxLength="499"
+            android:background="@null"
+            android:id="@+id/edt_content_record"
+            android:scrollbars="vertical"
+            android:textColor="#732322"
+            android:lineSpacingExtra="10dp"
+            android:gravity="top|left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>
+
+</RelativeLayout>

@@ -32,6 +32,18 @@ public class CourseAudioEntity {
     private long courseDay;
     private int discussCount;
     private List<?> discuss;
+    /**
+     * courseDetail : 现代心理研究认为，音乐的频率、强度和节奏传入人体的听觉中枢神经后，可以引起各种不同的共鸣反应，激发机体的潜能，使某些部位相应地由静止状态而转变为动态，以发挥一种物理性的治疗作用。特别是中国的古典音乐，曲调柔和舒缓，旋律优美动听，能使人忘却烦恼，开阔胸襟，促进身心健康。 近年来，中华中医学会著名的张辰赓教授在医疗保健工作中运用民族乐曲，受到道教和佛教的思想熏陶，追寻吐故纳新，天人合一的至高境界，开出“音乐处方”，让身心得以调整，达到最佳的心理平衡状态。
+     */
+    
+    private String courseDetail;
+    /**
+     * courseLearned : false
+     * courseStudy : 1234
+     */
+    
+    private boolean courseLearned;
+    private int courseStudy;
     
     public boolean isState() {
         return state;
@@ -119,5 +131,29 @@ public class CourseAudioEntity {
     
     public void setDiscuss(List<?> discuss) {
         this.discuss = discuss;
+    }
+    
+    public String getCourseDetail() {
+        return courseDetail;
+    }
+    
+    public void setCourseDetail(String courseDetail) {
+        this.courseDetail = courseDetail;
+    }
+    
+    public boolean isCourseLearned() {
+        return courseLearned;
+    }
+    
+    public void setCourseLearned(boolean courseLearned) {
+        this.courseLearned = courseLearned;
+    }
+    
+    public int getCourseStudy() {
+        return courseStudy;
+    }
+    
+    public void setCourseStudy(int courseStudy) {
+        this.courseStudy = courseStudy;
     }
 }

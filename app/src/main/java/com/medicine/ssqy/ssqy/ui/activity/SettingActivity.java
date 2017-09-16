@@ -32,6 +32,7 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
         mTvExitActivitySetting = (TextView) findViewById(R.id.tv_exit_activity_setting);
         mDialogLogout=new LogoutDig(this);
         mTvUsercenterActivitySetting = (TextView) findViewById(R.id.tv_usercenter_activity_setting);
+    
     }
     
     @Override
@@ -50,7 +51,7 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
                 accountDig.showSelf();
                 break;
             case R.id.tv_aboutus_activity_setting:
-                
+                goToActivity(AboutActivity.class);
                 break;
             case R.id.tv_exit_activity_setting:
                 mDialogLogout.showSelf();

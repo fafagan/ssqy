@@ -5,13 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
-
+    
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/bg_welcome"/>
-
+        android:src="@drawable/welcomepage2"/>
+    <!--<ImageView-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="100dp"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:id="@+id/imgv_index_welcome"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_height="wrap_content"/>-->
 
     <LinearLayout
         android:id="@+id/layout_bt_welcome"

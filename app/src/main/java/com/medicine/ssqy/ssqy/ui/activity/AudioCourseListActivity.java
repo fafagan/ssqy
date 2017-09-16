@@ -61,7 +61,7 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
     
     @Override
     public void initViews() {
-        
+     
         mPbLoadingCourseList = (ProgressWheel) findViewById(R.id.pb_loading_course_list);
         mPbLoadingCourseList.spin();
         mPbLoadingCourseList.postDelayed(new Runnable() {
@@ -77,9 +77,9 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
         mLayoutRefresh.setSwipeStyle(SwipeToLoadLayout.STYLE.ABOVE);
         
         if (type == TYPE_ALL) {
-            setTitleCenter("全部音频课程");
+            setTitleCenter("全部养生音频");
         } else {
-            setTitleCenter("今日音频课程");
+            setTitleCenter("今日养生音频");
         }
         
         mSwipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {

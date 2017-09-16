@@ -15,7 +15,6 @@ public class ItemVedioClickListener implements AdapterView.OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Context context = view.getContext();
     
-      
             Intent intent=new Intent(context, VideoPlayActivity.class);
             context.startActivity(intent);
          

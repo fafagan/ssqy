@@ -8,8 +8,14 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.entity.course.CoursePicDetailEntity;
+import com.medicine.ssqy.ssqy.entity.course.CoursePicListEntity;
 
 //http://3g.163.com/touch/article.html?channel=jiankang&offset=20&docid=C85SNS4P0038804V
 public class CourseDetailPicActivity extends KBaseActivity {
@@ -17,6 +23,8 @@ public class CourseDetailPicActivity extends KBaseActivity {
     private ProgressBar mProgressBar;
     private WebView mWv;
     private WebSettings mSettings;
+    private NetForJson mNetForJson;
+    private   CoursePicListEntity.PicCourseDataEntity pc;
     @Override
     public int setRootView() {
         return R.layout.activity_course_detail_pic;
@@ -24,21 +32,22 @@ public class CourseDetailPicActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
-        setTitleCenter("图文课程");
+        setTitleCenter("养生图文");
         setTitleRight("分享", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mSelf, "分享该课程", Toast.LENGTH_SHORT).show();
             }
         });
-        url=this.getIntent().getStringExtra("newsUrl");
+        Toast.makeText(mSelf, "正在为您加载相关图文，请稍后", Toast.LENGTH_SHORT).show();
+        pc= (CoursePicListEntity.PicCourseDataEntity) this.getIntent().getSerializableExtra("pc");
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
     
         mWv = (WebView) findViewById(R.id.wv);
     
         mSettings = mWv.getSettings();
     
-        mWv.loadUrl(url);
+      
         //设置在当前APP打卡url指向的网页
         mWv.setWebViewClient(new WebViewClient() {
             @Override
@@ -60,8 +69,6 @@ public class CourseDetailPicActivity extends KBaseActivity {
         });
     
         mSettings.setJavaScriptEnabled(true);
-    
-    
 
        mSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
     
@@ -72,7 +79,37 @@ public class CourseDetailPicActivity extends KBaseActivity {
     
     @Override
     public void initDatas() {
+        mNetForJson=new NetForJson(URLConstant.PIC_DETAIL_URL, new NetCallback<CoursePicDetailEntity>() {
+            @Override
+            public void onSuccess(CoursePicDetailEntity entity) {
+                if (entity.isState()){
+                    url=entity.getCoursehtmlUrl();
+                    loadWV();
+                }else {
+                    Toast.makeText(mSelf, "加载异常，请退出重试", Toast.LENGTH_SHORT).show();
+                }
         
+            }
+    
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "网络异常，请检查网络状态！", Toast.LENGTH_SHORT).show();
+            }
+    
+            @Override
+            public void onFinish() {
+        
+            }
+        });
+    
+        mNetForJson.addParam("uid", SharePLogin.getUid());
+        mNetForJson.addParam("courseID", pc.getCourseID());
+        mNetForJson.addParam("type", "pic");
+        mNetForJson.excute();
+    }
+    
+    private void loadWV() {
+        mWv.loadUrl(url);
     }
     
     @Override

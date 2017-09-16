@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
+    android:id="@+id/activity_about"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.AboutActivity">
+    <WebView
+        android:layout_below="@+id/progressBar"
+        android:id="@+id/wv_about"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

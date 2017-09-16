@@ -49,6 +49,7 @@ public class UserEntity {
     private String id;
     private boolean isNewRecord;
     private String remarks;
+    @Column(name="createDate")
     private String createDate;
     private String updateDate;
     private String realName;
@@ -56,7 +57,6 @@ public class UserEntity {
     private String age;
     private String password;
     private String type;
-    private String isFisrtLogin;
     private String isformally;
     private String loginip;
     private String loginteime;
@@ -105,8 +105,8 @@ public class UserEntity {
     @Column(name="state")
     private boolean state;
     
-    @Column(name="isFirstLogin")
-    private boolean isFirstLogin;
+    @Column(name="isFisrtLogin")
+    private String isFisrtLogin;
     
     @Column(name="uid")
     private String uid;
@@ -415,7 +415,7 @@ public class UserEntity {
         sb.append(", isMarried='").append(isMarried).append('\'');
         sb.append(", level=").append(level);
         sb.append(", state=").append(state);
-        sb.append(", isFirstLogin=").append(isFirstLogin);
+        sb.append(", isFirstLogin=").append(isFisrtLogin);
         sb.append(", uid='").append(uid).append('\'');
         sb.append(", errorInfo='").append(errorInfo).append('\'');
         sb.append(", errno=").append(errno);

@@ -8,6 +8,7 @@ import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
 import com.medicine.ssqy.ssqy.eventBus.FirstLoginMsg;
 import com.medicine.ssqy.ssqy.ui.views.TVWheelAdapter;
+import com.orhanobut.logger.Logger;
 import com.wx.wheelview.widget.WheelView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,7 +48,8 @@ public class FirstLoginStudyLevelFragment extends KBaseFragment {
             
                 FirstLoginMsg firstLoginMsg = new FirstLoginMsg();
                 firstLoginMsg.action = FirstLoginMsg.ACTION_DONE_ALL;
-                firstLoginMsg.studyLevel = mTvStudyFirstLogin.getText().toString().trim();
+//                firstLoginMsg.studyLevel = mTvStudyFirstLogin.getText().toString().trim();
+                firstLoginMsg.studyLevel = String.valueOf(mTvStudyFirstLogin.getTag());
                 EventBus.getDefault().post(firstLoginMsg);
             }
         });
@@ -70,6 +72,8 @@ public class FirstLoginStudyLevelFragment extends KBaseFragment {
             @Override
             public void onItemSelected(int i, Object o) {
                 mTvStudyFirstLogin.setText(o.toString());
+                mTvStudyFirstLogin.setTag(i);
+                Logger.e(i+"");
             }
         });
         
@@ -77,15 +81,11 @@ public class FirstLoginStudyLevelFragment extends KBaseFragment {
     
     
     private void initWVDatas() {
-    
-        mStudys.add("小学");
-        mStudys.add("初中");
-        mStudys.add("高中");
-        mStudys.add("大学本科");
-        mStudys.add("研究生");
-        mStudys.add("博士");
-        mStudys.add("专科");
-        mStudys.add("其他学历");
+        
+        
+        mStudys.add("大专及中专");
+        mStudys.add("本科及以上");
+        mStudys.add("高中及以下");
     }
     
 }

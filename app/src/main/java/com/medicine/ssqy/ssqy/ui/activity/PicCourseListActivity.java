@@ -4,50 +4,52 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
-import com.medicine.ssqy.ssqy.entity.course.CoursePicEntity;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.entity.course.CoursePicListEntity;
 import com.medicine.ssqy.ssqy.ui.adapter.ItemLvPicCourseAdapter;
-import com.medicine.ssqy.ssqy.ui.listener.ItemTWClickListener;
 import com.medicine.ssqy.ssqy.ui.views.ProgressWheel;
-import com.medicine.ssqy.ssqy.util.UtilCourseDay;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreListener, OnRefreshListener {
     private ListView mSwipeTarget;
     
     private SwipeToLoadLayout mLayoutRefresh;
- 
-    private static final int TYPE_ALL=111222;
-    private static final int TYPE_TODAY=222111;
-    private static  int type;
-    private List<CoursePicEntity.PicCourseDataEntity> mPicCourseDataEntities;
+    
+    private static final int TYPE_ALL = 111222;
+    private static final int TYPE_TODAY = 222111;
+    private static int type;
     private ItemLvPicCourseAdapter mItemLvPicCourseAdapter;
-    private List<CoursePicListEntity> mCoursePicListEntities;
     
     private ProgressWheel mPbLoadingCourseList;
-    private boolean mIsFirstRequest=true;
-
+    private boolean mIsFirstRequest = true;
+    private List<CoursePicListEntity.PicCourseDataEntity> mPicCourseData;
+    private NetForJson mNetForJson;
     
-    public static  void showAll(Context context){
-        type=TYPE_ALL;
-        Intent intent=new Intent(context,PicCourseListActivity.class);
+    public static void showAll(Context context) {
+        type = TYPE_ALL;
+        Intent intent = new Intent(context, PicCourseListActivity.class);
         context.startActivity(intent);
     }
-    public static  void showToday(Context context){
-        type=TYPE_TODAY;
-        Intent intent=new Intent(context,PicCourseListActivity.class);
+    
+    public static void showToday(Context context) {
+        type = TYPE_TODAY;
+        Intent intent = new Intent(context, PicCourseListActivity.class);
         context.startActivity(intent);
     }
+    
     @Override
     public int setRootView() {
         return R.layout.activity_pic_course_list;
@@ -55,7 +57,7 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
     
     @Override
     public void initViews() {
-    
+        
         mPbLoadingCourseList = (ProgressWheel) findViewById(R.id.pb_loading_course_list);
         mPbLoadingCourseList.spin();
         mPbLoadingCourseList.postDelayed(new Runnable() {
@@ -63,109 +65,149 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
             public void run() {
                 mPbLoadingCourseList.setVisibility(View.VISIBLE);
             }
-        },100);
+        }, 100);
         mSwipeTarget = (ListView) findViewById(R.id.swipe_target);
         mLayoutRefresh = (SwipeToLoadLayout) findViewById(R.id.layout_refresh);
         mLayoutRefresh.setOnRefreshListener(this);
         mLayoutRefresh.setOnLoadMoreListener(this);
         mLayoutRefresh.setSwipeStyle(SwipeToLoadLayout.STYLE.ABOVE);
-        if (type==TYPE_ALL) {
-            setTitleCenter("全部图文课程");
-        }else {
-            setTitleCenter("今日图文课程");
+        if (type == TYPE_ALL) {
+            setTitleCenter("全部养生图文");
+        } else {
+            setTitleCenter("今日养生图文");
         }
-        mSwipeTarget.setOnItemClickListener(new ItemTWClickListener());
+//        mSwipeTarget.setOnItemClickListener(new ItemTWClickListener());
+        mSwipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mSelf, CourseDetailPicActivity.class);
+                intent.putExtra("pc", mPicCourseData.get(position));
+                startActivity(intent);
+                
+            }
+        });
     }
     
     @Override
-    public void initDatas() { 
+    public void initDatas() {
+        mNetForJson = new NetForJson(URLConstant.PIC_LIST_URL, new NetCallback<CoursePicListEntity>() {
+            
+            
+            @Override
+            public void onSuccess(CoursePicListEntity entity) {
+                Toast.makeText(mSelf, "加载成功", Toast.LENGTH_SHORT).show();
+                mPicCourseData = entity.getPicCourseData();
+                mIsFirstRequest = false;
+                mPbLoadingCourseList.setVisibility(View.GONE);
+                mPbLoadingCourseList.stopSpinning();
+                if (mItemLvPicCourseAdapter == null) {
+                    mItemLvPicCourseAdapter = new ItemLvPicCourseAdapter(mSelf, mPicCourseData);
+                    mSwipeTarget.setAdapter(mItemLvPicCourseAdapter);
+                } else {
+                    mItemLvPicCourseAdapter.setEntities(mPicCourseData);
+                }
+            }
+            
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "加载失败，请下拉重试", Toast.LENGTH_SHORT).show();
+            }
+            
+            @Override
+            public void onFinish() {
+                mLayoutRefresh.setRefreshing(false);
+            }
+        });
+        mNetForJson.addParam("uid", SharePLogin.getUid());
+        mNetForJson.addParam("startpos", "0");
+        mNetForJson.addParam("count", "10");
         mLayoutRefresh.setRefreshing(true);
         
-       
-    }
-    
-    private void tempData() {
-      
-        mPicCourseDataEntities=new ArrayList<>();
-        if (type==TYPE_TODAY){
-            for (int i = 1; i <=22; i++) {
-                CoursePicEntity.PicCourseDataEntity picCourseDataEntity
-                        = new CoursePicEntity.PicCourseDataEntity();
-                picCourseDataEntity.setCourseID(i);
-                picCourseDataEntity.setCourseDay(UtilCourseDay.getToday());
-                picCourseDataEntity.setCourseLearned(i%2==0);
-                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
-                picCourseDataEntity.setCourseType("pic");
-                mPicCourseDataEntities.add(picCourseDataEntity);
-            }
-        }else {
-            for (int i = 1; i <=3; i++) {
-                CoursePicEntity.PicCourseDataEntity picCourseDataEntity
-                        = new CoursePicEntity.PicCourseDataEntity();
-                picCourseDataEntity.setCourseID(i);
-                picCourseDataEntity.setCourseDay(UtilCourseDay.getToday());
-                picCourseDataEntity.setCourseLearned(i%2==0);
-                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
-                picCourseDataEntity.setCourseType("pic");
-                mPicCourseDataEntities.add(picCourseDataEntity);
-            }
-            for (int i = 4; i <=6; i++) {
-                CoursePicEntity.PicCourseDataEntity picCourseDataEntity
-                        = new CoursePicEntity.PicCourseDataEntity();
-                picCourseDataEntity.setCourseID(i);
-                picCourseDataEntity.setCourseDay(UtilCourseDay.getYesterday());
-                picCourseDataEntity.setCourseLearned(i%2==0);
-                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
-                picCourseDataEntity.setCourseType("pic");
-                mPicCourseDataEntities.add(picCourseDataEntity);
-            }
-    
-            for (int i = 7; i <=15; i++) {
-                CoursePicEntity.PicCourseDataEntity picCourseDataEntity
-                        = new CoursePicEntity.PicCourseDataEntity();
-                picCourseDataEntity.setCourseID(i);
-                picCourseDataEntity.setCourseDay(UtilCourseDay.getBeforeYesterday());
-                picCourseDataEntity.setCourseLearned(i%2==0);
-                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
-                picCourseDataEntity.setCourseType("pic");
-                mPicCourseDataEntities.add(picCourseDataEntity);
-            }
-        }
-   
-    
-        reSortCourseList();
-        mIsFirstRequest=false;
-        mPbLoadingCourseList.setVisibility(View.GONE);
-        mPbLoadingCourseList.stopSpinning();
-        if (mItemLvPicCourseAdapter==null) {
-            mItemLvPicCourseAdapter = new ItemLvPicCourseAdapter(mSelf,mCoursePicListEntities);
-            mSwipeTarget.setAdapter(mItemLvPicCourseAdapter);
-        }
         
-     
     }
-    
-    private void reSortCourseList(){
-        if (mCoursePicListEntities==null) {
-            mCoursePicListEntities=new ArrayList<>();
-        }
-        String timeSYG="";
-        for (CoursePicEntity.PicCourseDataEntity picCourseDataEntity : mPicCourseDataEntities) {
-            String timeZYG=picCourseDataEntity.getCourseDay();
-            
-            if (!timeSYG.equals(timeZYG)){
-                CoursePicListEntity coursePicListEntityTime=new CoursePicListEntity();
-                coursePicListEntityTime.setTime(timeZYG);
-                mCoursePicListEntities.add(coursePicListEntityTime);
-                timeSYG=timeZYG;
-            }
-    
-            CoursePicListEntity coursePicListEntity=new CoursePicListEntity();
-            coursePicListEntity.setCoursePicEntity(picCourseDataEntity);
-            mCoursePicListEntities.add(coursePicListEntity);
-            
-        }
-    }
+
+//    private void tempData() {
+//      
+//        mPicCourseDataEntities=new ArrayList<>();
+//        if (type==TYPE_TODAY){
+//            for (int i = 1; i <=22; i++) {
+//                CoursePicDetailEntity.PicCourseDataEntity picCourseDataEntity
+//                        = new CoursePicDetailEntity.PicCourseDataEntity();
+//                picCourseDataEntity.setCourseID(i);
+//                picCourseDataEntity.setCourseDay(UtilCourseDay.getToday());
+//                picCourseDataEntity.setCourseLearned(i%2==0);
+//                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
+//                picCourseDataEntity.setCourseType("pic");
+//                mPicCourseDataEntities.add(picCourseDataEntity);
+//            }
+//        }else {
+//            for (int i = 1; i <=3; i++) {
+//                CoursePicDetailEntity.PicCourseDataEntity picCourseDataEntity
+//                        = new CoursePicDetailEntity.PicCourseDataEntity();
+//                picCourseDataEntity.setCourseID(i);
+//                picCourseDataEntity.setCourseDay(UtilCourseDay.getToday());
+//                picCourseDataEntity.setCourseLearned(i%2==0);
+//                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
+//                picCourseDataEntity.setCourseType("pic");
+//                mPicCourseDataEntities.add(picCourseDataEntity);
+//            }
+//            for (int i = 4; i <=6; i++) {
+//                CoursePicDetailEntity.PicCourseDataEntity picCourseDataEntity
+//                        = new CoursePicDetailEntity.PicCourseDataEntity();
+//                picCourseDataEntity.setCourseID(i);
+//                picCourseDataEntity.setCourseDay(UtilCourseDay.getYesterday());
+//                picCourseDataEntity.setCourseLearned(i%2==0);
+//                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
+//                picCourseDataEntity.setCourseType("pic");
+//                mPicCourseDataEntities.add(picCourseDataEntity);
+//            }
+//    
+//            for (int i = 7; i <=15; i++) {
+//                CoursePicDetailEntity.PicCourseDataEntity picCourseDataEntity
+//                        = new CoursePicDetailEntity.PicCourseDataEntity();
+//                picCourseDataEntity.setCourseID(i);
+//                picCourseDataEntity.setCourseDay(UtilCourseDay.getBeforeYesterday());
+//                picCourseDataEntity.setCourseLearned(i%2==0);
+//                picCourseDataEntity.setCourseTitle("四时七养养生系列课程"+i);
+//                picCourseDataEntity.setCourseType("pic");
+//                mPicCourseDataEntities.add(picCourseDataEntity);
+//            }
+//        }
+//   
+//    
+//        reSortCourseList();
+//        mIsFirstRequest=false;
+//        mPbLoadingCourseList.setVisibility(View.GONE);
+//        mPbLoadingCourseList.stopSpinning();
+//        if (mItemLvPicCourseAdapter==null) {
+//            mItemLvPicCourseAdapter = new ItemLvPicCourseAdapter(mSelf,mCoursePicListEntities);
+//            mSwipeTarget.setAdapter(mItemLvPicCourseAdapter);
+//        }
+//        
+//     
+//    }
+
+//    private void reSortCourseList(){
+//        if (mCoursePicListEntities==null) {
+//            mCoursePicListEntities=new ArrayList<>();
+//        }
+//        String timeSYG="";
+//        for (CoursePicDetailEntity.PicCourseDataEntity picCourseDataEntity : mPicCourseDataEntities) {
+//            String timeZYG=picCourseDataEntity.getCourseDay();
+//            
+//            if (!timeSYG.equals(timeZYG)){
+//                CoursePicListEntity coursePicListEntityTime=new CoursePicListEntity();
+//                coursePicListEntityTime.setTime(timeZYG);
+//                mCoursePicListEntities.add(coursePicListEntityTime);
+//                timeSYG=timeZYG;
+//            }
+//    
+//            CoursePicListEntity coursePicListEntity=new CoursePicListEntity();
+//            coursePicListEntity.setCoursePicEntity(picCourseDataEntity);
+//            mCoursePicListEntities.add(coursePicListEntity);
+//            
+//        }
+//    }
     
     @Override
     public void onLoadMore() {
@@ -174,30 +216,30 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
             public void run() {
                 doNetLoadMore();
             }
-        },2500);
-   
+        }, 2500);
+        
     }
-    
     
     
     @Override
     public void onRefresh() {
-    
+        
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 doNetRfresh();
-
+                
                 
             }
-        },2500);
-      
+        }, 500);
+        
     }
     
     private void doNetRfresh() {
-        Toast.makeText(mSelf, "已加载最新课程", Toast.LENGTH_SHORT).show();
-        tempData();
-        mLayoutRefresh.setRefreshing(false);
+        Toast.makeText(mSelf, "正在加载，请稍后", Toast.LENGTH_SHORT).show();
+//        tempData();
+        mNetForJson.excute();
+        
     }
     
     private void doNetLoadMore() {
@@ -207,7 +249,8 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
     
     @Override
     public void onBackPressed() {
-        if (mIsFirstRequest){
+        if (mIsFirstRequest) {
+            mNetForJson.cancel();
             mPbLoadingCourseList.stopSpinning();
             mLayoutRefresh.setRefreshing(false);
             super.onBackPressed();
@@ -215,6 +258,7 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
             
         }
         if (mLayoutRefresh.isRefreshing()) {
+            mNetForJson.cancel();
             mLayoutRefresh.setRefreshing(false);
             return;
         }

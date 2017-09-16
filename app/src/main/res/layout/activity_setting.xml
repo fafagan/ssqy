@@ -1,68 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorGrey"
-    android:orientation="vertical"
-    tools:context="com.medicine.ssqy.ssqy.ui.activity.SettingActivity">
-    <TextView
-        android:id="@+id/tv_account_activity_setting"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginBottom="20dp"
+        android:id="@+id/layout_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_content_space"
-        android:background="@color/colorWhite"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/padding_information"
-        android:paddingLeft="@dimen/left_right_margin"
-        android:paddingTop="@dimen/padding_information"
-        android:text="账号安全"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_size_small"/>
-    
-    <TextView
-        android:id="@+id/tv_usercenter_activity_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_content_space"
-        android:background="@color/colorWhite"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/padding_information"
-        android:paddingLeft="@dimen/left_right_margin"
-        android:paddingTop="@dimen/padding_information"
-        android:text="个人资料管理"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_size_small"/>
-    <TextView
-        android:id="@+id/tv_aboutus_activity_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_content_space"
-        android:background="@color/colorWhite"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/padding_information"
-        android:paddingLeft="@dimen/left_right_margin"
-        android:paddingTop="@dimen/padding_information"
-        android:text="关于我们"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_size_small"/>
-    <TextView
-        android:id="@+id/tv_exit_activity_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:background="@color/colorWhite"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/padding_information"
-        android:paddingLeft="@dimen/left_right_margin"
-        android:paddingTop="@dimen/padding_information"
-        android:text="退出"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_size_small"/>
-    
-</LinearLayout>
+        android:orientation="vertical"
+        tools:context="com.medicine.ssqy.ssqy.ui.activity.SettingActivity">
+        
+        <TextView
+            android:id="@+id/tv_account_activity_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_content_space"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_information"
+            android:paddingLeft="@dimen/left_right_margin"
+            android:paddingTop="@dimen/padding_information"
+            android:text="账号安全"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_small"/>
+
+        <TextView
+            android:id="@+id/tv_usercenter_activity_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_content_space"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_information"
+            android:paddingLeft="@dimen/left_right_margin"
+            android:paddingTop="@dimen/padding_information"
+            android:text="个人资料管理"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_small"/>
+
+        <TextView
+            android:id="@+id/tv_aboutus_activity_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_content_space"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_information"
+            android:paddingLeft="@dimen/left_right_margin"
+            android:paddingTop="@dimen/padding_information"
+            android:text="关于我们"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_small"/>
+
+        <TextView
+            android:id="@+id/tv_exit_activity_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_information"
+            android:paddingLeft="@dimen/left_right_margin"
+            android:paddingTop="@dimen/padding_information"
+            android:text="退出"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_small"/>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_below="@+id/layout_setting"
+        android:layout_toLeftOf="@+id/imgv_logo1"
+        android:layout_marginBottom="110dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/imgv_logo2"
+        android:src="@drawable/logo_kpzx"
+        android:layout_marginRight="10dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+    <ImageView
+        android:layout_below="@+id/layout_setting"
+        android:layout_marginBottom="110dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:id="@+id/imgv_logo1"
+        android:src="@drawable/logo_dzm"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/title_index"
+        android:layout_width="70dp"
+        android:layout_height="150dp"/>
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

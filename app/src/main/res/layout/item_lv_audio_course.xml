@@ -37,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.daimajia.numberprogressbar.NumberProgressBar
+        custom:progress_current="38"
         android:layout_below="@+id/imgv_item_lv_audio_course"
         android:layout_marginTop="7dp"
         android:id="@+id/pb_item_lv_audio_course"

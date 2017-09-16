@@ -8,14 +8,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
+import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
+import com.medicine.ssqy.ssqy.entity.course.CourseAllEntity;
 import com.medicine.ssqy.ssqy.ui.activity.AudioCourseListActivity;
+import com.medicine.ssqy.ssqy.ui.activity.PicCourseListActivity;
 import com.medicine.ssqy.ssqy.ui.activity.VedioCourseListActivity;
 import com.medicine.ssqy.ssqy.ui.dialog.DigPhoneOK;
 import com.medicine.ssqy.ssqy.ui.dialog.ModifyPhonenumberDig;
@@ -37,24 +43,24 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
     private ImageView mImgvDkAudio;
     private TextView mTvLearnCountAudioFragHome;
     private TextView mTvTotalCountAudioFragHome;
-//    private LinearLayout mLayoutImgTw;
-//    private TextView mTvTitleTwFragHome;
-//    private ImageView mImgvDkTw;
-//    private TextView mTvLearnCountTwFragHome;
-//    private TextView mTvTotalCountTwFragHome;
+    private LinearLayout mLayoutImgTw;
+    private TextView mTvTitleTwFragHome;
+    private ImageView mImgvDkTw;
+    private TextView mTvLearnCountTwFragHome;
+    private TextView mTvTotalCountTwFragHome;
     private ObjectAnimator mObjectAnimatorOpen,mObjectAnimatorClose;
     private View mTop;
     private Pop_dk mPop_dk;
     private RelativeLayout mItemVedioToday;
     private RelativeLayout mItemAudioToday;
-//    private RelativeLayout mItemTwToday;
+    private RelativeLayout mItemTwToday;
     private TextView mTvDaysFragCourse;
     private RelativeLayout mLayoutUnformllyFragHome;
     private TextView mTvUnformllyFragCourse;
     private ModifyPhonenumberDig mModifyPhonenumberDig;
-
-
     
+    
+    private NetForJson mNetForJson;
     
     
     
@@ -83,22 +89,22 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
         mImgvDkAudio = (ImageView) findViewById(R.id.imgv_dk_audio);
         mTvLearnCountAudioFragHome = (TextView) findViewById(R.id.tv_learn_count_audio_frag_home);
         mTvTotalCountAudioFragHome = (TextView) findViewById(R.id.tv_total_count_audio_frag_home);
-//        mLayoutImgTw = (LinearLayout) findViewById(R.id.layout_img_tw);
-//        mTvTitleTwFragHome = (TextView) findViewById(R.id.tv_title_tw_frag_home);
-//        mImgvDkTw = (ImageView) findViewById(R.id.imgv_dk_tw);
-//        mTvLearnCountTwFragHome = (TextView) findViewById(R.id.tv_learn_count_tw_frag_home);
-//        mTvTotalCountTwFragHome = (TextView) findViewById(R.id.tv_total_count_tw_frag_home);
+        mLayoutImgTw = (LinearLayout) findViewById(R.id.layout_img_tw);
+        mTvTitleTwFragHome = (TextView) findViewById(R.id.tv_title_tw_frag_home);
+        mImgvDkTw = (ImageView) findViewById(R.id.imgv_dk_tw);
+        mTvLearnCountTwFragHome = (TextView) findViewById(R.id.tv_learn_count_tw_frag_home);
+        mTvTotalCountTwFragHome = (TextView) findViewById(R.id.tv_total_count_tw_frag_home);
         mTop = (View) findViewById(R.id.top);
         mItemVedioToday = (RelativeLayout) findViewById(R.id.item_vedio_today);
         mItemAudioToday = (RelativeLayout) findViewById(R.id.item_audio_today);
-       // mItemTwToday = (RelativeLayout) findViewById(R.id.item_tw_today);
+        mItemTwToday = (RelativeLayout) findViewById(R.id.item_tw_today);
     
         mLayoutUnformllyFragHome = (RelativeLayout) findViewById(R.id.layout_unformlly_frag_home);
         mTvUnformllyFragCourse = (TextView) findViewById(R.id.tv_unformlly_frag_course);
         mLayoutChiyaoFragHome.setOnClickListener(this);
         mItemVedioToday.setOnClickListener(this);
         mItemAudioToday.setOnClickListener(this);
-       // mItemTwToday.setOnClickListener(this);
+        mItemTwToday.setOnClickListener(this);
     
     
         mTvUnformllyFragCourse.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +131,7 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
     public void onResume() {
         super.onResume();
         UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
-        if (StringEmptyUtil.isEmpty(nowUser.getPhone())){
+        if (StringEmptyUtil.isEmpty(nowUser.getUseraccount())){
             mLayoutChiyaoFragHome.setVisibility(View.GONE);
             mLayoutUnformllyFragHome.setVisibility(View.VISIBLE);
     
@@ -138,7 +144,33 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
     
     @Override
     public void initDatas() {
+        mNetForJson=new NetForJson(URLConstant.COURSE_LIST_URL, new NetCallback<CourseAllEntity>() {
+            @Override
+            public void onSuccess(CourseAllEntity entity) {
+                    mTvTotalCountVedioFragHome.setText(entity.getVideo().getAll()+"");
+                    mTvLearnCountVedioFragHome.setText(entity.getVideo().getLearned()+"/");
+                
+                mTvTotalCountAudioFragHome.setText(entity.getAudio().getAll()+"");
+                mTvLearnCountAudioFragHome.setText(entity.getAudio().getLearned()+"/");
+                
+                mTvTotalCountTwFragHome.setText(entity.getPic().getAll()+"");
+                mTvLearnCountTwFragHome.setText(entity.getPic().getLearned()+"/");
+                
+            }
         
+            @Override
+            public void onError() {
+                Toast.makeText(mActivity, "加载失败，请检查您的网络！", Toast.LENGTH_SHORT).show();
+            }
+        
+            @Override
+            public void onFinish() {
+            
+            }
+        },true);
+    
+        mNetForJson.addParam("uid",SharePLogin.getUid());
+        mNetForJson.excute();
     }
     
     
@@ -153,12 +185,10 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
                 break;
             case R.id.item_audio_today:
                 AudioCourseListActivity.showToday(mActivity);
-               
                 break;
-//            case R.id.item_tw_today:
-//                PicCourseListActivity.showToday(mActivity);
-//               
-//                break;
+            case R.id.item_tw_today:
+                PicCourseListActivity.showToday(mActivity);
+                break;
         }
         
     }

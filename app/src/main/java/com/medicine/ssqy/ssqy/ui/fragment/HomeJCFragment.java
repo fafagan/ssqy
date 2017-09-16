@@ -4,6 +4,7 @@ package com.medicine.ssqy.ssqy.ui.fragment;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
@@ -94,7 +95,43 @@ public class HomeJCFragment extends KBaseFragment {
                 new DigYYJL(mActivity).show();
             }
         });
+        mItemXtbgJcFrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "您还没有相关报告，请坚持每天记录！", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mItemXybgJcFrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "您还没有相关报告，请坚持每天记录！", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mItemTzbgJcFrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "您还没有相关报告，请坚持每天记录！", Toast.LENGTH_SHORT).show();
+            }
+        });
+         mItemYybgJcFrag.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Toast.makeText(mActivity, "您还没有相关报告，请坚持每天记录！", Toast.LENGTH_SHORT).show();
+             }
+         });
+        mItemSsbgJcFrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "您还没有相关报告，请坚持每天记录！", Toast.LENGTH_SHORT).show();
+            }
+        });
+         mItemYdbgJcFrag.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+             
         
+             }
+         });
     }
     
     @Override

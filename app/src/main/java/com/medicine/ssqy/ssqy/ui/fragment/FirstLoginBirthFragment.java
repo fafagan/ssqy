@@ -155,7 +155,6 @@ public class FirstLoginBirthFragment extends KBaseFragment {
         stringBuilder.append(mMonth);
         stringBuilder.append("-");
         stringBuilder.append(mDay);
-        stringBuilder.append("-");
         mTvBirthFirstLogin.setText(stringBuilder.toString());
     }
     

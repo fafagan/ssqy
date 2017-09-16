@@ -32,34 +32,34 @@
         android:layout_marginBottom="10dp"
         android:hint="请输入手机号码"
         android:inputType="phone"
-        android:maxLength="13"
+        android:maxLength="11"
         android:singleLine="true"/>
 
-    <!--<EditText-->
-        <!--android:id="@+id/edt_verifycode_reg"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/edt_phone_reg"-->
-        <!--android:layout_marginBottom="10dp"-->
-        <!--android:hint="请填写验证码"-->
-        <!--android:maxLength="8"-->
-        <!--android:singleLine="true"/>-->
+    <EditText
+        android:id="@+id/edt_verifycode_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_phone_reg"
+        android:layout_marginBottom="10dp"
+        android:hint="请填写验证码"
+        android:maxLength="8"
+        android:singleLine="true"/>
 
-    <!--<Button-->
-        <!--android:id="@+id/bt_get_verifycode_reg"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:layout_alignBottom="@+id/edt_verifycode_reg"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:background="@drawable/shape_login_bt"-->
-        <!--android:text="获取验证码"-->
-        <!--android:textColor="#fff"/>-->
+    <Button
+        android:id="@+id/bt_get_verifycode_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/edt_verifycode_reg"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shape_login_bt"
+        android:text="获取验证码"
+        android:textColor="#fff"/>
 
     <EditText
         android:id="@+id/edt_pwd_reg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_phone_reg"
+        android:layout_below="@+id/edt_verifycode_reg"
         android:layout_marginBottom="10dp"
         android:hint="请输入密码(不少于6位)"
         android:maxLength="16"

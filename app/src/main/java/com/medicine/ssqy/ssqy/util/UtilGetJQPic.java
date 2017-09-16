@@ -11,7 +11,7 @@ public class UtilGetJQPic {
     public static int getLogoRes(){
         String nowJQ = _24SolarTerms.getNowJQ();
         if (nowJQ==null) {
-            return R.drawable.title_index;
+            return -111;
         }
         switch (nowJQ){
             case SolarName.LICHUN:
@@ -64,13 +64,13 @@ public class UtilGetJQPic {
                 return R.drawable.dahan;
         }
         
-        return R.drawable.title_index;
+        return -111;
     }
     
     public static int getCircleRes(){
         String nowJQ = _24SolarTerms.getNowJQ();
         if (nowJQ==null) {
-            return R.drawable.dahanimg;
+            return -111;
         }
         switch (nowJQ){
             case SolarName.LICHUN:
@@ -123,6 +123,46 @@ public class UtilGetJQPic {
                 return R.drawable.dahanimg;
         }
         
-        return R.drawable.dahanimg;
+        return -111;
+    }
+    
+    
+    public static int getBGRes(){
+        String nowJQ = _24SolarTerms.getNowJQ();
+        if (nowJQ==null) {
+            return -111;
+        }
+        switch (nowJQ){
+            case SolarName.LICHUN:
+            case SolarName.YUSHUI:
+            case SolarName.JINGZHE:
+            case SolarName.CHUNFEN:
+            case SolarName.QINGMING:
+            case SolarName.GUYU:
+                return R.drawable.cbg;
+            case SolarName.LIXIA:
+            case SolarName.XIAOMAN:
+            case SolarName.MANGZHONG:
+            case SolarName.XIAZHI:
+            case SolarName.XIAOSHU:
+            case SolarName.DASHU:
+                return R.drawable.xbg;
+            case SolarName.LIQIU:
+            case SolarName.CHUSHU:
+            case SolarName.BAILU:
+            case SolarName.QIUFEN:
+            case SolarName.HANLU:
+            case SolarName.SHUANGJIANG:
+                return R.drawable.qbg;
+            case SolarName.LIDONG:
+            case SolarName.XIAOXUE:
+            case SolarName.DAXUE:
+            case SolarName.DONGZHI:
+            case SolarName.XIAOHAN:
+            case SolarName.DAHAN:
+                return R.drawable.dbg;
+        }
+        
+        return R.drawable.qbg;
     }
 }

@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.medicine.ssqy.ssqy.ui.activity.AudioPlayActivity">
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.AudioPlayActivity"
+    >
+    
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+ >
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_width="55dp"
+        android:layout_height="90dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/title_index"/>
     <TextView
         android:id="@+id/tv_audiotitle_activity_audio_play"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/left_right_margin"
         android:layout_marginRight="@dimen/left_right_margin"
-        android:layout_marginTop="@dimen/title_content_space"
+        android:layout_marginTop="110dp"
         android:text="课程题目"
         android:textSize="18sp"
         android:textStyle="bold"/>
@@ -33,6 +47,7 @@
                   android:background="@drawable/audio_play_pause_selector"
                   android:button="@null"/>
         <SeekBar android:id="@+id/sb_activity_audio_play"
+              
                  android:layout_width="0dp"
                  android:layout_height="30dp"
                  android:layout_gravity="center_vertical"
@@ -55,15 +70,15 @@
         android:layout_marginRight="@dimen/left_right_margin"
         android:layout_marginTop="@dimen/title_content_space"
         android:lineSpacingExtra="@dimen/content_content_space"
-        android:text="课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容"
+        android:text="暂无相关内容介绍。。。"
         android:textSize="14sp"/>
     <ImageView android:id="@+id/imgv_activity_audio_play"
                android:layout_width="match_parent"
-               android:layout_height="120dp"
+               android:layout_height="230dp"
                android:layout_below="@+id/tv_audiocontent_activity_audio_play"
                android:layout_marginLeft="@dimen/left_right_margin"
                android:layout_marginRight="@dimen/left_right_margin"
-               android:layout_marginTop="@dimen/title_content_space"
+               android:layout_marginTop="30dp"
                android:scaleType="centerCrop"
                android:src="@drawable/img"/>
     <!--<include layout="@layout/comments"-->
@@ -71,4 +86,5 @@
              <!--android:layout_height="wrap_content"-->
              <!--android:layout_below="@+id/imgv_activity_audio_play"-->
              <!--android:layout_marginTop="@dimen/title_content_space"/>-->
-</RelativeLayout>
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>
+</ScrollView>

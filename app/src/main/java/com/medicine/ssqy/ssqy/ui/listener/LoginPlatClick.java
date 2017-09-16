@@ -91,13 +91,16 @@ public class LoginPlatClick extends BaseOnClick<LoginActivity> {
         switch (v.getId()) {
             case R.id.layout_login_wx:
                 Toast.makeText(mContext, "功能正在来临，敬请期待！", Toast.LENGTH_SHORT).show();
+                mPopWindow.dismiss();
                 break;
             case R.id.layout_login_qq:
                 mParent.mShareAPI.getPlatformInfo(mParent, SHARE_MEDIA.QQ, umDetailListener);
+                
                 break;
             case R.id.layout_login_wb:
                 Toast.makeText(mContext, "功能正在来临，敬请期待！", Toast.LENGTH_SHORT).show();
                // mParent.mShareAPI.getPlatformInfo(mParent, SHARE_MEDIA.SINA, umDetailListener);
+                mPopWindow.dismiss();
                 break;
         }
      

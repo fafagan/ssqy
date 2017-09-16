@@ -75,8 +75,9 @@ public class FirstLoginSexFragment extends KBaseFragment implements RadioGroup.O
     
                 FirstLoginMsg firstLoginMsg=new FirstLoginMsg();
                 firstLoginMsg.action=FirstLoginMsg.ACTION_DONE_1;
-                firstLoginMsg.sex=mRbFirstLoginSexMan.isChecked()?"man":"woman";
-                firstLoginMsg.isMarried=mRbFirstLoginMarryYes.isChecked();
+//                firstLoginMsg.sex=mRbFirstLoginSexMan.isChecked()?"man":"woman";
+                firstLoginMsg.sex=mRbFirstLoginSexMan.isChecked()?"0":"1";
+                firstLoginMsg.isMarried=mRbFirstLoginMarryYes.isChecked()?"1":"0";
                 EventBus.getDefault().post(firstLoginMsg);
             }
         });

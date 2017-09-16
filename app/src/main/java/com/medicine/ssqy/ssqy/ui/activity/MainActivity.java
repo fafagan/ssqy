@@ -37,10 +37,9 @@ public class MainActivity extends KBaseActivity implements View.OnClickListener 
                                if (!StringEmptyUtil.isEmpty(nowUser.isIsFisrtLogin())&&"false".equals(nowUser.isIsFisrtLogin())){
                                    goToActivity(IndexActivity.class);
                                }else {
-                                   goToActivity(IndexActivity.class);
-//                                   goToActivity(FirstLoginActivity.class);
+//                                   goToActivity(IndexActivity.class);
+                                   goToActivity(FirstLoginActivity.class);
                                }
-//                                goToActivity(IndexActivity.class);
                                
                             }else {
                                 goToActivity(LoginActivity.class);
@@ -69,8 +68,19 @@ public class MainActivity extends KBaseActivity implements View.OnClickListener 
         return R.layout.activity_main;
     }
     
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//    
+//        super.onCreate(savedInstanceState);
+//    }
+    
     @Override
     public void initViews() {
+        if (SharePFirst.isFirst()){
+            goToActivity(FirstWelcomeActivity.class);
+            finish();
+            return;
+        }
         mHandler.sendEmptyMessageDelayed(1,1000);
         initBT();
       

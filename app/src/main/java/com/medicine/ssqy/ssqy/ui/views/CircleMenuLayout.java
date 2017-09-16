@@ -538,8 +538,8 @@ public class CircleMenuLayout extends ViewGroup
 				Context.WINDOW_SERVICE);
 		DisplayMetrics outMetrics = new DisplayMetrics();
 		wm.getDefaultDisplay().getMetrics(outMetrics);
-		return Math.min(1600, outMetrics.heightPixels);
-//		return Math.min(outMetrics.widthPixels, outMetrics.heightPixels);
+//		return Math.min(outMetrics.widthPixels/4*3, outMetrics.heightPixels/3*2);
+		return Math.min(outMetrics.widthPixels/3*4, outMetrics.heightPixels);
 	}
 
 	/**

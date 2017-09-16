@@ -28,6 +28,7 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/edt_xt"
             android:hint="您的血糖值"
             android:layout_width="0dp"
             android:layout_weight="1"

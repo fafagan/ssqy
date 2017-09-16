@@ -1,5 +1,7 @@
 package com.medicine.ssqy.ssqy.util;
 
+import com.example.sj.mylibrary.util.StringEmptyUtil;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -10,21 +12,39 @@ public class _24SolarTerms {
     private static final double D = 0.2422;
     private final static Map<String, Integer[]> INCREASE_OFFSETMAP = new HashMap<String, Integer[]>();// +1偏移
     private final static Map<String, Integer[]> DECREASE_OFFSETMAP = new HashMap<String, Integer[]>();// -1偏移
+    public static final int DAY=1000*60*60*24;
+    private static String sJQNow=null;
+    private static long sLastConfirmTime=0;
     public static String getNowJQ(){
-        long time=System.currentTimeMillis();
-        Calendar calendar=Calendar.getInstance();
-        calendar.setTimeInMillis(time);;
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String monthStr=null;
-        if(month<10){
-            monthStr="0"+month;
-        }else{
-            monthStr=""+month;
+        if (!StringEmptyUtil.isEmpty(sJQNow)) {
+            //定时更新
+            if (System.currentTimeMillis()-sLastConfirmTime<DAY/2){
+                return sJQNow;
+            }
+         
         }
-        String jq=_24SolarTerms.getSolatName( year, monthStr+day);
-        System.out.println(jq);
+        long time=System.currentTimeMillis();
+        String jq=null;
+        while (true){
+            time=time-DAY;
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTimeInMillis(time);;
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH)+1;
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            String monthStr=null;
+            if(month<10){
+                monthStr="0"+month;
+            }else{
+                monthStr=""+month;
+            }
+            jq= _24SolarTerms.getSolatName( year, monthStr+day);
+            if (jq!=null){
+                break;
+            }
+        }
+        sLastConfirmTime=System.currentTimeMillis();
+        sJQNow=jq;
         return jq;
     }
     /** 24节气 **/
@@ -202,7 +222,7 @@ public class _24SolarTerms {
             return null;
         }
     }
-    
+    private static List<JQ> sJQs=new ArrayList<>();
     private static void solarTermToString(int year) {
         mYear = year;
         if (mSolarData != null) {
@@ -217,6 +237,7 @@ public class _24SolarTerms {
         }
         // 1
         mSolarName.add("立春");
+  
         mSolarData.add("02"
                 + getSolarTermNum(year, SolarTermsEnum.LICHUN.name()));
         // 2
@@ -310,7 +331,52 @@ public class _24SolarTerms {
         mSolarName.add("大寒");
         mSolarData
                 .add("01" + getSolarTermNum(year, SolarTermsEnum.DAHAN.name()));
+        //配合服务器，春分为1
+        int num=1;
+        for (int i = 3; i <mSolarName.size(); i++) {
+            sJQs.add(new JQ(mSolarName.get(i),num++));
+        }
+        sJQs.add(new JQ(mSolarName.get(0),num++));
+        sJQs.add(new JQ(mSolarName.get(1),num++));
+        sJQs.add(new JQ(mSolarName.get(2),num++));
+    }
+    
+    public static JQ getNowJQObj(){
+        if (StringEmptyUtil.isEmpty(sJQNow)) {
+            getNowJQ();
+        }
+        for (JQ jq : sJQs) {
+            if (sJQNow.equals(jq.title)) {
+                return jq;
+            }
+        }
+        return  sJQs.get(0);
+    }
+    public static List<JQ> getNear4JQObj(){
+      //  int count =0;
+        List<JQ> jqs=new ArrayList<>();
         
+        if (StringEmptyUtil.isEmpty(sJQNow)) {
+            getNowJQ();
+        }
+        int nowPos=0;
+        for (int i = 0; i <sJQs.size(); i++) {
+            if (sJQNow.equals(sJQs.get(i).title)) {
+                nowPos=i;
+            }
+        }
+    
+        int jqCount=sJQs.size();
+        jqs.add(sJQs.get((nowPos+1)%jqCount  ));
+        jqs.add(sJQs.get((nowPos+2)%jqCount  ));
+        jqs.add(sJQs.get((nowPos+3)%jqCount  ));
+        jqs.add(sJQs.get((nowPos+4)%jqCount  ));
+//        while (count<4){
+//            count++;
+//            
+//        }
+      
+        return  jqs;
     }
     
 }

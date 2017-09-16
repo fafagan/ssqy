@@ -1,198 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/bg_gray"
-              android:orientation="vertical">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_item_jc_frag"
-        android:layout_margin="@dimen/margin_item_jc_frag"
-        android:background="@drawable/bg_jc1">
-
-        <LinearLayout
-            android:id="@+id/item_xtjc_jc_frag"
-            android:layout_width="@dimen/width_inner_jc_frag"
-            android:layout_height="@dimen/height_inner_jc_frag"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_inner_jc_frag"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/width_imgv_jc_frag"
-                android:layout_height="@dimen/height_imgv_jc_frag"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
-                android:scaleType="fitXY"
-                android:src="@drawable/xt"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="血糖监测"
-                android:textColor="@color/text_common_default"
-                android:textSize="@dimen/textsize_jc_frag"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_xyjc_jc_frag"
-            android:layout_width="@dimen/width_inner_jc_frag"
-            android:layout_height="@dimen/height_inner_jc_frag"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/width_imgv_jc_frag"
-                android:layout_height="@dimen/height_imgv_jc_frag"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
-                android:scaleType="fitXY"
-                android:src="@drawable/xy"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="血压监测"
-                android:textColor="@color/text_common_default"
-                android:textSize="@dimen/textsize_jc_frag"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_tzjc_jc_frag"
-            android:layout_width="@dimen/width_inner_jc_frag"
-            android:layout_height="@dimen/height_inner_jc_frag"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/margin_inner_jc_frag"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/width_imgv_jc_frag"
-                android:layout_height="@dimen/height_imgv_jc_frag"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
-                android:scaleType="fitXY"
-                android:src="@drawable/tz"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="体重监测"
-                android:textColor="@color/text_common_default"
-                android:textSize="@dimen/textsize_jc_frag"/>
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <!--    -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_item_jc_frag"
-        android:layout_margin="@dimen/margin_item_jc_frag"
-        android:background="@drawable/bg_jc1">
-
-        <LinearLayout
-            android:id="@+id/item_yyjl_jc_frag"
-            android:layout_width="@dimen/width_inner_jc_frag"
-            android:layout_height="@dimen/height_inner_jc_frag"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_inner_jc_frag"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/width_imgv_jc_frag"
-                android:layout_height="@dimen/height_imgv_jc_frag"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
-                android:scaleType="fitXY"
-                android:src="@drawable/yyjl"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="用药记录"
-                android:textColor="@color/text_common_default"
-                android:textSize="@dimen/textsize_jc_frag"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_ssjl_jc_frag"
-            android:layout_width="@dimen/width_inner_jc_frag"
-            android:layout_height="@dimen/height_inner_jc_frag"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/width_imgv_jc_frag"
-                android:layout_height="@dimen/height_imgv_jc_frag"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
-                android:scaleType="fitXY"
-                android:src="@drawable/ssjl"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="膳食记录"
-                android:textColor="@color/text_common_default"
-                android:textSize="@dimen/textsize_jc_frag"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_ydjl_jc_frag"
-            android:layout_width="@dimen/width_inner_jc_frag"
-            android:layout_height="@dimen/height_inner_jc_frag"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/margin_inner_jc_frag"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/width_imgv_jc_frag"
-                android:layout_height="@dimen/height_imgv_jc_frag"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
-                android:scaleType="fitXY"
-                android:src="@drawable/ydjl"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="运动记录"
-                android:textColor="@color/text_common_default"
-                android:textSize="@dimen/textsize_jc_frag"/>
-        </LinearLayout>
-
-    </RelativeLayout>
-
-
-    <!--    -->
     <LinearLayout
-        android:padding="5dp"
-        android:layout_margin="@dimen/margin_item_jc_frag"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_jc2"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_gray"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/height_item_jc_frag"
+            android:layout_margin="@dimen/margin_item_jc_frag"
+            android:background="@drawable/bg_jc1">
+
             <LinearLayout
-                android:id="@+id/item_xtbg_jc_frag"
+                android:id="@+id/item_xtjc_jc_frag"
                 android:layout_width="@dimen/width_inner_jc_frag"
                 android:layout_height="@dimen/height_inner_jc_frag"
                 android:layout_centerVertical="true"
@@ -205,20 +29,20 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
                     android:scaleType="fitXY"
-                    android:src="@drawable/xtbg"/>
+                    android:src="@drawable/xt"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="血糖报告"
+                    android:text="血糖监测"
                     android:textColor="@color/text_common_default"
                     android:textSize="@dimen/textsize_jc_frag"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/item_xybg_jc_frag"
+                android:id="@+id/item_xyjc_jc_frag"
                 android:layout_width="@dimen/width_inner_jc_frag"
                 android:layout_height="@dimen/height_inner_jc_frag"
                 android:layout_centerInParent="true"
@@ -230,20 +54,20 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
                     android:scaleType="fitXY"
-                    android:src="@drawable/xybg"/>
+                    android:src="@drawable/xy"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="血压报告"
+                    android:text="血压监测"
                     android:textColor="@color/text_common_default"
                     android:textSize="@dimen/textsize_jc_frag"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/item_tzbg_jc_frag"
+                android:id="@+id/item_tzjc_jc_frag"
                 android:layout_width="@dimen/width_inner_jc_frag"
                 android:layout_height="@dimen/height_inner_jc_frag"
                 android:layout_alignParentRight="true"
@@ -257,27 +81,29 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
                     android:scaleType="fitXY"
-                    android:src="@drawable/tzbg"/>
+                    android:src="@drawable/tz"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="体重报告"
+                    android:text="体重监测"
                     android:textColor="@color/text_common_default"
                     android:textSize="@dimen/textsize_jc_frag"/>
             </LinearLayout>
 
         </RelativeLayout>
-        
-        <!--  -->
 
+        <!--    -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/height_item_jc_frag"
+            android:layout_margin="@dimen/margin_item_jc_frag"
+            android:background="@drawable/bg_jc1">
+
             <LinearLayout
-                android:id="@+id/item_yybg_jc_frag"
+                android:id="@+id/item_yyjl_jc_frag"
                 android:layout_width="@dimen/width_inner_jc_frag"
                 android:layout_height="@dimen/height_inner_jc_frag"
                 android:layout_centerVertical="true"
@@ -290,20 +116,20 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
                     android:scaleType="fitXY"
-                    android:src="@drawable/yybg"/>
+                    android:src="@drawable/yyjl"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="用药报告"
+                    android:text="用药记录"
                     android:textColor="@color/text_common_default"
                     android:textSize="@dimen/textsize_jc_frag"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/item_ssbg_jc_frag"
+                android:id="@+id/item_ssjl_jc_frag"
                 android:layout_width="@dimen/width_inner_jc_frag"
                 android:layout_height="@dimen/height_inner_jc_frag"
                 android:layout_centerInParent="true"
@@ -315,20 +141,20 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ssbg"/>
+                    android:src="@drawable/ssjl"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="膳食报告"
+                    android:text="膳食记录"
                     android:textColor="@color/text_common_default"
                     android:textSize="@dimen/textsize_jc_frag"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/item_ydbg_jc_frag"
+                android:id="@+id/item_ydjl_jc_frag"
                 android:layout_width="@dimen/width_inner_jc_frag"
                 android:layout_height="@dimen/height_inner_jc_frag"
                 android:layout_alignParentRight="true"
@@ -342,18 +168,201 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ydbg"/>
+                    android:src="@drawable/ydjl"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="运动报告"
+                    android:text="运动记录"
                     android:textColor="@color/text_common_default"
                     android:textSize="@dimen/textsize_jc_frag"/>
             </LinearLayout>
 
         </RelativeLayout>
+
+
+        <!--    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_item_jc_frag"
+            android:background="@drawable/bg_jc2"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <LinearLayout
+                    android:id="@+id/item_xtbg_jc_frag"
+                    android:layout_width="@dimen/width_inner_jc_frag"
+                    android:layout_height="@dimen/height_inner_jc_frag"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_inner_jc_frag"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/width_imgv_jc_frag"
+                        android:layout_height="@dimen/height_imgv_jc_frag"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/xtbg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="血糖报告"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/textsize_jc_frag"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item_xybg_jc_frag"
+                    android:layout_width="@dimen/width_inner_jc_frag"
+                    android:layout_height="@dimen/height_inner_jc_frag"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/width_imgv_jc_frag"
+                        android:layout_height="@dimen/height_imgv_jc_frag"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/xybg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="血压报告"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/textsize_jc_frag"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item_tzbg_jc_frag"
+                    android:layout_width="@dimen/width_inner_jc_frag"
+                    android:layout_height="@dimen/height_inner_jc_frag"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/margin_inner_jc_frag"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/width_imgv_jc_frag"
+                        android:layout_height="@dimen/height_imgv_jc_frag"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tzbg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="体重报告"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/textsize_jc_frag"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!--  -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/item_yybg_jc_frag"
+                    android:layout_width="@dimen/width_inner_jc_frag"
+                    android:layout_height="@dimen/height_inner_jc_frag"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_inner_jc_frag"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/width_imgv_jc_frag"
+                        android:layout_height="@dimen/height_imgv_jc_frag"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/yybg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="用药报告"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/textsize_jc_frag"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item_ssbg_jc_frag"
+                    android:layout_width="@dimen/width_inner_jc_frag"
+                    android:layout_height="@dimen/height_inner_jc_frag"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/width_imgv_jc_frag"
+                        android:layout_height="@dimen/height_imgv_jc_frag"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ssbg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="膳食报告"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/textsize_jc_frag"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/item_ydbg_jc_frag"
+                    android:layout_width="@dimen/width_inner_jc_frag"
+                    android:layout_height="@dimen/height_inner_jc_frag"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/margin_inner_jc_frag"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/width_imgv_jc_frag"
+                        android:layout_height="@dimen/height_imgv_jc_frag"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_imgv_jc_frag"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ydbg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="运动报告"
+                        android:textColor="@color/text_common_default"
+                        android:textSize="@dimen/textsize_jc_frag"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</ScrollView>

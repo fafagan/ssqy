@@ -3,4 +3,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--"四时七养-中医养生\"-->
+    <string name="sunday">日</string>
+    <string name="monday">一</string>
+    <string name="thesday">二</string>
+    <string name="wednesday">三</string>
+    <string name="thursday">四</string>
+    <string name="friday">五</string>
+    <string name="saturday">六</string>
+
+    <string name="app_introduce"> 此APP是北京市科委科普专项，北京中医药大学东直门医院研究研发的中医健康管理方案。旨在根据不同体质、不同节气指导的中医"四时七养"养生方案，首先需要您认真填写表格，进行您个人的体质分析。</string>
+    <string name="question_welcome">为了更好的了解您的相关体质，以便我们的专家能够根据您的真实情况，定制具体的养生方案，接下来需要您填写体质问卷，还请认真，耐心填写完毕。</string>
 </resources>

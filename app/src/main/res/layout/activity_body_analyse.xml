@@ -1,72 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
     tools:context="com.medicine.ssqy.ssqy.ui.activity.BodyAnalyseActivity"
     >
-
-    <LinearLayout
-
+    <com.medicine.ssqy.ssqy.ui.views.ProgressWheel
+        android:id="@+id/pb_loading_body"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        ProgressWheel:text="生成报告中，请稍后。。"
+        ProgressWheel:rimColor="#44be6f53"
+        ProgressWheel:barLengthPw="60dp"
+        ProgressWheel:barColor="#dc5030"
+        ProgressWheel:barWidth="25dp"
+        ProgressWheel:rimWidth="25dp"
+        ProgressWheel:spinSpeed="2dp"
+        ProgressWheel:textColor="@color/text_common_default"
+        ProgressWheel:textSize="14sp"/>
+    
+    <RelativeLayout
+        android:id="@+id/layout_report"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_jc2"
-        android:orientation="vertical"
-        android:padding="10dp"
-        >
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/icon_fjyy"/>
-
-        <TextView
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="针对您的体质，基本资料，医生为您得出如下体质分析报告："
-            android:textColor="@color/text_color_red"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:layout_height="25dp"/>
 
-        <TextView
+        <WebView
+            android:layout_below="@+id/progressBar"
+            android:id="@+id/wv_about"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="您的整体身体状况：  良好"
-            android:textColor="@color/text_color_red"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:layout_height="match_parent"></WebView>
+    </RelativeLayout>
+    <!--<LinearLayout-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="具体说明："
-            android:textColor="@color/text_color_red"
-            android:textStyle="bold"/>
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@drawable/bg_jc2"-->
+        <!--android:orientation="vertical"-->
+        <!--android:padding="10dp"-->
+        <!--&gt;-->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<ImageView-->
+            <!--android:layout_width="70dp"-->
+            <!--android:layout_height="70dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:src="@drawable/icon_fjyy"/>-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tz"/>
-        </ScrollView>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:text="针对您的体质，基本资料，医生为您得出如下体质分析报告："-->
+            <!--android:textColor="@color/text_color_red"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textStyle="bold"/>-->
 
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:text="您的整体身体状况：  良好"-->
+            <!--android:textColor="@color/text_color_red"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textStyle="bold"/>-->
 
-    <ImageView
-        android:layout_width="35dp"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/title_index"/>
-</RelativeLayout>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="16dp"-->
+            <!--android:text="具体说明："-->
+            <!--android:textColor="@color/text_color_red"-->
+            <!--android:textStyle="bold"/>-->
+
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/tz"/>-->
+        <!--</ScrollView>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<ImageView-->
+        <!--android:layout_width="35dp"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@drawable/title_index"/>-->
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

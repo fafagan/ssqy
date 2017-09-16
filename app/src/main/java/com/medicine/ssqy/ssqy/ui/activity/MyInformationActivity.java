@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.ui.dialog.ModifyMarriageDig;
 import com.medicine.ssqy.ssqy.ui.dialog.ModifyNicknameDig;
 import com.medicine.ssqy.ssqy.ui.dialog.ModifyPhonenumberDig;
@@ -32,6 +35,7 @@ public class MyInformationActivity extends KBaseActivity implements View.OnClick
     private TextView mTvUserlevelActivityInformation;
     private RelativeLayout mRlRegistedtimeActivityInformation;
     private TextView mTvRegistedtimeActivityInformation;
+    private UserEntity mNowUser;
     
     @Override
     public int setRootView() {
@@ -72,6 +76,38 @@ public class MyInformationActivity extends KBaseActivity implements View.OnClick
         mRlPhonenumberActivityInformation.setOnClickListener(this);
         mRlJobActivityInformation.setOnClickListener(this);
         mRlStudylevelActivityInformation.setOnClickListener(this);
+    
+        mNowUser = TempUser.getNowUser(SharePLogin.getUid());
+    
+        mTvUsernameActivityInformation.setText(mNowUser.getUseraccount());
+        mTvNicknameActivityInformation.setText(mNowUser.getNickName());
+        if ("1".equals(mNowUser.getSex())) {
+            mTvUsersexActivityInformation.setText("女");
+        }else {
+          
+            mTvUsersexActivityInformation.setText("男");
+        }
+    
+    
+        if ("0".equals(mNowUser.getSex())) {
+            mTvUsermarriageActivityInformation.setText("未婚");
+        }else {
+            mTvUsermarriageActivityInformation.setText("已婚");
+        }
+     
+        mTvBirthdayActivityInformation.setText(mNowUser.getBirthDay());
+        mTvPhonenumberActivityInformation.setText(mNowUser.getUseraccount());
+        if ("0".equals(mNowUser.getStudyLevel())){
+            mTvStudylevelActivityInformation.setText("高中或以下");
+        }else if ("1".equals(mNowUser.getStudyLevel())){
+            mTvStudylevelActivityInformation.setText("大专及中专");
+        }else {
+          
+            mTvStudylevelActivityInformation.setText("本科及以上");
+        }
+       
+        mTvUserlevelActivityInformation.setText("等级 "+mNowUser.getLevel());
+        mTvRegistedtimeActivityInformation.setText(mNowUser.getCreateDate());
     }
     
     @Override

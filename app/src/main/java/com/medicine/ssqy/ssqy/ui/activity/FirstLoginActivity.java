@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.sj.mylibrary.net.NetCallback;
@@ -22,6 +24,7 @@ import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginBirthFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginJobFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginSexFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginStudyLevelFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.QuestionFragment;
 import com.medicine.ssqy.ssqy.ui.pop.LoadingPopWindow;
 import com.orhanobut.logger.Logger;
 
@@ -37,11 +40,15 @@ public class FirstLoginActivity extends KBaseActivity {
     private KBaseFragment[] mKBaseFragments={mFirstLoginSexFragment,mFirstLoginBirthFragment,mFirstLoginJobFragment,mFirstLoginStudyLevelFragment};
     private LoadingPopWindow loadingPopWindow;
     public String sex;
-    public boolean isMarried;
+    public String isMarried;
     public String birthDay;
     public String job;
     public String studyLevel;
     NetForJson mNetForJson;
+    private RelativeLayout mContainerQuestionFrag;
+    
+
+    
     @Override
     public int setRootView() {
         return R.layout.activity_first_login;
@@ -49,6 +56,7 @@ public class FirstLoginActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
+        mContainerQuestionFrag = (RelativeLayout) findViewById(R.id.container_question_frag);
         loadingPopWindow=new LoadingPopWindow(this);
         mVpFirstLogin = (ViewPager) findViewById(R.id.vp_first_login);
         mVpFirstLogin.setAdapter(new AdapterVPFirstLogin(mFragmentManager));
@@ -132,14 +140,14 @@ public class FirstLoginActivity extends KBaseActivity {
     private void synchServer() {
         UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
         Logger.e(nowUser.toString());
-        Logger.e(birthDay+"  "+nowUser.getPhone());
         mNetForJson.addParam("nickName",nowUser.getNickName());
         mNetForJson.addParam("sex","man".equals(sex)?1:2);
-        mNetForJson.addParam("marry",isMarried?0:1);
+        mNetForJson.addParam("marry",isMarried);
         mNetForJson.addParam("birth",birthDay);
         mNetForJson.addParam("phone",nowUser.getUseraccount());
         mNetForJson.addParam("job",job);
         mNetForJson.addParam("studylevel",studyLevel);
+        mNetForJson.addParam("isFirstLogin",false);
         mNetForJson.addParam("level",1);
         mNetForJson.excute();
         
@@ -147,9 +155,24 @@ public class FirstLoginActivity extends KBaseActivity {
     }
     
     private void onSaveOk(){
-        TempUser.saveOrUpdateUserFirst(sex,isMarried,birthDay,job,studyLevel);
-        goToActivity(IndexActivity.class);
-        finish();
+//        TempUser.saveOrUpdateUserFirst(sex,isMarried,birthDay,job,studyLevel);
+        UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
+        nowUser.setIsMarried(isMarried);
+        nowUser.setBirthDay(birthDay);
+        nowUser.setJob(job);
+        nowUser.setStudyLevel(studyLevel);
+        nowUser.setIsFisrtLogin("true");
+        nowUser.setSex(sex);
+        TempUser.saveOrUpdateUser(nowUser);
+//        goToActivity(IndexActivity.class);
+        showQuestionFrag();
+    }
+    
+    private void showQuestionFrag() {
+        setTitleCenter("填写调查问卷");
+        mContainerQuestionFrag.setVisibility(View.VISIBLE);
+        mVpFirstLogin.setVisibility(View.GONE);
+        addFrag(R.id.container_question_frag,new QuestionFragment());
     }
     
     @Override

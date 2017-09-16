@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+    
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.medicine.ssqy.ssqy.ui.activity.VideoPlayActivity">
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.VideoPlayActivity"
+   >
     <RelativeLayout
         android:id="@+id/rl_activity_video_play"
         android:layout_width="match_parent"
@@ -71,7 +73,7 @@
                       android:layout_height="wrap_content"
                       android:layout_centerVertical="true"
                       android:layout_toRightOf="@+id/bt_back_activity_video_play"
-                      android:text="标题"
+                      android:text=""
                       android:textColor="@color/colorWhite"
                       android:textSize="@dimen/text_size_medium"/>
             <TextView android:id="@+id/tv_share_activity_video_play"
@@ -114,7 +116,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:layout_weight="2"
-                android:text="18:50"
+                android:text="00:00"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_micro"/>
             <ProgressBar
@@ -133,7 +135,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:layout_weight="2"
-                android:text="30:50"
+                android:text="00:00"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_micro"/>
             <ImageView
@@ -151,31 +153,46 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rl_activity_video_play"
                     android:visibility="visible">
+       
+       <Button
+           android:id="@+id/bt_replay_vedio"
+           android:textColor="#fff"
+           android:layout_margin="10dp"
+           android:textStyle="bold"
+           android:background="@drawable/shape_first_login_bt"
+           android:text="忘记之前学过什么？点此重新播放视频噢！"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"/>
         <TextView
+            android:layout_below="@+id/bt_replay_vedio"
             android:id="@+id/tv_videotitle_activity_video_play"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/left_right_margin"
             android:layout_marginRight="@dimen/left_right_margin"
             android:layout_marginTop="@dimen/title_content_space"
-            android:text="课程题目"
+            android:text="标题"
             android:textSize="18sp"
             android:textStyle="bold"/>
+        
+        <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_videotitle_activity_video_play">
         <TextView
             android:id="@+id/tv_videocontent_activity_video_play"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_videotitle_activity_video_play"
+           
             android:layout_marginBottom="@dimen/title_content_space"
             android:layout_marginLeft="@dimen/left_right_margin"
             android:layout_marginRight="@dimen/left_right_margin"
-            android:layout_marginTop="@dimen/title_content_space"
+            android:layout_marginTop="3dp"
             android:lineSpacingExtra="@dimen/content_content_space"
-            android:text="课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容课程内容"
+            android:text="内容"
             android:textSize="14sp"/>
-        <include layout="@layout/comments"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_below="@+id/tv_videocontent_activity_video_play"/>
+        </ScrollView>
     </RelativeLayout>
-</RelativeLayout>
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>
+

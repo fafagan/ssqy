@@ -13,7 +13,7 @@ public class FirstLoginMsg {
     public int action;
     
     public String sex;
-    public boolean isMarried;
+    public String isMarried;
     public String birthDay;
     public String job;
     public String studyLevel;

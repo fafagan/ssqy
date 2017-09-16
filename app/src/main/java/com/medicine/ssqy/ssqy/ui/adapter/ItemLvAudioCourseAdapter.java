@@ -70,8 +70,10 @@ public class ItemLvAudioCourseAdapter extends BaseAdapter {
 //            viewHolder.imgvItemLvAudioCourse
             viewHolder.tvTimeItemLvAudioCourse.setText(UtilTimeConvertS.formatTime(courseAudioEntity.getCourseLength()));
             viewHolder.tvTitleItemLvAudioCourse.setText(courseAudioEntity.getCourseTitle());
-            viewHolder.pbItemLvAudioCourse.setMax(courseAudioEntity.getCourseLength());
-            viewHolder.pbItemLvAudioCourse.setProgress(courseAudioEntity.getCourseStudy());
+            viewHolder.pbItemLvAudioCourse.setMax(100);
+//            viewHolder.pbItemLvAudioCourse.setMax(courseAudioEntity.getCourseLength());
+//            viewHolder.pbItemLvAudioCourse.setProgress(courseAudioEntity.getCourseStudy());
+            viewHolder.pbItemLvAudioCourse.setProgress(38);
        
  
         return convertView;

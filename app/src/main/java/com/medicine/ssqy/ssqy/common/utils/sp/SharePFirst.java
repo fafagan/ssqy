@@ -12,6 +12,7 @@ public class SharePFirst {
        
    }
     public static boolean isFirst(){
+//        return true;
         return SharedPrefrencesUtil.getData(KBaseApp.mContextGlobal,"ssqyIsFirst","IsFirst",true);
         
     }

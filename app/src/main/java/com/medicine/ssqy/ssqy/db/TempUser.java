@@ -12,10 +12,10 @@ import org.xutils.x;
  */
 public class TempUser {
     
-    public static void saveOrUpdateUserFirst(String sex,boolean isMarried,String birthDay,String job,String study){
+    public static void saveOrUpdateUserFirst(String sex,String isMarried,String birthDay,String job,String study){
         UserEntity nowUser = getNowUser(SharePLogin.getUid());
         nowUser.setSex(sex);
-        nowUser.setIsMarried(isMarried+"");
+        nowUser.setIsMarried(isMarried);
         nowUser.setBirthDay(birthDay);
         nowUser.setJob(job);
         nowUser.setStudyLevel(study);
@@ -45,7 +45,7 @@ public class TempUser {
                 dbManager.
                         update(userEntity, "birthDay", "headPicUrl", "job",
                                 "nickName", "phone", "regTime", "sex", "studylevel",
-                                "useraccount", "isMarried", "level", "state", "uid");
+                                "useraccount", "isMarried", "level", "state", "uid","isFisrtLogin");
             } else {
                 dbManager.saveBindingId(userEntity);
             }

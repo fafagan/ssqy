@@ -22,19 +22,20 @@
         android:layout_height="1dp"/>
     <LinearLayout
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/edt_dy"
             android:hint="低压值"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
         <TextView
             android:gravity="center"
-            android:text="单位：kpa"
+            android:text="单位：mmHg"
             android:textColor="@color/text_common_default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
@@ -44,20 +45,98 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+        
         <EditText
+            android:id="@+id/edt_gy"
             android:hint="高压值"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
         <TextView
             android:gravity="center"
-            android:text="单位：kpa"
+            android:text="单位：mmHg"
             android:textColor="@color/text_common_default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
     </LinearLayout>
+    
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/text_color_red"
+            android:text="选择低压："
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textColor="@color/text_color_red"
+            android:text="选择高压："
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <FrameLayout
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <com.wx.wheelview.widget.WheelView
+                android:id="@+id/wv_dy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_mengban_top"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/shape_mengban_bottom"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <com.wx.wheelview.widget.WheelView
+                android:id="@+id/wv_gy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_mengban_top"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/shape_mengban_bottom"/>
+        </FrameLayout>
+    </LinearLayout>
     <Button
         android:id="@+id/dig_confirm"
         android:text="确定记录"

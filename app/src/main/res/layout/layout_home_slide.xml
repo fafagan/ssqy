@@ -122,16 +122,16 @@
             android:textColor="@color/text_common_default"
             android:textSize="16sp"/>
         
-        <TextView
-            android:id="@+id/tv_pop_doctor"
-            android:background="@drawable/shape_red_pop"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:text="7"
-            android:layout_width="20dp"
-            android:layout_height="20dp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_pop_doctor"-->
+            <!--android:background="@drawable/shape_red_pop"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="#fff"-->
+            <!--android:textStyle="bold"-->
+            <!--android:text="7"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"/>-->
     </LinearLayout>
 
     <LinearLayout
@@ -155,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="我的课程"
+            android:text="我的今日养生"
             android:textColor="@color/text_common_default"
             android:textSize="16sp"/>
     </LinearLayout>

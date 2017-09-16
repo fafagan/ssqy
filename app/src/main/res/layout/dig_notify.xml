@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="310dp"
+              android:layout_height="320dp"
+              android:gravity="center_horizontal"
+              android:background="@drawable/cbg"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="友情提示您："
+        android:textColor="#f00"
+        android:textSize="@dimen/text_size_medium"/>
+
+    <RelativeLayout
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+             android:layout_centerInParent="true"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:text="   即将展现针对您个人的“四时七养”方案，体质不同，节气不同，方案也不同。此方案仅适用您自己，请勿让他人尝试，以免对他人的健康造成干扰。"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+    
+    
+        <Button
+            android:id="@+id/bt_confirm"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_first_login_bt"
+            android:text="我已经了解"
+            android:textColor="#fff"
+            android:textSize="16sp"/>
+        <CheckBox
+            android:id="@+id/cb_cancel"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="不再显示该提示"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>

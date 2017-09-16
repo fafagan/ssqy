@@ -3,14 +3,17 @@ package com.medicine.ssqy.ssqy.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
-import com.medicine.ssqy.ssqy.R;
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.entity.course.CourseVideoProgressEntity;
 import com.medicine.ssqy.ssqy.eventBus.MusicSoldier;
 import com.medicine.ssqy.ssqy.ui.listener.MyPhoneStateListener;
 import com.orhanobut.logger.Logger;
@@ -27,11 +30,45 @@ import java.util.TimerTask;
 public class MusicService extends Service {
     private int curIndex = 0;
     private int totalTime = 0;
-    public static MediaPlayer mp = new MediaPlayer();
+    public static MediaPlayer mp ;
     MusicSoldier soldier = new MusicSoldier();
     Timer timer = new Timer();
     private MyPhoneStateListener mPhoneStateListener;
     private String mCourseUrl;
+    
+    private Timer mTimerSyncLearnProgress;
+    private String courseID;
+    private TimerTask mTimerTaskSyncLearnProgress=new TimerTask() {
+        @Override
+        public void run() {
+            mNetForJsonSyncLearnProgress.addParam("uid", SharePLogin.getUid());
+            mNetForJsonSyncLearnProgress.addParam("type","audio");
+            mNetForJsonSyncLearnProgress.addParam("courseID",courseID);
+            if (mp!=null) {
+                mNetForJsonSyncLearnProgress.addParam("learnProgress",mp.getCurrentPosition());
+                mNetForJsonSyncLearnProgress.excute();
+            }
+           
+        }
+    };
+    private boolean mHasBeginSycn=false;
+    private NetForJson mNetForJsonSyncLearnProgress=new NetForJson(URLConstant.AUDIO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
+        @Override
+        public void onSuccess(CourseVideoProgressEntity entity) {
+            
+        }
+        
+        @Override
+        public void onError() {
+            
+        }
+        
+        @Override
+        public void onFinish() {
+            
+        }
+    },true);
+    private int courseStudy;
     
     public MusicService() {
     }
@@ -48,7 +85,13 @@ public class MusicService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mCourseUrl = intent.getStringExtra("courseUrl");
-        playMusic();
+        courseID=intent.getStringExtra("courseID");
+        courseStudy=intent.getIntExtra("courseStudy",0);
+        mp = new MediaPlayer();
+        if (mCourseUrl!=null&&courseID!=null){
+            playMusic();
+        }
+     
         
         return super.onStartCommand(intent, flags, startId);
     }
@@ -65,6 +108,8 @@ public class MusicService extends Service {
                 break;
             case MusicSoldier.ACTION_KILL_SERVICE:
                 mp.stop();
+                mp.release();
+                mp=null;
                 break;
         }
     }
@@ -77,6 +122,9 @@ public class MusicService extends Service {
         EventBus.getDefault().unregister(this);
         TelephonyManager tmgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         tmgr.listen(mPhoneStateListener, 0);
+        mTimerSyncLearnProgress.cancel();
+        mTimerSyncLearnProgress=null;
+        mHasBeginSycn=false;
         super.onDestroy();
     }
     
@@ -102,8 +150,9 @@ public class MusicService extends Service {
             curIndex = mp.getCurrentPosition();
             mp.pause();
         } else {
-            mp.seekTo(curIndex);
+//            mp.seekTo(curIndex);
             mp.start();
+           
             timer.schedule(new MyTask(), 0, 1000);
         }
     }
@@ -118,7 +167,7 @@ public class MusicService extends Service {
     }
     
     public void playMusic() {
-        AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.testaudio);
+//        AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.testaudio);
         if (mp != null) {
             try {
                 mp.reset();
@@ -126,20 +175,31 @@ public class MusicService extends Service {
                 mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 //                mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(),
 //                        file.getLength());
+//                mp.setDataSource("http://192.168.0.104:8080/test/test.ogg");
                 mp.setDataSource(mCourseUrl);
                 mp.prepareAsync();
                 mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         totalTime = mp.getDuration();
+                        
                         soldier.setAction(MusicSoldier.ACTION_UPDATE_TIMEDATA);
                         soldier.setTotalTime(totalTime);
                         EventBus.getDefault().post(soldier);
                         mp.start();
+                        if (courseStudy!=0){
+                            mp.seekTo((int) courseStudy);
+                            
+                        }
+                        if (!mHasBeginSycn) {
+                            mHasBeginSycn=true;
+                            mTimerSyncLearnProgress=new Timer();
+                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                        }
                         timer.schedule(new MyTask(), 0, 1000);
                     }
                 });
-                file.close();
+//                file.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -149,8 +209,14 @@ public class MusicService extends Service {
     
     public void playMusic(int index) {
         if (mp != null) {
-            mp.seekTo(index);
+//            mp.seekTo(index);
+    
+            if (!mHasBeginSycn) {
+                mHasBeginSycn=true;
+                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+            }
             mp.start();
+            mp.seekTo(index);
             timer.schedule(new MyTask(), 0, 1000);
         }
     }
@@ -170,6 +236,7 @@ public class MusicService extends Service {
                 
                 curIndex = (int) (mp.getCurrentPosition());
                 Logger.e("curIndex: "+curIndex);
+                Logger.e("total: "+mp.getDuration());
                 soldier.setAction(MusicSoldier.ACTION_UPDATE_SEEKBAR_PROGRESS);
                 soldier.setCurIndex(curIndex);
                 soldier.setTotalTime(totalTime);
