@@ -27,6 +27,9 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:maxLength="6"
+            android:singleLine="true"
+            android:inputType="numberDecimal"
             android:id="@+id/edt_tz"
             android:hint="在此填写您的体重值"
             android:layout_width="0dp"

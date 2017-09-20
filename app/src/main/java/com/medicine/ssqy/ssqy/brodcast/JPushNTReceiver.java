@@ -17,9 +17,10 @@ public class JPushNTReceiver extends BroadcastReceiver {
     private static final String TAG = "JPushNTReceiver";
      
     private NotificationManager nm;
-     
+     private Context mContext;
     @Override
     public void onReceive(Context context, Intent intent) {
+        mContext=context;
         if (null == nm) {
             nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
@@ -59,16 +60,25 @@ public class JPushNTReceiver extends BroadcastReceiver {
  
    private void openNotification(Context context, Bundle bundle){
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-       Logger.e("extras  "+extras);
+        Logger.e("extras  "+extras);
         String myValue = "";
         try {
             JSONObject extrasJson = new JSONObject(extras);
+            String pushType = extrasJson.getString("type");
+            if("downover".equals(pushType)){
+                String notiid=extrasJson.getString("notiid");
+                if (notiid != null) {
+                    JPushInterface.removeLocalNotification(mContext,Long.parseLong(notiid));
+                }
+                return;
+            }
             myValue = extrasJson.optString("url");
             
             Intent intent=new Intent(context, CourseDetailPicActivity.class);
     
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("newsUrl",myValue);
+            intent.putExtra("type",CourseDetailPicActivity.TYPE_XJ);
             context.startActivity(intent);
             Logger.e("myValue  "+myValue);
         } catch (Exception e) {

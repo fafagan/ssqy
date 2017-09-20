@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/json" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/playerDemo" />
+            <option value="$PROJECT_DIR$/playerlib" />
             <option value="$PROJECT_DIR$/test" />
           </set>
         </option>

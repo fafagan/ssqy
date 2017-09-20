@@ -20,11 +20,11 @@ import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.entity.UsersetEntity;
 import com.medicine.ssqy.ssqy.eventBus.FirstLoginMsg;
-import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginBirthFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginJobFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginSexFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.FirstLoginStudyLevelFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.QuestionFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.first.FirstLoginBirthFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.first.FirstLoginJobFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.first.FirstLoginSexFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.first.FirstLoginStudyLevelFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.first.QuestionFragment;
 import com.medicine.ssqy.ssqy.ui.pop.LoadingPopWindow;
 import com.orhanobut.logger.Logger;
 
@@ -141,7 +141,8 @@ public class FirstLoginActivity extends KBaseActivity {
         UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
         Logger.e(nowUser.toString());
         mNetForJson.addParam("nickName",nowUser.getNickName());
-        mNetForJson.addParam("sex","man".equals(sex)?1:2);
+        mNetForJson.addParam("sex",sex);
+//        mNetForJson.addParam("sex","man".equals()?1:2);
         mNetForJson.addParam("marry",isMarried);
         mNetForJson.addParam("birth",birthDay);
         mNetForJson.addParam("phone",nowUser.getUseraccount());
@@ -150,7 +151,6 @@ public class FirstLoginActivity extends KBaseActivity {
         mNetForJson.addParam("isFirstLogin",false);
         mNetForJson.addParam("level",1);
         mNetForJson.excute();
-        
       
     }
     
@@ -160,7 +160,7 @@ public class FirstLoginActivity extends KBaseActivity {
         nowUser.setIsMarried(isMarried);
         nowUser.setBirthDay(birthDay);
         nowUser.setJob(job);
-        nowUser.setStudyLevel(studyLevel);
+        nowUser.setStudylevel(studyLevel);
         nowUser.setIsFisrtLogin("true");
         nowUser.setSex(sex);
         TempUser.saveOrUpdateUser(nowUser);

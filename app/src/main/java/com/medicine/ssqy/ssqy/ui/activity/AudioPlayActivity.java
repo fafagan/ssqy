@@ -26,6 +26,7 @@ import com.medicine.ssqy.ssqy.ui.adapter.ItemDiscussLvAdapter;
 import com.medicine.ssqy.ssqy.ui.dialog.DigDiscuss;
 import com.medicine.ssqy.ssqy.util.ShareUtil;
 import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
+import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,7 +45,9 @@ public class AudioPlayActivity extends KBaseActivity {
     private TextView mTvTotaltimeActivityAudioPlay;
     private TextView mTvAudiocontentActivityAudioPlay;
     private ImageView mImgvActivityAudioPlay;
-//    private ImageView mFengexian;
+    private TextView mTvPlaytimeActivityAudioPlay;
+    
+    //    private ImageView mFengexian;
 //    private TextView mTvCommentsnumComment;
 //    private ListView mLvCommentsComment;0
 //    private LinearLayout mLlBottombarComment;
@@ -62,7 +65,9 @@ public class AudioPlayActivity extends KBaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case UPDATE_PROGRESS:
-                    mSbActivityAudioPlay.setProgress((Integer) msg.obj);
+                    int currentProgress= (Integer) msg.obj;
+                    mSbActivityAudioPlay.setProgress(currentProgress);
+                    mTvPlaytimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) currentProgress));
                     break;
                 default:
                     break;
@@ -92,7 +97,8 @@ public class AudioPlayActivity extends KBaseActivity {
         mTvTotaltimeActivityAudioPlay = (TextView) findViewById(R.id.tv_totaltime_activity_audio_play);
         mTvAudiocontentActivityAudioPlay = (TextView) findViewById(R.id.tv_audiocontent_activity_audio_play);
         mImgvActivityAudioPlay = (ImageView) findViewById(R.id.imgv_activity_audio_play);
-        
+    
+        mTvPlaytimeActivityAudioPlay = (TextView) findViewById(R.id.tv_playtime_activity_audio_play);
 //        mFengexian = (ImageView) findViewById(R.id.fengexian);
 //        mTvCommentsnumComment = (TextView) findViewById(R.id.tv_commentsnum_comment);
 //        mLvCommentsComment = (ListView) findViewById(R.id.lv_comments_comment);
@@ -160,7 +166,7 @@ public class AudioPlayActivity extends KBaseActivity {
     
                 mTvTotaltimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) entity.getCourseLength()));
                 mSbActivityAudioPlay.setMax(entity.getCourseLength());
-                mTvAudiocontentActivityAudioPlay.setText(mEntity.getCourseDetail());
+                mTvAudiocontentActivityAudioPlay.setText("音频简介： "+mEntity.getCourseDetail());
             }
     
             @Override
@@ -181,22 +187,28 @@ public class AudioPlayActivity extends KBaseActivity {
         mCbPlayorpauseActivityAudioPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Logger.e("ischecked"+isChecked);
                 if (mCbPlayorpauseActivityAudioPlay.isChecked()){
                     if (mEntity==null||mCourse==null){
-                        Toast.makeText(mSelf, "网络异常，请退出重试！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mSelf, "正在准备音频，请稍后重试噢！", Toast.LENGTH_SHORT).show();
                         mCbPlayorpauseActivityAudioPlay.setChecked(false);
                         return;
                     }
-                 
+                }
+                String courseUrl = mEntity.getCourseUrl();
+                if (courseUrl==null) {
+                    Toast.makeText(mSelf, "网络异常，请退出重试！", Toast.LENGTH_SHORT).show();
+                    mCbPlayorpauseActivityAudioPlay.setChecked(false);
+                    return;
                 }
                 if (firstPlay) {
                     Intent intent = new Intent(AudioPlayActivity.this, MusicService.class);
-                    String courseUrl = mEntity.getCourseUrl();
                     String replace = courseUrl.replace("http://192.168.1.25:10086", "http://106.3.41.199:8066");
 //                    intent.putExtra("courseUrl",replace);
                     intent.putExtra("courseUrl",replace);
                     intent.putExtra("courseID",mEntity.getCourseID());
                     intent.putExtra("courseStudy",mEntity.getCourseStudy());
+                    intent.putExtra("courseEntity",mEntity);
                     startService(intent);
                     firstPlay = false;
                 } else {
@@ -238,9 +250,12 @@ public class AudioPlayActivity extends KBaseActivity {
             case MusicSoldier.ACTION_UPDATE_TIMEDATA:
 //                mTvTotaltimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) event.getTotalTime()));
 //                mSbActivityAudioPlay.setMax(event.getTotalTime());
+    
                 break;
             case MusicSoldier.ACTION_UPDATE_SEEKBAR_PROGRESS:
                 curIndex = event.getCurIndex();
+                
+                
                 Message message=new Message();
                 message.what=UPDATE_PROGRESS;
                 message.obj=curIndex;

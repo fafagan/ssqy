@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.sj.mylibrary.util.AnimatorString;
 import com.medicine.ssqy.ssqy.R;
-import com.medicine.ssqy.ssqy.ui.fragment.HomeCourseFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeCourseFragment;
 
 import org.xutils.common.util.DensityUtil;
 

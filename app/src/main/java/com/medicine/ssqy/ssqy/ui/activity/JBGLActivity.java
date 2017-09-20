@@ -2,7 +2,7 @@ package com.medicine.ssqy.ssqy.ui.activity;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
-import com.medicine.ssqy.ssqy.ui.fragment.HomeJCFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeJCFragment;
 
 public class JBGLActivity extends KBaseActivity {
     
@@ -14,6 +14,7 @@ public class JBGLActivity extends KBaseActivity {
     @Override
     public void initViews() {
         setTitleCenter("我的疾病管理");
+       
         addFrag(R.id.activity_jbgl,new HomeJCFragment());
     }
     

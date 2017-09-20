@@ -25,6 +25,25 @@ public class CourseDetailPicActivity extends KBaseActivity {
     private WebSettings mSettings;
     private NetForJson mNetForJson;
     private   CoursePicListEntity.PicCourseDataEntity pc;
+    
+    public static final int TYPE_XJ=110;
+    private int type=-1;
+//    private NetForJson mNetForJsonSyncLearnProgress=new NetForJson(URLConstant.VIDEO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
+//        @Override
+//        public void onSuccess(CourseVideoProgressEntity entity) {
+//            
+//        }
+//        
+//        @Override
+//        public void onError() {
+//            
+//        }
+//        
+//        @Override
+//        public void onFinish() {
+//            
+//        }
+//    },true);
     @Override
     public int setRootView() {
         return R.layout.activity_course_detail_pic;
@@ -32,7 +51,9 @@ public class CourseDetailPicActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
-        setTitleCenter("养生图文");
+        
+        type=this.getIntent().getIntExtra("type",-1);
+
         setTitleRight("分享", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,33 +100,48 @@ public class CourseDetailPicActivity extends KBaseActivity {
     
     @Override
     public void initDatas() {
-        mNetForJson=new NetForJson(URLConstant.PIC_DETAIL_URL, new NetCallback<CoursePicDetailEntity>() {
-            @Override
-            public void onSuccess(CoursePicDetailEntity entity) {
-                if (entity.isState()){
-                    url=entity.getCoursehtmlUrl();
-                    loadWV();
-                }else {
-                    Toast.makeText(mSelf, "加载异常，请退出重试", Toast.LENGTH_SHORT).show();
+        if (type==-1) {
+            setTitleCenter("养生图文");
+            mNetForJson=new NetForJson(URLConstant.PIC_DETAIL_URL, new NetCallback<CoursePicDetailEntity>() {
+                @Override
+                public void onSuccess(CoursePicDetailEntity entity) {
+                    if (entity.isState()){
+                        url=entity.getCoursehtmlUrl();
+                        loadWV();
+                    }else {
+                        Toast.makeText(mSelf, "加载异常，请退出重试", Toast.LENGTH_SHORT).show();
+                    }
+            
                 }
         
-            }
-    
-            @Override
-            public void onError() {
-                Toast.makeText(mSelf, "网络异常，请检查网络状态！", Toast.LENGTH_SHORT).show();
-            }
-    
-            @Override
-            public void onFinish() {
+                @Override
+                public void onError() {
+                    Toast.makeText(mSelf, "网络异常，请检查网络状态！", Toast.LENGTH_SHORT).show();
+                }
         
-            }
-        });
+                @Override
+                public void onFinish() {
+            
+                }
+            });
     
-        mNetForJson.addParam("uid", SharePLogin.getUid());
-        mNetForJson.addParam("courseID", pc.getCourseID());
-        mNetForJson.addParam("type", "pic");
-        mNetForJson.excute();
+            mNetForJson.addParam("uid", SharePLogin.getUid());
+            mNetForJson.addParam("courseID", pc.getCourseID());
+            mNetForJson.addParam("type", "pic");
+            mNetForJson.excute();
+    
+//    
+//            mNetForJsonSyncLearnProgress.addParam("uid",SharePLogin.getUid());
+//            mNetForJsonSyncLearnProgress.addParam("type","video");
+//            mNetForJsonSyncLearnProgress.addParam("courseID",pc.getCourseID());
+//            mNetForJsonSyncLearnProgress.addParam("learnProgress",10000);
+//            mNetForJsonSyncLearnProgress.addParam("courseLearned","true");
+        }else {
+            setTitleCenter("养生宣教");
+            url=getIntent().getStringExtra("newsUrl");
+            loadWV();
+        }
+      
     }
     
     private void loadWV() {

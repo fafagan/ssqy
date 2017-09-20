@@ -273,9 +273,9 @@
             android:launchMode="singleTask">
         </activity>
         <activity
-            android:screenOrientation="portrait"
+            android:name=".ui.activity.FirstLoginActivity"
             android:hardwareAccelerated="true"
-            android:name=".ui.activity.FirstLoginActivity">
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.VedioCourseListActivity">
         </activity>
@@ -284,18 +284,18 @@
         <activity android:name=".ui.activity.PicCourseListActivity">
         </activity>
         <activity
-            android:screenOrientation="portrait"
+            android:name=".ui.activity.CourseDetailPicActivity"
             android:hardwareAccelerated="true"
-            android:name=".ui.activity.CourseDetailPicActivity">
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.CourseHistoryActivity">
         </activity>
         <activity android:name=".ui.activity.SystemMsgActivity">
         </activity>
         <activity
-            android:screenOrientation="portrait"
+            android:name=".ui.activity.BodyAnalyseActivity"
             android:hardwareAccelerated="true"
-            android:name=".ui.activity.BodyAnalyseActivity">
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.TempActivity">
         </activity>
@@ -316,9 +316,9 @@
         </service>
 
         <activity
-            android:screenOrientation="portrait"
+            android:name=".ui.activity.MyInformationActivity"
             android:hardwareAccelerated="true"
-            android:name=".ui.activity.MyInformationActivity">
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.SettingActivity">
         </activity>
@@ -341,13 +341,22 @@
         <activity android:name=".ui.activity.AboutActivity">
         </activity>
         <activity
-            android:screenOrientation="portrait"
+            android:name=".ui.activity.XYActivity"
             android:hardwareAccelerated="true"
-            android:name=".ui.activity.XYActivity">
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.PWDFind2Activity">
         </activity>
         <activity android:name=".ui.activity.HomeUtilActivity">
+        </activity>
+
+        <service
+            android:name=".task.download.controller.DownloadService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
+        <activity android:name=".ui.activity.JBGLListActivity">
         </activity>
     </application>
 

@@ -1,1 +1,1 @@
-include ':app', ':library', ':json', ':test'
+include ':app', ':library', ':json', ':test', ':playerlib', ':playerDemo'

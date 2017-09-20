@@ -12,13 +12,13 @@ import org.xutils.x;
  */
 public class TempUser {
     
-    public static void saveOrUpdateUserFirst(String sex,String isMarried,String birthDay,String job,String study){
+    public   static  void saveOrUpdateUserFirst(String sex,String isMarried,String birthDay,String job,String study){
         UserEntity nowUser = getNowUser(SharePLogin.getUid());
         nowUser.setSex(sex);
         nowUser.setIsMarried(isMarried);
         nowUser.setBirthDay(birthDay);
         nowUser.setJob(job);
-        nowUser.setStudyLevel(study);
+        nowUser.setStudylevel(study);
         saveOrUpdateUser(nowUser);
     }
     

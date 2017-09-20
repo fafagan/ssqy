@@ -2,7 +2,6 @@
 <com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -15,14 +14,32 @@
 
     </com.medicine.ssqy.ssqy.ui.views.calendar.CalendarView>
 
-    <ImageView
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:id="@+id/imgv_logo_index"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/title_index"/>
-
+    <!--<ImageView-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:id="@+id/imgv_logo_index"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_marginRight="30dp"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:src="@drawable/title_index"/>-->
+    <TextView
+        android:id="@+id/tv_byysrj"
+       android:layout_margin="5dp"
+       android:textColor="#000"
+        android:layout_below="@+id/calender"
+        android:text="本月养生日记："
+       android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recy_calendar"
+        android:layout_below="@+id/tv_byysrj"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    <!--<ListView-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:id="@+id/lv_calendar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"></ListView>-->
 </com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

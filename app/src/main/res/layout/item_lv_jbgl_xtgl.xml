@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="60dp"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:paddingLeft="10dp"
+              android:paddingTop="10dp"
+              android:paddingBottom="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="血糖值："
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:id="@+id/tv_data_xt"
+        android:layout_width="50dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:textColor="@color/text_color_red"
+        android:text="单位:mmol/L"
+        android:textSize="14sp"/>
+    <!--<TextView-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="8dp"-->
+        <!--android:text="记录时间："-->
+        <!--android:textSize="14sp"/>-->
+    
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/tv_time_xt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="16sp"/>
+</LinearLayout>

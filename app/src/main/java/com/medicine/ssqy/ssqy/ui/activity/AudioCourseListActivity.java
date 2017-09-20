@@ -154,7 +154,11 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
         },true);
         
     }
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mLayoutRefresh.setRefreshing(true);
+    }
 //    private void tempData() {
 //
 //        mAudioCourseDataEntities=new ArrayList<>();
@@ -250,6 +254,7 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
 //        },2500);
         if (mSwipeTarget.getCount() >= mCourseCount) {
             Toast.makeText(mSelf, "已全部加载完毕", Toast.LENGTH_SHORT).show();
+            mLayoutRefresh.setLoadingMore(false);
             return;
         }
         doNetLoadMore();
@@ -261,12 +266,11 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
         typeNet = TYPE_REFRESH;
         mNetForJson.addParam("uid", SharePLogin.getUid());
         mNetForJson.addParam("startpos", 0);
-        mNetForJson.addParam("count", 5);
+        mNetForJson.addParam("count", 10);
         mNetForJson.excute();
     }
     
     private void doNetRfresh() {
-        Toast.makeText(mSelf, "已加载最新课程", Toast.LENGTH_SHORT).show();
 //        tempData();
         mLayoutRefresh.setRefreshing(false);
         
@@ -278,7 +282,7 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
         mLayoutRefresh.setLoadingMore(false);
         mNetForJson.addParam("uid", SharePLogin.getUid());
         mNetForJson.addParam("startpos", mPosStart);
-        mNetForJson.addParam("count", 5);
+        mNetForJson.addParam("count", 10);
         mNetForJson.excute();
     }
     

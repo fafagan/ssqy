@@ -43,7 +43,7 @@ public class LoginPlatClick extends BaseOnClick<LoginActivity> {
             loginEntity.setNickName(data.get("screen_name"));
             loginEntity.setHeadPicUrl(data.get("profile_image_url"));
             loginEntity.setSex(data.get("gender"));
-            loginEntity.setLevel(2);
+            loginEntity.setLevel(1);
             loginEntity.setFisrtLogin(true);
     
           
@@ -94,7 +94,9 @@ public class LoginPlatClick extends BaseOnClick<LoginActivity> {
                 mPopWindow.dismiss();
                 break;
             case R.id.layout_login_qq:
-                mParent.mShareAPI.getPlatformInfo(mParent, SHARE_MEDIA.QQ, umDetailListener);
+                Toast.makeText(mContext, "功能正在来临，敬请期待！", Toast.LENGTH_SHORT).show();
+                mPopWindow.dismiss();
+//                mParent.mShareAPI.getPlatformInfo(mParent, SHARE_MEDIA.QQ, umDetailListener);
                 
                 break;
             case R.id.layout_login_wb:

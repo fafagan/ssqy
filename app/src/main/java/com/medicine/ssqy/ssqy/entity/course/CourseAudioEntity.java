@@ -1,11 +1,12 @@
 package com.medicine.ssqy.ssqy.entity.course;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/12.
  */
-public class CourseAudioEntity {
+public class CourseAudioEntity implements Serializable{
     
     /**
      * state : true

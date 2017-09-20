@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="310dp"
-              android:layout_height="320dp"
-              android:gravity="center_horizontal"
+              android:layout_width="330dp"
+              android:layout_height="360dp"
+              android:gravity="center"
               android:background="@drawable/cbg"
               android:orientation="vertical">
 

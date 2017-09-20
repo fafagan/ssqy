@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.example.sj.mylibrary.net.NetCallback;
 import com.example.sj.mylibrary.net.NetForJson;
+import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
@@ -30,7 +32,15 @@ public class DigXTJC extends Dialog implements View.OnClickListener {
     private NetForJson mNetForJson;
     private EditText mEdtTz;
     
-
+    private boolean mIsUpdateMode = false;
+    private String mReordID;
+    private SwipeToLoadLayout mSwipeToLoadLayout;
+    
+    public void setUpdateMode(String recordID, SwipeToLoadLayout refreshLayout) {
+        mIsUpdateMode = true;
+        mReordID = recordID;
+        mSwipeToLoadLayout = refreshLayout;
+    }
     
     public DigXTJC(final Context context) {
         super(context);
@@ -41,40 +51,84 @@ public class DigXTJC extends Dialog implements View.OnClickListener {
         mDigConfirm = (Button) findViewById(R.id.dig_confirm);
         mDigConfirm.setOnClickListener(this);
         mEdtTz = (EditText) findViewById(R.id.edt_xt);
-        initNet();
+ 
     }
     
     private void initNet() {
-    
-        mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
-            @Override
-            public void onSuccess(JCEntity entity) {
-                Toast.makeText(getContext(), "记录成功！", Toast.LENGTH_SHORT).show();
-                cancel();
-                
+        if (mNetForJson==null) {
+            if (mIsUpdateMode) {
+                mNetForJson=new NetForJson(URLConstant.JBGL_MODIFY_URL, new NetCallback<JCEntity>() {
+                    @Override
+                    public void onSuccess(JCEntity entity) {
+                        if (entity.isState()) {
+                            Toast.makeText(getContext(), "修改成功！", Toast.LENGTH_SHORT).show();
+                            if (mSwipeToLoadLayout != null) {
+                                mSwipeToLoadLayout.setRefreshing(true);
+                            }
+                            cancel();
+                        }else {
+                            Toast.makeText(getContext(), "修改异常，请重试！", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onError() {
+                        Toast.makeText(context, "记录失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
+                    }
+                    
+                    @Override
+                    public void onFinish() {
+                        
+                    }
+                });
+            }else {
+                mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
+                    @Override
+                    public void onSuccess(JCEntity entity) {
+                        if (entity.isState()) {
+                            Toast.makeText(getContext(), "记录成功！", Toast.LENGTH_SHORT).show();
+                            cancel();
+                        }else {
+                            Toast.makeText(getContext(), "当天记录已存在，请查看我的疾病管理", Toast.LENGTH_SHORT).show();
+                            
+                        }
+                    }
+                    
+                    @Override
+                    public void onError() {
+                        Toast.makeText(context, "记录失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
+                    }
+                    
+                    @Override
+                    public void onFinish() {
+                        
+                    }
+                });
             }
-        
-            @Override
-            public void onError() {
-                Toast.makeText(context, "记录失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
-            
-            }
-        
-            @Override
-            public void onFinish() {
-            
-            }
-        });
-    
+        }
     }
     
     
     @Override
     public void onClick(View v) {
-        mNetForJson.addParam("uid", SharePLogin.getUid());
-        mNetForJson.addParam("recordtype", URLConstant.RECORD_TYPE_XT);
-        mNetForJson.addParam("data", mEdtTz.getText().toString());
-        mNetForJson.addParam("time", System.currentTimeMillis());
-        mNetForJson.excute();
+        String string = mEdtTz.getText().toString().trim();
+        if (StringEmptyUtil.isEmpty(string)) {
+            Toast.makeText(mContext, "请填写血糖值再保存！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Toast.makeText(mContext, "正在记录，请稍等", Toast.LENGTH_SHORT).show();
+        initNet();
+        if (mIsUpdateMode) {
+            mNetForJson.addParam("uid", SharePLogin.getUid());
+            mNetForJson.addParam("recordtype", URLConstant.RECORD_TYPE_XT);
+            mNetForJson.addParam("recordID", mReordID);
+            mNetForJson.addParam("newdata", string);
+            mNetForJson.excute();
+        }else {
+            mNetForJson.addParam("uid", SharePLogin.getUid());
+            mNetForJson.addParam("recordtype", URLConstant.RECORD_TYPE_XT);
+            mNetForJson.addParam("data", string);
+            mNetForJson.excute();  
+        }
+      
     }
 }

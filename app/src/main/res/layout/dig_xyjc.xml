@@ -28,6 +28,9 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:maxLength="6"
+            android:singleLine="true"
+            android:inputType="numberDecimal"
             android:id="@+id/edt_dy"
             android:hint="低压值"
             android:layout_width="0dp"

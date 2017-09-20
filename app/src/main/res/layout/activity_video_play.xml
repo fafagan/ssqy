@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-    
+
 <com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.medicine.ssqy.ssqy.ui.activity.VideoPlayActivity"
-   >
+    >
+
     <RelativeLayout
         android:id="@+id/rl_activity_video_play"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:background="@color/colorBlack">
+
         <SurfaceView
             android:id="@+id/sv_activity_video_play"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_centerInParent="true"/>
-        <LinearLayout android:id="@+id/ll_lightbar_activity_video_play"
-                      android:layout_width="150dp"
-                      android:layout_height="wrap_content"
-                      android:layout_centerInParent="true"
-                      android:background="@color/colorTransBlack"
-                      android:orientation="vertical"
-                      android:visibility="gone">
-            <ImageView android:layout_width="40dp"
-                       android:layout_height="40dp"
-                       android:layout_gravity="center_horizontal"
-                       android:layout_margin="10dp"
-                       android:src="@drawable/player_bright_icon"/>
+
+        <LinearLayout
+            android:id="@+id/ll_lightbar_activity_video_play"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/colorTransBlack"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:src="@drawable/player_bright_icon"/>
+
             <ProgressBar
                 android:id="@+id/pb_light_activity_video_play"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -37,18 +44,23 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="5dp"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/ll_volumebar_activity_video_play"
-                      android:layout_width="150dp"
-                      android:layout_height="wrap_content"
-                      android:layout_centerInParent="true"
-                      android:background="@color/colorTransBlack"
-                      android:orientation="vertical"
-                      android:visibility="gone">
-            <ImageView android:layout_width="40dp"
-                       android:layout_height="40dp"
-                       android:layout_gravity="center_horizontal"
-                       android:layout_margin="10dp"
-                       android:src="@drawable/player_volume_icon"/>
+
+        <LinearLayout
+            android:id="@+id/ll_volumebar_activity_video_play"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/colorTransBlack"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:src="@drawable/player_volume_icon"/>
+
             <ProgressBar
                 android:id="@+id/pb_volume_activity_video_play"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -57,47 +69,77 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="5dp"/>
         </LinearLayout>
-        <RelativeLayout android:id="@+id/rl_svtopbar_activity_video_play"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/colorTransBlack"
-                        android:visibility="visible">
-            <Button android:id="@+id/bt_back_activity_video_play"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/ppq_back"/>
-            <TextView android:id="@+id/tv_vedioname_activity_video_play"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_centerVertical="true"
-                      android:layout_toRightOf="@+id/bt_back_activity_video_play"
-                      android:text=""
-                      android:textColor="@color/colorWhite"
-                      android:textSize="@dimen/text_size_medium"/>
-            <TextView android:id="@+id/tv_share_activity_video_play"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_alignParentRight="true"
-                      android:layout_centerVertical="true"
-                      android:text="分享"
-                      android:clickable="true"
-                      android:layout_marginRight="@dimen/left_right_margin"
-                      android:textColor="@color/colorWhite"
-                      android:textSize="@dimen/text_size_medium"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_svtopbar_activity_video_play"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorTransBlack"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/bt_back_activity_video_play"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:background="@drawable/ppq_back"/>
+
+            <TextView
+                android:id="@+id/tv_vedioname_activity_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/bt_back_activity_video_play"
+                android:text=""
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_medium"/>
+
+
+
+            <TextView
+                android:layout_margin="5dp"
+                android:id="@+id/tv_download_activity_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:drawableLeft="@drawable/down"
+                android:text=" 缓存"
+                android:clickable="true"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorWhite"
+                android:layout_toLeftOf="@+id/tv_share_activity_video_play"/>
+
+            <TextView
+                android:gravity="center_vertical"
+                android:id="@+id/tv_share_activity_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/left_right_margin"
+                android:clickable="true"
+                android:text="分享"
+                android:drawableLeft="@drawable/share_vedio_selector"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"/>
         </RelativeLayout>
-        <Button android:id="@+id/bt_play_activity_video_play"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/ppq_play"/>
-        <LinearLayout android:id="@+id/ll_svbottombar_activity_video_play"
-                      android:layout_width="match_parent"
-                      android:layout_height="40dp"
-                      android:layout_alignParentBottom="true"
-                      android:background="@color/colorTransBlack"
-                      android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_play_activity_video_play"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ppq_play"/>
+
+        <LinearLayout
+            android:id="@+id/ll_svbottombar_activity_video_play"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorTransBlack"
+            android:orientation="horizontal">
+
             <CheckBox
                 android:id="@+id/cb_playorstop_activity_video_play"
                 android:layout_width="0dp"
@@ -109,6 +151,7 @@
                 android:background="@drawable/play_pause"
                 android:button="@null"
                 android:checked="false"/>
+
             <TextView
                 android:id="@+id/tv_playtime_activity_video_play"
                 android:layout_width="5dp"
@@ -119,6 +162,7 @@
                 android:text="00:00"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_micro"/>
+
             <ProgressBar
                 android:id="@+id/pb_activity_video_play"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -128,6 +172,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="8"
                 android:visibility="visible"/>
+
             <TextView
                 android:id="@+id/tv_totaltime_activity_video_play"
                 android:layout_width="5dp"
@@ -138,6 +183,7 @@
                 android:text="00:00"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_micro"/>
+
             <ImageView
                 android:id="@+id/bt_landscape_activity_video_play"
                 android:layout_width="0dp"
@@ -148,50 +194,55 @@
                 android:src="@mipmap/quanping"/>
         </LinearLayout>
     </RelativeLayout>
-    <RelativeLayout android:id="@+id/rl_content_activity_video_play"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rl_activity_video_play"
-                    android:visibility="visible">
-       
-       <Button
-           android:id="@+id/bt_replay_vedio"
-           android:textColor="#fff"
-           android:layout_margin="10dp"
-           android:textStyle="bold"
-           android:background="@drawable/shape_first_login_bt"
-           android:text="忘记之前学过什么？点此重新播放视频噢！"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_content_activity_video_play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_activity_video_play"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/bt_replay_vedio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_first_login_bt"
+            android:text="忘记之前学过什么？点此重新播放视频噢！"
+            android:textColor="#fff"
+            android:textStyle="bold"/>
+
         <TextView
-            android:layout_below="@+id/bt_replay_vedio"
             android:id="@+id/tv_videotitle_activity_video_play"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_replay_vedio"
+            android:layout_marginBottom="6dp"
             android:layout_marginLeft="@dimen/left_right_margin"
             android:layout_marginRight="@dimen/left_right_margin"
             android:layout_marginTop="@dimen/title_content_space"
-            android:text="标题"
+            android:text="当前正在播放："
             android:textSize="18sp"
             android:textStyle="bold"/>
-        
+
         <ScrollView
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tv_videotitle_activity_video_play">
-        <TextView
-            android:id="@+id/tv_videocontent_activity_video_play"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           
-            android:layout_marginBottom="@dimen/title_content_space"
-            android:layout_marginLeft="@dimen/left_right_margin"
-            android:layout_marginRight="@dimen/left_right_margin"
-            android:layout_marginTop="3dp"
-            android:lineSpacingExtra="@dimen/content_content_space"
-            android:text="内容"
-            android:textSize="14sp"/>
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_videotitle_activity_video_play">
+
+            <TextView
+                android:id="@+id/tv_videocontent_activity_video_play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/title_content_space"
+                android:layout_marginLeft="@dimen/left_right_margin"
+                android:layout_marginRight="@dimen/left_right_margin"
+                android:layout_marginTop="3dp"
+                android:lineSpacingExtra="@dimen/content_content_space"
+                android:paddingBottom="15dp"
+                android:text="视频简介："
+                android:textSize="14sp"/>
         </ScrollView>
     </RelativeLayout>
 </com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

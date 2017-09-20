@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.medicine.ssqy.ssqy.R;
-import com.medicine.ssqy.ssqy.ui.fragment.FragUtilItem;
+import com.medicine.ssqy.ssqy.ui.fragment.coursehome.FragUtilItem;
 
 import java.util.List;
 

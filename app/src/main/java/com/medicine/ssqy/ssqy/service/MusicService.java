@@ -13,6 +13,7 @@ import com.example.sj.mylibrary.net.NetCallback;
 import com.example.sj.mylibrary.net.NetForJson;
 import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.entity.course.CourseAudioEntity;
 import com.medicine.ssqy.ssqy.entity.course.CourseVideoProgressEntity;
 import com.medicine.ssqy.ssqy.eventBus.MusicSoldier;
 import com.medicine.ssqy.ssqy.ui.listener.MyPhoneStateListener;
@@ -30,7 +31,7 @@ import java.util.TimerTask;
 public class MusicService extends Service {
     private int curIndex = 0;
     private int totalTime = 0;
-    public static MediaPlayer mp ;
+    public static MediaPlayer mp;
     MusicSoldier soldier = new MusicSoldier();
     Timer timer = new Timer();
     private MyPhoneStateListener mPhoneStateListener;
@@ -38,21 +39,37 @@ public class MusicService extends Service {
     
     private Timer mTimerSyncLearnProgress;
     private String courseID;
-    private TimerTask mTimerTaskSyncLearnProgress=new TimerTask() {
+    private CourseAudioEntity mCourseAudioEntity;
+    private TimerTask mTimerTaskSyncLearnProgress = new TimerTask() {
         @Override
         public void run() {
             mNetForJsonSyncLearnProgress.addParam("uid", SharePLogin.getUid());
-            mNetForJsonSyncLearnProgress.addParam("type","audio");
-            mNetForJsonSyncLearnProgress.addParam("courseID",courseID);
-            if (mp!=null) {
-                mNetForJsonSyncLearnProgress.addParam("learnProgress",mp.getCurrentPosition());
+            mNetForJsonSyncLearnProgress.addParam("type", "audio");
+            mNetForJsonSyncLearnProgress.addParam("courseID", courseID);
+            if (mp != null) {
+                mNetForJsonSyncLearnProgress.addParam("learnProgress", mp.getCurrentPosition());
                 mNetForJsonSyncLearnProgress.excute();
             }
-           
+            if (mCourseAudioEntity != null) {
+                if (!mCourseAudioEntity.isCourseLearned()) {
+                    mNetForJsonSyncLearnProgress.addParam("courseLearned", "false");
+                    if (mp != null) {
+                        if (mp.getCurrentPosition() >= mCourseAudioEntity.getCourseLength() * 0.94) {
+                            mNetForJsonSyncLearnProgress.addParam("courseLearned", "true");
+                        } 
+                    }
+                    
+                } else {
+                    mNetForJsonSyncLearnProgress.addParam("courseLearned", "true");
+                }
+            }else {
+                mNetForJsonSyncLearnProgress.addParam("courseLearned", "false");
+            }
+            
         }
     };
-    private boolean mHasBeginSycn=false;
-    private NetForJson mNetForJsonSyncLearnProgress=new NetForJson(URLConstant.AUDIO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
+    private boolean mHasBeginSycn = false;
+    private NetForJson mNetForJsonSyncLearnProgress = new NetForJson(URLConstant.AUDIO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
         @Override
         public void onSuccess(CourseVideoProgressEntity entity) {
             
@@ -67,7 +84,7 @@ public class MusicService extends Service {
         public void onFinish() {
             
         }
-    },true);
+    }, true);
     private int courseStudy;
     
     public MusicService() {
@@ -76,7 +93,7 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mPhoneStateListener=new MyPhoneStateListener(this,mp);
+        mPhoneStateListener = new MyPhoneStateListener(this, mp);
         TelephonyManager tmgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         tmgr.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
         EventBus.getDefault().register(this);
@@ -85,13 +102,14 @@ public class MusicService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mCourseUrl = intent.getStringExtra("courseUrl");
-        courseID=intent.getStringExtra("courseID");
-        courseStudy=intent.getIntExtra("courseStudy",0);
+        courseID = intent.getStringExtra("courseID");
+        courseStudy = intent.getIntExtra("courseStudy", 0);
+        mCourseAudioEntity = (CourseAudioEntity) intent.getSerializableExtra("courseEntity");
         mp = new MediaPlayer();
-        if (mCourseUrl!=null&&courseID!=null){
+        if (mCourseUrl != null && courseID != null) {
             playMusic();
         }
-     
+        
         
         return super.onStartCommand(intent, flags, startId);
     }
@@ -109,7 +127,9 @@ public class MusicService extends Service {
             case MusicSoldier.ACTION_KILL_SERVICE:
                 mp.stop();
                 mp.release();
-                mp=null;
+                mp = null;
+                Intent intent=new Intent(this,MusicService.class);
+                this.stopService(intent);
                 break;
         }
     }
@@ -117,14 +137,18 @@ public class MusicService extends Service {
     @Override
     public void onDestroy() {
         curIndex = 0;
-        release();
+        if (mp != null) {
+            release();
+        }
+        
+      
         timer.cancel();
         EventBus.getDefault().unregister(this);
         TelephonyManager tmgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         tmgr.listen(mPhoneStateListener, 0);
         mTimerSyncLearnProgress.cancel();
-        mTimerSyncLearnProgress=null;
-        mHasBeginSycn=false;
+        mTimerSyncLearnProgress = null;
+        mHasBeginSycn = false;
         super.onDestroy();
     }
     
@@ -152,7 +176,7 @@ public class MusicService extends Service {
         } else {
 //            mp.seekTo(curIndex);
             mp.start();
-           
+            
             timer.schedule(new MyTask(), 0, 1000);
         }
     }
@@ -187,14 +211,14 @@ public class MusicService extends Service {
                         soldier.setTotalTime(totalTime);
                         EventBus.getDefault().post(soldier);
                         mp.start();
-                        if (courseStudy!=0){
+                        if (courseStudy != 0) {
                             mp.seekTo((int) courseStudy);
                             
                         }
                         if (!mHasBeginSycn) {
-                            mHasBeginSycn=true;
-                            mTimerSyncLearnProgress=new Timer();
-                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                            mHasBeginSycn = true;
+                            mTimerSyncLearnProgress = new Timer();
+                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress, 5000, 5000);
                         }
                         timer.schedule(new MyTask(), 0, 1000);
                     }
@@ -210,10 +234,10 @@ public class MusicService extends Service {
     public void playMusic(int index) {
         if (mp != null) {
 //            mp.seekTo(index);
-    
+            
             if (!mHasBeginSycn) {
-                mHasBeginSycn=true;
-                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                mHasBeginSycn = true;
+                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress, 5000, 5000);
             }
             mp.start();
             mp.seekTo(index);
@@ -235,8 +259,8 @@ public class MusicService extends Service {
                 
                 
                 curIndex = (int) (mp.getCurrentPosition());
-                Logger.e("curIndex: "+curIndex);
-                Logger.e("total: "+mp.getDuration());
+                Logger.e("curIndex: " + curIndex);
+                Logger.e("total: " + mp.getDuration());
                 soldier.setAction(MusicSoldier.ACTION_UPDATE_SEEKBAR_PROGRESS);
                 soldier.setCurIndex(curIndex);
                 soldier.setTotalTime(totalTime);

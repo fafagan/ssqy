@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
@@ -26,9 +25,9 @@ import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.ui.dialog.DigCourseType;
 import com.medicine.ssqy.ssqy.ui.dialog.DigPhotoChoose;
-import com.medicine.ssqy.ssqy.ui.fragment.HomeCourseFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.HomeJCFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.HomeUtilFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeCourseFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeJCFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeUtilFragment;
 import com.medicine.ssqy.ssqy.ui.views.DragLayout;
 import com.medicine.ssqy.ssqy.util.SaveBMUtil;
 
@@ -41,8 +40,6 @@ import static com.medicine.ssqy.ssqy.ui.dialog.DigPhotoChoose.REQUEST_CODE_CLIP_
 
 public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private DragLayout mDlActivityHome;
-    
-    
     private ImageView mImgvHomeUsercenter;
     private RadioGroup mRgTitleHome;
     private RadioButton mRbHomeCourse;
@@ -55,11 +52,8 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     HomeJCFragment mHomeJCFragment = new HomeJCFragment();
     HomeUtilFragment mHomeUtilFragment = new HomeUtilFragment();
     
-    
     private KBaseFragment[] mFragmentHome = {mHomeCourseFragment, mHomeUtilFragment, mHomeJCFragment};
     private DigCourseType mDigCourseType;
-    
-    
     private CircleImageView mImgvHeadActivityHome;
     private ImageView mImgvSexActivityHome;
     private TextView mTvUsernameActivityHome;
@@ -181,7 +175,13 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
             }
         });
         mRgTitleHome.setOnCheckedChangeListener(this);
-        mRbHomeCourse.setChecked(true);
+        boolean record = this.getIntent().getBooleanExtra("record", false);
+        if(record){
+            mRbHomeJc.setChecked(true);
+        }else {
+            mRbHomeCourse.setChecked(true);
+        }
+        
         
         
     }
@@ -189,7 +189,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     
     @Override
     public void initDatas() {
-      
+        
     }
     
     
@@ -243,7 +243,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
                 mDigCourseType.showSelf();
                 break;
             case R.id.layout_item_userdoctor_activity_home:
-                Toast.makeText(mSelf, "该功能尚未开发，敬请关注！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mSelf, "该功能尚未开放，敬请关注！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_item_userbody_activity_home:
                 goToActivity(BodyAnalyseActivity.class);

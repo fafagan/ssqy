@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
@@ -31,6 +32,11 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
     
     public void setEntities(List<CourseVedioEntity.VideoCourseDataEntity> entities) {
         mEntities = entities;
+        notifyDataSetChanged();
+    }
+    
+    public void addEntities(List<CourseVedioEntity.VideoCourseDataEntity> entities) {
+        mEntities .addAll(entities);
         notifyDataSetChanged();
     }
     
@@ -94,10 +100,14 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
 //            viewHolder.pbItemLvVedioCourse.setMax(courseVedioEntity.getCourseLength());
             viewHolder.pbItemLvVedioCourse.setMax(100);
 //            viewHolder.pbItemLvVedioCourse.setProgress(courseVedioEntity.getCourseStudy());
-            viewHolder.pbItemLvVedioCourse.setProgress(16);
+            viewHolder.pbItemLvVedioCourse.setProgress((int) (entity.getCourseStudy()*1.0f/entity.getCourseLength()*100));
 //        }
-       
- 
+    
+        if (entity.isCourseLearned()){
+            viewHolder.mLayoutCourseLearned.setVisibility(View.VISIBLE);
+        }else {
+            viewHolder.mLayoutCourseLearned.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
@@ -108,7 +118,7 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
     private TextView tvTimeItemLvVedioCourse;
     private NumberProgressBar pbItemLvVedioCourse;
     private TextView mTextViewDivider;
-
+        private LinearLayout mLayoutCourseLearned;
         public ViewHolder(View view) {
             try {
                 imgvItemLvVedioCourse = (ImageView) view.findViewById(R.id.imgv_item_lv_vedio_course);
@@ -116,6 +126,8 @@ public class ItemLvVedioCourseAdapter extends BaseAdapter {
                 tvTimeItemLvVedioCourse = (TextView) view.findViewById(R.id.tv_time_item_lv_vedio_course);
                 pbItemLvVedioCourse = (NumberProgressBar) view.findViewById(R.id.pb_item_lv_vedio_course);
 //                mTextViewDivider= (TextView) view.findViewById(R.id.tv_time_divider_vedio);
+    
+                mLayoutCourseLearned = (LinearLayout)view. findViewById(R.id.layout_course_learned);
             } catch (Exception e) {
             }
         }

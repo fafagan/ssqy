@@ -6,7 +6,7 @@
               android:background="#fff"
               android:orientation="vertical"
               
-              tools:context="com.medicine.ssqy.ssqy.ui.fragment.HistoryDayFragment">
+              tools:context="com.medicine.ssqy.ssqy.ui.fragment.courseHistory.HistoryDayFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

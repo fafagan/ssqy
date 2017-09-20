@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingBottom="6dp"
+              android:paddingLeft="10dp"
+              android:paddingTop="10dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="高压："
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_data_xyg"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:ellipsize="end"
+                android:paddingLeft="8dp"
+                android:singleLine="true"
+                android:text="123"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="低压："
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_data_xyd"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:ellipsize="end"
+                android:paddingLeft="8dp"
+                android:singleLine="true"
+                android:text="123"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:paddingLeft="8dp"
+        android:text="单位:mmHg"
+        android:textColor="@color/text_color_red"
+        android:textSize="14sp"/>
+    <!--<TextView-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:paddingLeft="8dp"-->
+    <!--android:text="记录时间："-->
+    <!--android:textSize="14sp"/>-->
+
+    <TextView
+        android:id="@+id/tv_time_xt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:paddingLeft="8dp"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+</LinearLayout>

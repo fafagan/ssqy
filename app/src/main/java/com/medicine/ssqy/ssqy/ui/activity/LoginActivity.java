@@ -146,39 +146,10 @@ public class LoginActivity extends KBaseActivity {
         mNetForJson=new NetForJson(URLConstant.LOGIN_URL, new NetCallback<UserEntity>() {
             @Override
             public void onSuccess(UserEntity entity) {
+                if (!entity.isState()) {
+                    Toast.makeText(mSelf, "用户名密码错误！", Toast.LENGTH_SHORT).show();
+                }
                 Toast.makeText(mSelf, "登录成功！", Toast.LENGTH_SHORT).show();
-//                LoginEntity loginEntity=new LoginEntity();
-//                loginEntity.setFisrtLogin(true);
-//                loginEntity.setState(true);
-//                loginEntity.setIsformally(true);
-//                loginEntity.setUid(123456);
-//                loginEntity.setType("phone");
-//                loginEntity.setUseraccount("13718454853");
-//                loginEntity.setNickName("绽放的朝阳");
-//                loginEntity.setHeadPicUrl("http://img.taopic.com/uploads/allimg/120417/6597-12041F940198.jpg");
-//                loginEntity.setSex("woman");
-//                loginEntity.setLevel(2);
-//                loginEntity.setFisrtLogin(true);
-//    
-//                SharePLogin.saveIsFree(true);
-//                SharePLogin.saveUsername(loginEntity.getUseraccount());
-//                SharePLogin.saveUserpwd(EdtUtil.getEdtText(mEdtPwdLogin));
-//                SharePLogin.saveUid(loginEntity.getUid());
-//    
-//                UserEntity userEntity=new UserEntity();
-//                userEntity.setState(loginEntity.isState());
-//                userEntity.setUid(loginEntity.getUid());
-//                userEntity.setUseraccount(loginEntity.getUseraccount());
-//                userEntity.setPhone("13718454853");
-//                userEntity.setNickName(loginEntity.getNickName());
-//                userEntity.setHeadPicUrl(loginEntity.getHeadPicUrl());
-//                userEntity.setSex(loginEntity.getSex());
-//                userEntity.setLevel(loginEntity.getLevel());
-//                userEntity.setFirstLogin(loginEntity.isFisrtLogin());
-//              
-    
-//                Bundle bundle=new Bundle();
-//                bundle.putSerializable("entity",loginEntity);
     
                 TempUser.saveOrUpdateUser(entity);
                 SharePLogin.saveUid(entity.getUid());

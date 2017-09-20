@@ -4,148 +4,193 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:padding="10dp">
 
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/layout_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/layout_google_hook_header"/>
+
+        <ListView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@null"/>
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/layout_google_hook_footer"/>
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
     <LinearLayout
-
+        android:id="@+id/layout_none_system_msg"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_gray"
-        android:orientation="vertical"
-        android:padding="15dp"
-        tools:context="com.medicine.ssqy.ssqy.ui.activity.SystemMsgActivity">
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:custom="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="30dp">/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/tv_time_divider_audio1"
-                android:background="#bbb"/>
-
-            <TextView
-                android:id="@+id/tv_time_divider_audio1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="2017-09-11"
-                android:textColor="#777"
-                android:textStyle="bold"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_time_divider_audio1"
-                android:background="#bbb"/>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icon_sjtx"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:padding="5dp"
-                android:text="四时七养系列又推出新课程了，快和您的好友一起下载APP学习吧！"
-                android:textColor="@color/text_common_default"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icon_sjtx"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:padding="5dp"
-                android:text="您今天是不是已经吃药打卡了呢？"
-                android:textColor="@color/text_common_default"/>
-        </LinearLayout>
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:custom="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="30dp">/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/tv_time_divider_audio"
-                android:background="#bbb"/>
-
-            <TextView
-                android:id="@+id/tv_time_divider_audio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="2017-09-11"
-                android:textColor="#777"
-                android:textStyle="bold"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_time_divider_audio"
-                android:background="#bbb"/>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icon_sjtx"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:padding="5dp"
-                android:text="尊敬的用户，欢迎您，来学习四时七养系列课程，中医养生学伴您一起健康人生！！"
-                android:textColor="@color/text_common_default"/>
-        </LinearLayout>
-    </LinearLayout>
-    <ImageView
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/title_index"
-        android:layout_width="35dp"
-        android:layout_height="70dp"/>
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/icon_sjtx"/>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="18sp"
+            android:text="您还有收到任何养生宣教"
+            android:textColor="@color/text_color_red"/>
+    </LinearLayout>
+    <!--<LinearLayout-->
+
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@drawable/bg_gray"-->
+    <!--android:orientation="vertical"-->
+    <!--android:padding="15dp"-->
+    <!--tools:context="com.medicine.ssqy.ssqy.ui.activity.SystemMsgActivity">-->
+
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:custom="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:padding="30dp">/>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_toLeftOf="@+id/tv_time_divider_audio1"-->
+    <!--android:background="#bbb"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_time_divider_audio1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:text="2017-09-11"-->
+    <!--android:textColor="#777"-->
+    <!--android:textStyle="bold"/>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_toRightOf="@+id/tv_time_divider_audio1"-->
+    <!--android:background="#bbb"/>-->
+    <!--</RelativeLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="30dp"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:src="@drawable/icon_sjtx"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="四时七养系列又推出新课程了，快和您的好友一起下载APP学习吧！"-->
+    <!--android:textColor="@color/text_common_default"/>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="30dp"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:src="@drawable/icon_sjtx"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="您今天是不是已经吃药打卡了呢？"-->
+    <!--android:textColor="@color/text_common_default"/>-->
+    <!--</LinearLayout>-->
+
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:custom="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:padding="30dp">/>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_toLeftOf="@+id/tv_time_divider_audio"-->
+    <!--android:background="#bbb"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_time_divider_audio"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:text="2017-09-11"-->
+    <!--android:textColor="#777"-->
+    <!--android:textStyle="bold"/>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_toRightOf="@+id/tv_time_divider_audio"-->
+    <!--android:background="#bbb"/>-->
+    <!--</RelativeLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="30dp"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:src="@drawable/icon_sjtx"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="尊敬的用户，欢迎您，来学习四时七养系列课程，中医养生学伴您一起健康人生！！"-->
+    <!--android:textColor="@color/text_common_default"/>-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+    <!--<ImageView-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:background="@drawable/title_index"-->
+    <!--android:layout_width="35dp"-->
+    <!--android:layout_height="70dp"/>-->
 </com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

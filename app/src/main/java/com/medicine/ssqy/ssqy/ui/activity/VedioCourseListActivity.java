@@ -37,7 +37,12 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
     private ProgressWheel mPbLoadingCourseList;
     private boolean mIsFirstRequest = true;
     private NetForJson mNetForJson;
-    
+    public static final int TYPE_REFRESH = 110;
+    public static final int TYPE_LOADMORE = 120;
+    private int typeNet = TYPE_REFRESH;
+    private int mPosStart;
+    private int mCourseCount;
+    private boolean mIsFirst;
     public static void showAll(Context context) {
         type = TYPE_ALL;
         Intent intent = new Intent(context, VedioCourseListActivity.class);
@@ -96,16 +101,31 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
             public void onSuccess(CourseVedioEntity entity) {
                 Toast.makeText(mSelf, "加载成功！", Toast.LENGTH_SHORT).show();
                 mVideoCourseData = entity.getVideoCourseData();
-                
-                if (mItemLvVedioCourseAdapter == null) {
-                    mItemLvVedioCourseAdapter = new ItemLvVedioCourseAdapter(mSelf, mVideoCourseData);
-                    mSwipeTarget.setAdapter(mItemLvVedioCourseAdapter);
-                    mIsFirstRequest = false;
-                    mPbLoadingCourseList.setVisibility(View.GONE);
-                    mPbLoadingCourseList.stopSpinning();
-                } else {
-                    mItemLvVedioCourseAdapter.setEntities(mVideoCourseData);
+                mCourseCount = entity.getCourseCount();
+                if (typeNet == TYPE_REFRESH) {
+                    if (mItemLvVedioCourseAdapter == null) {
+                        mItemLvVedioCourseAdapter = new ItemLvVedioCourseAdapter(mSelf, mVideoCourseData);
+                        mSwipeTarget.setAdapter(mItemLvVedioCourseAdapter);
+                        mIsFirstRequest = false;
+                        mPbLoadingCourseList.setVisibility(View.GONE);
+                        mPbLoadingCourseList.stopSpinning();
+                    } else {
+                        mItemLvVedioCourseAdapter.setEntities(mVideoCourseData);
+                    }
+                    
+                }else {
+    
+                    if (mItemLvVedioCourseAdapter == null) {
+                        mItemLvVedioCourseAdapter = new ItemLvVedioCourseAdapter(mSelf, mVideoCourseData);
+                        mSwipeTarget.setAdapter(mItemLvVedioCourseAdapter);
+                        mIsFirstRequest = false;
+                        mPbLoadingCourseList.setVisibility(View.GONE);
+                        mPbLoadingCourseList.stopSpinning();
+                    } else {
+                        mItemLvVedioCourseAdapter.addEntities(mVideoCourseData);
+                    }
                 }
+               
             }
             
             @Override
@@ -117,15 +137,24 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
             
             @Override
             public void onFinish() {
+                typeNet = TYPE_REFRESH;
+                mLayoutRefresh.setLoadingMore(false);
+                mPbLoadingCourseList.setVisibility(View.GONE);
                 mLayoutRefresh.setRefreshing(false);
+                mPbLoadingCourseList.stopSpinning();
             }
         }, true);
         mLayoutRefresh.setRefreshing(true);
         
         
     }
-
-//    private void tempData() {
+    
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mLayoutRefresh.setRefreshing(true);
+    }
+    //    private void tempData() {
 //      
 //        mVedioCourseDataEntities=new ArrayList<>();
 //        if (type==TYPE_TODAY){
@@ -230,6 +259,7 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
+        
         doNetRfresh();
 
 //                
@@ -241,15 +271,27 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
     private void doNetRfresh() {
         Toast.makeText(mSelf, "正在加载，请稍等", Toast.LENGTH_SHORT).show();
 //        tempData();
+        typeNet = TYPE_REFRESH;
         mNetForJson.addParam("uid", SharePLogin.getUid());
         mNetForJson.addParam("startpos", "0");
         mNetForJson.addParam("count", "10");
         mNetForJson.excute();
-        mLayoutRefresh.setRefreshing(false);
     }
     
     private void doNetLoadMore() {
+        if (mSwipeTarget.getCount() >= mCourseCount) {
+            Toast.makeText(mSelf, "已全部加载完毕", Toast.LENGTH_SHORT).show();
+            mLayoutRefresh.setLoadingMore(false);
+            return;
+        }
+    
+        mPosStart = mSwipeTarget.getCount();
+        typeNet = TYPE_LOADMORE;
         mLayoutRefresh.setLoadingMore(false);
+        mNetForJson.addParam("uid", SharePLogin.getUid());
+        mNetForJson.addParam("startpos", mPosStart);
+        mNetForJson.addParam("count", 10);
+        mNetForJson.excute();
         
     }
     

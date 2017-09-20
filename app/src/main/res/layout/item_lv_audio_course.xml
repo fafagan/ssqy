@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/tv_title_item_lv_audio_course"
         android:lines="2"
-        android:textColor="@color/text_common_default"
+        android:textColor="#000"
         android:textSize="16sp"
         android:ellipsize="end"
         android:layout_toRightOf="@+id/imgv_item_lv_audio_course"
@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"/>
 
     <TextView
+        
         android:layout_below="@+id/tv_title_item_lv_audio_course"
         android:id="@+id/tv_time_item_lv_audio_course"
         android:textColor="@color/text_common_default"
@@ -36,6 +37,31 @@
         android:layout_toRightOf="@+id/imgv_item_lv_audio_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layout_course_learned"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/pb_item_lv_audio_course"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/zan_outline"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="#559cff"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:text="您已听完该养生音频"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <com.daimajia.numberprogressbar.NumberProgressBar
         custom:progress_current="38"
         android:layout_below="@+id/imgv_item_lv_audio_course"

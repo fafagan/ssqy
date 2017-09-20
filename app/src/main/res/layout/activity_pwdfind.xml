@@ -17,9 +17,10 @@
                   android:textColor="@color/colorBlack"
                   android:textSize="@dimen/text_size_medium"/>
         <EditText
+            android:paddingLeft="10dp"
             android:id="@+id/edt_phone_dig_modify_phonenumber"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginBottom="@dimen/left_right_margin"
             android:layout_marginLeft="@dimen/left_right_margin"
             android:layout_marginRight="@dimen/left_right_margin"
@@ -36,8 +37,9 @@
                         android:layout_marginLeft="@dimen/left_right_margin"
                         android:layout_marginRight="@dimen/left_right_margin">
             <EditText android:id="@+id/edt_verifycode_dig_modify_phonenumber"
+                      android:paddingLeft="10dp"
                       android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
+                      android:layout_height="60dp"
                       android:background="@drawable/input"
                       android:hint="请填写验证码"
                       android:inputType="phone"
@@ -46,7 +48,7 @@
                       android:textSize="@dimen/text_size_small"/>
             <Button android:id="@+id/btn_get_verifycode_dig_modify_phonenumber"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"

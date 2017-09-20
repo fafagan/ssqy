@@ -35,7 +35,6 @@ public class AccoutDig extends Dialog implements View.OnClickListener {
         mBtnCancelDigAccount = (Button) findViewById(R.id.btn_cancel_dig_account);
         mBtnConfirmDigAccount = (Button) findViewById(R.id.btn_confirm_dig_account);
     
-    
     }
     
     private void initDatas() {

@@ -62,7 +62,6 @@ public class UserEntity {
     private String loginteime;
     private String sm;
     private String bz;
-    private String studyLevel;
     private String tjbh;
     private String doctorid;
     private String tz;
@@ -315,13 +314,7 @@ public class UserEntity {
         this.job = job;
     }
     
-    public String getStudyLevel() {
-        return studyLevel;
-    }
     
-    public void setStudyLevel(String studyLevel) {
-        this.studyLevel = studyLevel;
-    }
     
     public String getBirthDay() {
         return birthDay;
@@ -379,6 +372,14 @@ public class UserEntity {
         this.tzs = tzs;
     }
     
+    public String getStudylevel() {
+        return studylevel;
+    }
+    
+    public void setStudylevel(String studylevel) {
+        this.studylevel = studylevel;
+    }
+    
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("UserEntity{");
@@ -398,7 +399,6 @@ public class UserEntity {
         sb.append(", loginteime='").append(loginteime).append('\'');
         sb.append(", sm='").append(sm).append('\'');
         sb.append(", bz='").append(bz).append('\'');
-        sb.append(", studyLevel='").append(studyLevel).append('\'');
         sb.append(", tjbh='").append(tjbh).append('\'');
         sb.append(", doctorid='").append(doctorid).append('\'');
         sb.append(", tz='").append(tz).append('\'');

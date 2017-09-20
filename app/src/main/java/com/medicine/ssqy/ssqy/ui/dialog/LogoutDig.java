@@ -16,7 +16,6 @@ import com.medicine.ssqy.ssqy.ui.activity.HomeActivity;
 import com.medicine.ssqy.ssqy.ui.activity.IndexActivity;
 import com.medicine.ssqy.ssqy.ui.activity.LoginActivity;
 import com.medicine.ssqy.ssqy.ui.activity.SettingActivity;
-import com.orhanobut.logger.Logger;
 
 /**
  * Created by Amy on 2016/12/16.
@@ -72,7 +71,7 @@ public class LogoutDig extends Dialog implements View.OnClickListener {
     
     private void doLogOut() {
         SharePLogin.saveIsFree(false);
-        Logger.e("xx"+SharePLogin.isFree());
+//        Logger.e("xx"+SharePLogin.isFree());
         TempUser.reset();
         Intent intent = new Intent(mContext, LoginActivity.class);
         mContext.startActivity(intent);

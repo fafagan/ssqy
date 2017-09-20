@@ -1,17 +1,23 @@
 package com.medicine.ssqy.ssqy.ui.activity;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.brodcast.ConnectionChangeReceiver;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePFirst;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePJQ;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogo;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePNotify;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
+import com.medicine.ssqy.ssqy.task.download.controller.DownloadController;
+import com.medicine.ssqy.ssqy.task.download.model.DownloadTask;
 import com.medicine.ssqy.ssqy.ui.dialog.DigCourseType;
 import com.medicine.ssqy.ssqy.ui.dialog.DigNotify;
 import com.medicine.ssqy.ssqy.ui.views.CircleMenuLayout;
@@ -21,20 +27,19 @@ import com.medicine.ssqy.ssqy.util._24SolarTerms;
 import static com.medicine.ssqy.ssqy.util.UtilGetJQPic.getLogoRes;
 import static com.medicine.ssqy.ssqy.util._24SolarTerms.getNowJQ;
 
-public class IndexActivity extends KBaseActivity  {
+public class IndexActivity extends KBaseActivity {
     
-    private String[] mItemTexts = new String[] { "1.我的体质 ", "2.我的七养", "3.我的每日养生",
-            "4.我的疾病管理", "5.养生日记", "6.养生宣教","7.个人中心" };
-    private int[] mItemImgs = new int[] { R.drawable.byfa,
+    private String[] mItemTexts = new String[]{"1.我的体质 ", "2.我的七养", "3.我的每日养生",
+            "4.我的疾病管理", "5.养生日记", "6.养生宣教", "7.个人中心"};
+    private int[] mItemImgs = new int[]{R.drawable.byfa,
             R.drawable.ssqy, R.drawable.wdkc,
             R.drawable.xjtz, R.drawable.xsbj,
-            R.drawable.ysrj ,R.drawable.zjzx};
+            R.drawable.ysrj, R.drawable.zjzx};
     private CircleMenuLayout mCircleMenuLayout;
     
     private ImageView mImgvLogoIndex;
     private RelativeLayout mIdCircleMenuItemCenter;
-    
-   
+
 
 //    private CircleImageView mImgvHeadActivityHome;
 //    private ImageView mImgvSexActivityHome;
@@ -50,6 +55,30 @@ public class IndexActivity extends KBaseActivity  {
     private UserEntity mUserEntity;
     private DigCourseType mDigCourseType;
     private DigNotify mDigNotify;
+    
+    private ConnectionChangeReceiver myReceiver;
+    private DownloadController mDownloadController;
+    
+    private void registerReceiver() {
+        if (myReceiver == null) {
+            IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            myReceiver = new ConnectionChangeReceiver();
+            this.registerReceiver(myReceiver, filter);
+        }
+        
+    }
+    
+    
+    private void unregisterReceiver() {
+        this.unregisterReceiver(myReceiver);
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver();
+    }
+    
     @Override
     public int setRootView() {
         return R.layout.activity_index;
@@ -58,6 +87,14 @@ public class IndexActivity extends KBaseActivity  {
     @Override
     public void initViews() {
         SharePFirst.saveIsFirst(false);
+        registerReceiver();
+        mDownloadController = new DownloadController();
+        DownloadTask downloadTaskWait = mDownloadController.getDownloadTaskWait();
+        
+        if (downloadTaskWait != null) {
+            mDownloadController.startTasks();
+            Toast.makeText(mSelf, "网络恢复，继续为您缓存视频", Toast.LENGTH_SHORT).show();
+        }
 //        AnimationSet animationSet=new AnimationSet(true);
 //        AlphaAnimation alphaAnimation=new AlphaAnimation(0f,1f);
 //        alphaAnimation.setDuration(500);
@@ -74,8 +111,8 @@ public class IndexActivity extends KBaseActivity  {
 //        
 //        LayoutAnimationController layoutAnimationController=new LayoutAnimationController(animationSet,1f);
 //        mLayoutZhuanpan.setLayoutAnimation(layoutAnimationController);
-    
-    
+
+
 //        mItemIndexZhuanpanWdkc.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -115,11 +152,11 @@ public class IndexActivity extends KBaseActivity  {
 //        
 //            }
 //        });
-    
- //       mUserEntity= TempUser.getNowUser(SharePLogin.getUid());
+        
+        //       mUserEntity= TempUser.getNowUser(SharePLogin.getUid());
 //        initSlide();
         if (!SharePNotify.getCancel()) {
-            mDigNotify=new DigNotify(this);
+            mDigNotify = new DigNotify(this);
             mDigNotify.show();
         }
         
@@ -127,18 +164,18 @@ public class IndexActivity extends KBaseActivity  {
         mCircleMenuLayout.setMenuItemIconsAndTexts(mItemImgs, mItemTexts);
         mImgvLogoIndex = (ImageView) findViewById(R.id.imgv_logo_index);
         mIdCircleMenuItemCenter = (RelativeLayout) findViewById(R.id.id_circle_menu_item_center);
-        int  logoRes= UtilGetJQPic.getLogoRes();
+        int logoRes = UtilGetJQPic.getLogoRes();
         int circleRes = UtilGetJQPic.getCircleRes();
-        if (StringEmptyUtil.isEmpty( SharePJQ.getJQ())) {
+        if (StringEmptyUtil.isEmpty(SharePJQ.getJQ())) {
             SharePJQ.saveJQ(getNowJQ());
             
             SharePLogo.saveCircle(logoRes);
             SharePLogo.saveCircle(circleRes);
-        }else {
-    
-            String jqNow=_24SolarTerms.getNowJQ();
-            String jqOld=SharePJQ.getJQ();
-            if (!jqNow.equals(jqOld)){
+        } else {
+            
+            String jqNow = _24SolarTerms.getNowJQ();
+            String jqOld = SharePJQ.getJQ();
+            if (!jqNow.equals(jqOld)) {
                 logoRes = getLogoRes();
                 circleRes = UtilGetJQPic.getCircleRes();
                 SharePLogo.saveCircle(logoRes);
@@ -147,20 +184,15 @@ public class IndexActivity extends KBaseActivity  {
             }
         }
         
-       
-        
-        
         
         mImgvLogoIndex.setImageResource(logoRes);
         mIdCircleMenuItemCenter.setBackgroundResource(circleRes);
-    
-        mCircleMenuLayout.setOnMenuItemClickListener(new CircleMenuLayout.OnMenuItemClickListener()
-        {
         
+        mCircleMenuLayout.setOnMenuItemClickListener(new CircleMenuLayout.OnMenuItemClickListener() {
+            
             @Override
-            public void itemClick(View view, int pos)
-            {
-                switch (pos){
+            public void itemClick(View view, int pos) {
+                switch (pos) {
                     case 0:
                         goToActivity(BodyAnalyseActivity.class);
                         break;
@@ -171,7 +203,7 @@ public class IndexActivity extends KBaseActivity  {
                         goToActivity(HomeActivity.class);
                         break;
                     case 3:
-                        goToActivity(JBGLActivity.class);
+                        goToActivity(JBGLListActivity.class);
                         break;
                     case 4:
                         goToActivity(CalendarActivity.class);
@@ -185,16 +217,15 @@ public class IndexActivity extends KBaseActivity  {
                     
                 }
             }
-        
-            @Override
-            public void itemCenterClick(View view)
-            {
             
+            @Override
+            public void itemCenterClick(View view) {
+                
             }
         });
     }
     
-//    private void initSlide() {
+    //    private void initSlide() {
 //        mImgvHeadActivityHome = (CircleImageView) findViewById(R.id.imgv_head_activity_home);
 //        mImgvSexActivityHome = (ImageView) findViewById(R.id.imgv_sex_activity_home);
 //        mTvUsernameActivityHome = (TextView) findViewById(R.id.tv_username_activity_home);
@@ -251,7 +282,7 @@ public class IndexActivity extends KBaseActivity  {
     public boolean isUseTitle() {
         return false;
     }
-    
+
 //    @Override
 //    public void onClick(View v) {
 //        switch (v.getId()) {
@@ -277,6 +308,6 @@ public class IndexActivity extends KBaseActivity  {
 //                startActivity(intent_setting);
 //                break;
 //        }
-        
- //   }
+    
+    //   }
 }

@@ -46,13 +46,13 @@ public class Yang implements Serializable{
     public static List<Yang> sYangs=new ArrayList<>();
     static {
     
-        sYangs.add(new Yang("心养",1));
-        sYangs.add(new Yang("气养",2));
-        sYangs.add(new Yang("动养",3));
+        sYangs.add(new Yang("心养",2));
+        sYangs.add(new Yang("气养",3));
+        sYangs.add(new Yang("动养",7));
         sYangs.add(new Yang("术养",4));
-        sYangs.add(new Yang("药养",5));
-        sYangs.add(new Yang("食养",6));
-        sYangs.add(new Yang("居养",7));
+        sYangs.add(new Yang("药养",6));
+        sYangs.add(new Yang("食养",5));
+        sYangs.add(new Yang("居养",1));
         
     }
     public Yang(String title, int index) {

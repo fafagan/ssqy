@@ -9,12 +9,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
+import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.entity.JCEntity;
 import com.medicine.ssqy.ssqy.ui.views.TVWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.umeng.socialize.utils.DeviceConfig.context;
 
 
 /**
@@ -32,7 +41,16 @@ public class DigXYJC extends Dialog implements View.OnClickListener {
     
     private List<String> mDYs=new ArrayList<>();
     private List<String> mGYs=new ArrayList<>();
+    private NetForJson mNetForJson;
+    private boolean mIsUpdateMode = false;
+    private String mReordID;
+    private SwipeToLoadLayout mSwipeToLoadLayout;
     
+    public void setUpdateMode(String recordID, SwipeToLoadLayout refreshLayout) {
+        mIsUpdateMode = true;
+        mReordID = recordID;
+        mSwipeToLoadLayout = refreshLayout;
+    }
     
     public DigXYJC(final Context context) {
         super(context);
@@ -47,9 +65,30 @@ public class DigXYJC extends Dialog implements View.OnClickListener {
         mEdtGy = (EditText) findViewById(R.id.edt_gy);
         mWvDy = (WheelView) findViewById(R.id.wv_dy);
         mWvGy = (WheelView) findViewById(R.id.wv_gy);
+    
+    
+        mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
+            @Override
+            public void onSuccess(JCEntity entity) {
+                if (entity.isState()) {
+                    Toast.makeText(getContext(), "记录成功！", Toast.LENGTH_SHORT).show();
+                    cancel();
+                }else {
+                    Toast.makeText(getContext(), "当天记录已存在，请查看我的疾病管理", Toast.LENGTH_SHORT).show();
+                
+                }
+            }
         
+            @Override
+            public void onError() {
+                Toast.makeText(context, "记录失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
+            }
         
-        
+            @Override
+            public void onFinish() {
+            
+            }
+        });
         initWVDatas();
         mWvDy.setWheelAdapter(new TVWheelAdapter(context)); // 文本数据源
         WheelView.WheelViewStyle wheelViewStyle = new WheelView.WheelViewStyle();
@@ -89,10 +128,88 @@ public class DigXYJC extends Dialog implements View.OnClickListener {
     
     @Override
     public void onClick(View v) {
-        Toast.makeText(mContext, "已完成记录！", Toast.LENGTH_SHORT).show();
-        this.cancel();
-    }
+        String string1 = mEdtGy.getText().toString().trim();
+        if (StringEmptyUtil.isEmpty(string1)) {
+            Toast.makeText(mContext, "请填写高压值再保存！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        initNet();
+        String string2 = mEdtDy.getText().toString().trim();
+        if (StringEmptyUtil.isEmpty(string2)) {
+            Toast.makeText(mContext, "请填写低压值再保存！", Toast.LENGTH_SHORT).show();
+            return;
+        }
     
+        if (mIsUpdateMode) {
+            Toast.makeText(mContext, "正在修改，请稍等", Toast.LENGTH_SHORT).show();
+            mNetForJson.addParam("uid", SharePLogin.getUid());
+            mNetForJson.addParam("recordtype", URLConstant.RECORD_TYPE_XY);
+            mNetForJson.addParam("recordID", mReordID);
+            mNetForJson.addParam("pressuremax", string1);
+            mNetForJson.addParam("pressuremin", string2);
+            mNetForJson.excute();
+        }else {
+            Toast.makeText(mContext, "正在记录，请稍等", Toast.LENGTH_SHORT).show();
+            mNetForJson.addParam("uid", SharePLogin.getUid());
+            mNetForJson.addParam("recordtype", URLConstant.RECORD_TYPE_XY);
+            mNetForJson.addParam("pressuremax", string1);
+            mNetForJson.addParam("pressuremin", string2);
+            mNetForJson.excute();
+        }
+   
+    }
+    private void initNet() {
+        if (mNetForJson==null) {
+            if (mIsUpdateMode) {
+                mNetForJson=new NetForJson(URLConstant.JBGL_MODIFY_URL, new NetCallback<JCEntity>() {
+                    @Override
+                    public void onSuccess(JCEntity entity) {
+                        if (entity.isState()) {
+                            Toast.makeText(getContext(), "修改成功！", Toast.LENGTH_SHORT).show();
+                            if (mSwipeToLoadLayout != null) {
+                                mSwipeToLoadLayout.setRefreshing(true);
+                            }
+                            cancel();
+                        }else {
+                            Toast.makeText(getContext(), "修改异常，请重试！", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onError() {
+                        Toast.makeText(context, "记录失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
+                    }
+                    
+                    @Override
+                    public void onFinish() {
+                        
+                    }
+                });
+            }else {
+                mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
+                    @Override
+                    public void onSuccess(JCEntity entity) {
+                        if (entity.isState()) {
+                            Toast.makeText(getContext(), "记录成功！", Toast.LENGTH_SHORT).show();
+                            cancel();
+                        }else {
+                            Toast.makeText(getContext(), "当天记录已存在，请查看我的疾病管理", Toast.LENGTH_SHORT).show();
+                            
+                        }
+                    }
+                    
+                    @Override
+                    public void onError() {
+                        Toast.makeText(context, "记录失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
+                    }
+                    
+                    @Override
+                    public void onFinish() {
+                        
+                    }
+                });
+            }
+        }
+    }
     private void initWVDatas() {
         for (int i = 60; i <= 90; i+=5) {
             mDYs.add(i+" mmHg");

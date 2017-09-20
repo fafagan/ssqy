@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
+    android:id="@+id/activity_jbgllist"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.JBGLListActivity">
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:id="@+id/ll_activity_tabbar_all"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:id="@+id/hs_activity_tabbar"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:fadingEdge="none"
+            android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/ll_activity_tabbar_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/jbgl_frag"
+        android:layout_below="@+id/ll_activity_tabbar_all"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

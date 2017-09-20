@@ -134,6 +134,9 @@ public class ModifyPhonenumberDig extends Dialog implements View.OnClickListener
                 break;
             case R.id.btn_confirm_dig_modify_phonenumber:
                 //确定
+//                if (phone==null||) {
+//                    
+//                }
                 Toast.makeText(mContext, "验证中，请稍等", Toast.LENGTH_SHORT).show();
                 String phone1=mEdtPhoneDigModifyPhonenumber.getText().toString().trim();
                 SMSSDK. submitVerificationCode("86",phone1,mEdtVerifycodeDigModifyPhonenumber.getText().toString());

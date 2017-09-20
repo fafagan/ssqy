@@ -24,7 +24,7 @@ public class SearchActivity extends KBaseActivity implements View.OnClickListene
     private Button mItemCy7;
     private Button mItemCy8;
     
-
+    private int mItemIndex;
     
     @Override
     public int setRootView() {
@@ -33,7 +33,9 @@ public class SearchActivity extends KBaseActivity implements View.OnClickListene
     
     @Override
     public void initViews() {
-        setTitleCenter("搜 索");
+    
+        mItemIndex = getIntent().getIntExtra("item", 0);
+//        setTitleCenter("搜 索");
         mLayoutSearchActivity = (LinearLayout) findViewById(R.id.layout_search_activity);
         mEdt = (EditText) findViewById(R.id.edt);
         mBtDoSearch = (Button) findViewById(R.id.bt_doSearch);
@@ -68,7 +70,20 @@ public class SearchActivity extends KBaseActivity implements View.OnClickListene
     
     @Override
     public void initDatas() {
-        
+        switch (mItemIndex) {
+            case 0:
+                setTitleCenter("食物热量搜索");
+                break;
+            case 1:
+                setTitleCenter("食物嘌呤搜索");
+                break;
+            case 2:
+                setTitleCenter("食物含钙量搜索");
+                break;
+            case 3:
+                setTitleCenter("运动消耗搜索");
+                break;
+        }
     }
     
     @Override

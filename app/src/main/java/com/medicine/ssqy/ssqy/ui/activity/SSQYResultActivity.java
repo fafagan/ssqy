@@ -20,7 +20,7 @@ public class SSQYResultActivity extends KBaseActivity {
 
     
 //    String mUrl="http://mp.weixin.qq.com/s?__biz=MzA5MzAwMDMxOQ==&mid=2651623704&idx=1&sn=da998ad730c9c47c8414b81aaa894ca8&chksm=8b9cb608bceb3f1e373fed437c2e4702331619cd92b2e11ec93d5b6bcae63e42dbce332fec11&mpshare=1&scene=23&srcid=0312RHyiEMkWwdNvTPxYSE3H#rd";
-    String mUrl= URLConstant.SSQY_URL;
+    String mUrl= null;
     private WebSettings mSettings;
     private JQ mNowJQ;
     private Yang mNowYang;
@@ -32,11 +32,39 @@ public class SSQYResultActivity extends KBaseActivity {
     @Override
     public void initViews() {
         Toast.makeText(mSelf, "正在加载，请稍后", Toast.LENGTH_SHORT).show();
-        mNowJQ= (JQ) getIntent().getSerializableExtra("sl");
-        mNowYang= (Yang) getIntent().getSerializableExtra("yang");
-        setTitleCenter(mNowJQ.title+"  "+mNowYang.title);
+        boolean isCxqdMode =  getIntent().getBooleanExtra("cxqdMode",false);
     
-        mUrl+="?season24="+mNowJQ.index+"&feed7="+mNowYang.index;
+        if (isCxqdMode) {
+          String  cxqdType=getIntent().getStringExtra("cxqdType");
+    
+            switch (cxqdType) {
+                case "chun":
+                    mUrl=URLConstant.SEASON_URL+"?season=1";
+                    setTitleCenter("春季养生");
+                    break;
+                case "xia":
+                    mUrl=URLConstant.SEASON_URL+"?season=2";
+                    setTitleCenter("夏季养生");
+                    break;
+                case "qiu":
+                    mUrl=URLConstant.SEASON_URL+"?season=3";
+                    setTitleCenter("秋季养生");
+                    break;
+                case "dong":
+                    mUrl=URLConstant.SEASON_URL+"?season=4";
+                    setTitleCenter("冬季养生");
+                    break;
+            }
+        }else {
+//            mNowJQ= (JQ) getIntent().getSerializableExtra("sl");
+//            mNowYang= (Yang) getIntent().getSerializableExtra("yang");
+//            mUrl= URLConstant.SSQY_URL+"?season24="+mNowJQ.index+"&feed7="+mNowYang.index;
+//            setTitleCenter(mNowJQ.title+"  "+mNowYang.title);
+            setTitleCenter("我的节气养生");
+        }
+     
+      
+      
         
         mWebViewSsqyResult = (WebView) findViewById(R.id.webView_ssqy_result);
         mSettings = mWebViewSsqyResult.getSettings();

@@ -2,9 +2,11 @@ package com.medicine.ssqy.ssqy.ui.activity;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.task.download.controller.DownloadController;
 import com.medicine.ssqy.ssqy.ui.dialog.AccoutDig;
 import com.medicine.ssqy.ssqy.ui.dialog.LogoutDig;
 
@@ -15,8 +17,9 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
     private LogoutDig mDialogLogout;
     
     private TextView mTvUsercenterActivitySetting;
+    private TextView mTvClearCacheActivitySetting;
     
- 
+    private DownloadController mDownloadController;
     
     
     @Override
@@ -32,7 +35,8 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
         mTvExitActivitySetting = (TextView) findViewById(R.id.tv_exit_activity_setting);
         mDialogLogout=new LogoutDig(this);
         mTvUsercenterActivitySetting = (TextView) findViewById(R.id.tv_usercenter_activity_setting);
-    
+        mTvClearCacheActivitySetting = (TextView) findViewById(R.id.tv_clearCache_activity_setting);
+        
     }
     
     @Override
@@ -41,6 +45,9 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
         mTvAboutusActivitySetting.setOnClickListener(this);
         mTvExitActivitySetting.setOnClickListener(this);
         mTvUsercenterActivitySetting.setOnClickListener(this);
+        mTvClearCacheActivitySetting.setOnClickListener(this);
+        mDownloadController=new DownloadController();
+        mTvClearCacheActivitySetting.setText("清除系统缓存：  共"+mDownloadController.getAllCache());
     }
     
     @Override
@@ -58,6 +65,11 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
                 break;
             case R.id.tv_usercenter_activity_setting:
                 goToActivity(MyInformationActivity.class);
+                break;
+            case R.id.tv_clearCache_activity_setting:
+                mDownloadController.removeAllCache();
+                Toast.makeText(mSelf, "清除完毕！", Toast.LENGTH_SHORT).show();
+                mTvClearCacheActivitySetting.setText("清除系统缓存：  共0M");
                 break;
         }
     }

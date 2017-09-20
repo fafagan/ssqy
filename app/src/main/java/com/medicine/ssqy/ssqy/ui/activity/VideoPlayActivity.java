@@ -42,6 +42,7 @@ import com.medicine.ssqy.ssqy.db.TempUser;
 import com.medicine.ssqy.ssqy.entity.course.CourseVedioDetailEntity;
 import com.medicine.ssqy.ssqy.entity.course.CourseVedioEntity;
 import com.medicine.ssqy.ssqy.entity.course.CourseVideoProgressEntity;
+import com.medicine.ssqy.ssqy.task.download.controller.DownloadController;
 import com.medicine.ssqy.ssqy.test.DiscussEntity;
 import com.medicine.ssqy.ssqy.ui.adapter.ItemDiscussLvAdapter;
 import com.medicine.ssqy.ssqy.ui.dialog.DigDiscuss;
@@ -50,9 +51,11 @@ import com.medicine.ssqy.ssqy.util.BrightnessUtil;
 import com.medicine.ssqy.ssqy.util.ShareUtil;
 import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
 import com.medicine.ssqy.ssqy.util.UtilGetDiscussTime;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.util.DensityUtil;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -141,20 +144,29 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private boolean mLoadOk = false;
     private boolean mHasStart = false;
     private CourseVedioDetailEntity mEntityNow;
+    private TextView mTvDownloadActivityVideoPlay;
+
     
     private IMediaPlayer.OnSeekCompleteListener mOnSeekCompletedListener = new IMediaPlayer.OnSeekCompleteListener() {
         @Override
         public void onSeekComplete(IMediaPlayer mp) {
+       
         }
     };
     
     private IMediaPlayer.OnCompletionListener mOnCompletionListener = new IMediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(IMediaPlayer mp) {
-            Toast.makeText(mSelf, "当前养生视频播放完毕。", Toast.LENGTH_LONG).show();
-           videoPlayEnd();
+         Toast.makeText(mSelf, "当前养生视频播放完毕!", Toast.LENGTH_LONG).show();
+            mCbPlayorstopActivityVideoPlay.setChecked(false);
+            mBtPlayActivityVideoPlay.setVisibility(View.VISIBLE);
+            mTvPlaytimeActivityVideoPlay.setText(mTvTotaltimeActivityVideoPlay.getText());
+            mIsLoop=true;
+//           videoPlayEnd();
         }
     };
+    private boolean mCBFirst =true;
+    
     private void videoPlayEnd() {
         if(mMediaPlayer != null)
         {
@@ -163,9 +175,10 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         }
         
     }
+    private boolean mIsLoop=false;
     private IMediaPlayer.OnErrorListener mOnErrorListener = new IMediaPlayer.OnErrorListener() {
-        @Override
-        public boolean onError(IMediaPlayer mp, int what, int extra) {
+            @Override
+            public boolean onError(IMediaPlayer mp, int what, int extra) {
 //            switch (what)
 //            {
 //                case KSYMediaPlayer.MEDIA_ERROR_UNKNOWN:
@@ -181,9 +194,87 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             Toast.makeText(mSelf, "网络异常，请检查您的网络状态！", Toast.LENGTH_LONG).show();
             if(mMediaPlayer != null)
             {
-                mMediaPlayer.release();
-                mMediaPlayer = null;
+//                mMediaPlayer.release();
+//                mMediaPlayer = null;
+                mMediaPlayer.reset();
+                mHasStart=false;
+                mCbPlayorstopActivityVideoPlay.setChecked(false);
+                mPrepareOk=false;
+                
             }
+            return false;
+        }
+    };
+    
+    private IMediaPlayer.OnErrorListener mOnErrorListenerCache = new IMediaPlayer.OnErrorListener() {
+        @Override
+        public boolean onError(IMediaPlayer mp, int what, int extra) {
+//            
+            
+//            Toast.makeText(mSelf, "网络异常，请检查您的网络状态！", Toast.LENGTH_LONG).show();
+            if(mMediaPlayer != null)
+            {
+//                mMediaPlayer.release();
+//                mMediaPlayer = null;
+                mMediaPlayer.reset();
+                mPrepareOk=false;
+            }else {
+                mMediaPlayer=new KSYMediaPlayer.Builder(mSelf).build();
+            }
+    
+            try {
+                mMediaPlayer.setDataSource(mEntityNow.getCourseUrl());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mMediaPlayer.setDisplay(mSurfaceHolder);
+            mMediaPlayer.setOnErrorListener(mOnErrorListener);
+            mMediaPlayer.setLooping(false);
+            mMediaPlayer.prepareAsync();
+            mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+        
+                @Override
+                public void onPrepared(IMediaPlayer mp) {
+                    mMediaPlayer.pause();
+                    mPrepareOk = true;
+//                    mMediaPlayer.seekTo(currentPosition);
+                    //准备完成，可以播放了
+                    setVideoParams(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+                    totalTime = mEntityNow.getCourseLength();
+//                    totalTime = mMediaPlayer.getDuration();
+                    String totalTimeStr = TimeFormatUtil.formatLongToTimeStr((long) totalTime);
+
+//                    mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
+                    mPbActivityVideoPlay.setMax(mEntityNow.getCourseLength());
+                    mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
+            
+            
+                    if (mHasStart) {
+                        Logger.e("准备玩。。。开始了");
+                        mMediaPlayer.start();
+                        if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
+//                            mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
+                            if (mIsLoop) {
+                                mMediaPlayer.seekTo(0);
+                            }else{
+//                                    mMediaPlayer.seekTo(1000*60*4);
+                                mMediaPlayer.seekTo( mEntityNow.getCourseStudy());
+                                //mEntityNow.getCourseStudy()
+                            }
+                        }
+                        if (!mHasBeginSycn) {
+                            mHasBeginSycn=true;
+                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                        }
+                
+                    }
+//                   
+                    mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                    mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
+                    mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                    mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                }
+            });
             return false;
         }
     };
@@ -225,9 +316,18 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         @Override
         public void run() {
             mNetForJsonSyncLearnProgress.addParam("uid",SharePLogin.getUid());
-            mNetForJsonSyncLearnProgress.addParam("type","vedio");
+            mNetForJsonSyncLearnProgress.addParam("type","video");
             mNetForJsonSyncLearnProgress.addParam("courseID",mEntityNow.getCourseID());
             mNetForJsonSyncLearnProgress.addParam("learnProgress",mMediaPlayer.getCurrentPosition());
+            if (!mEntityNow.isCourseLearned()) {
+                if (mMediaPlayer.getCurrentPosition()>=mEntityNow.getCourseLength()*0.94){
+                    mNetForJsonSyncLearnProgress.addParam("courseLearned","true");
+                }else {
+                    mNetForJsonSyncLearnProgress.addParam("courseLearned","false");
+                }
+            }else {
+                mNetForJsonSyncLearnProgress.addParam("courseLearned","true");
+            }
             mNetForJsonSyncLearnProgress.excute();
         }
     };
@@ -240,7 +340,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     
         @Override
         public void onError() {
-        
+            
         }
     
         @Override
@@ -260,6 +360,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     
     @Override
     public void initViews() {
+        mTvDownloadActivityVideoPlay = (TextView) findViewById(R.id.tv_download_activity_video_play);
         mTvShareActivityVideoPlay = (TextView) findViewById(R.id.tv_share_activity_video_play);
         mSvActivityVideoPlay = (SurfaceView) findViewById(R.id.sv_activity_video_play);
         mBtPlayActivityVideoPlay = (Button) findViewById(R.id.bt_play_activity_video_play);
@@ -289,23 +390,34 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mBtReplayVedio = (Button) findViewById(R.id.bt_replay_vedio);
         mBtPlayActivityVideoPlay.setOnClickListener(this);
         mTvShareActivityVideoPlay.setOnClickListener(this);
+        mTvDownloadActivityVideoPlay.setOnClickListener(this);
         mCbPlayorstopActivityVideoPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (mMediaPlayer==null) {
+                    Toast.makeText(mSelf, "网络异常，请退出重试", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (isChecked) {
+                    Logger.e("开始了。。");
                     if (firstPlay) {
                         firstPlay = false;
                         play(curIndex);
                         mCbPlayorstopActivityVideoPlay.setChecked(true);
                         mBtPlayActivityVideoPlay.setVisibility(View.INVISIBLE);
                     } else {
+                        if (!mPrepareOk) {
+                            return;
+                        }
                         mMediaPlayer.start();
                         mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                         mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
                         mBtPlayActivityVideoPlay.setVisibility(View.INVISIBLE);
                     }
-                    
                 } else {
+                    if (!mPrepareOk) {
+                        return;
+                    }
                     mMediaPlayer.pause();
                     mRlSvtopbarActivityVideoPlay.setVisibility(View.VISIBLE);
                 }
@@ -363,27 +475,32 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         
         
     }
-    
-    @Override
-    public void initDatas() {
-        
-        
-//        mMediaPlayer = new MediaPlayer();
+    private void  initMP(){
+        //        mMediaPlayer = new MediaPlayer();
         mMediaPlayer = new KSYMediaPlayer.Builder(this).build();
 //        mMediaPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
         mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
 //        mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
-        mMediaPlayer.setOnInfoListener(mOnInfoListener);
+//        mMediaPlayer.setOnInfoListener(mOnInfoListener);
 //        mMediaPlayer.setOnVideoSizeChangedListener(mOnVideoSizeChangeListener);
-        mMediaPlayer.setOnErrorListener(mOnErrorListener);
-        mMediaPlayer.setOnSeekCompleteListener(mOnSeekCompletedListener);
+//        mMediaPlayer.setOnErrorListener(mOnErrorListener);
+//        mMediaPlayer.setOnSeekCompleteListener(mOnSeekCompletedListener);
         mMediaPlayer.setScreenOnWhilePlaying(true);
         mMediaPlayer.setBufferTimeMax(3.0f);
         mMediaPlayer.setTimeout(500, 3000);
         mMediaPlayer.setDecodeMode(KSYMediaPlayer.KSYDecodeMode.KSY_DECODE_MODE_AUTO);
-        mPhoneStateListener = new MyPhoneStateListener(this, mMediaPlayer);
         TelephonyManager tmgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (mPhoneStateListener != null) {
+           
+            tmgr.listen(mPhoneStateListener, 0);
+        }
+        
+        mPhoneStateListener = new MyPhoneStateListener(this, mMediaPlayer);
         tmgr.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+    }
+    @Override
+    public void initDatas() {
+        initMP();
         createSurface();
         //保持屏幕为亮的状态
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -407,7 +524,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             public void onSuccess(CourseVedioDetailEntity entity) {
                 mLoadOk = true;
                 mEntityNow = entity;
-                mTvVideocontentActivityVideoPlay.setText(entity.getCourseDetail());
+                mTvVideocontentActivityVideoPlay.setText("视频简介： "+entity.getCourseDetail());
                 if (!mPrepareOk) {
                     prepareMP();
                 }
@@ -500,7 +617,10 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             public void surfaceCreated(SurfaceHolder holder) {
                 isSurfaceCreated = true;
 //                mMediaPlayer.seekTo(curIndex);
-                mMediaPlayer.setDisplay(mSurfaceHolder);//页面创建好了以后再展示  
+                if (mMediaPlayer != null) {
+                    mMediaPlayer.setDisplay(mSurfaceHolder);//页面创建好了以后再展示  
+                }
+
             }
             
             @Override
@@ -513,7 +633,14 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     }
     
     private void play(final int currentPosition) {
-
+        Logger.e("play--->");
+        if (mIsLoop){
+            mMediaPlayer.release();
+            initMP();
+            mMediaPlayer.setDisplay(mSurfaceHolder);
+            prepareMP();
+         
+        }
         mHasStart = !mHasStart;
         if (!mLoadOk) {
             return;
@@ -523,12 +650,18 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             prepareMP();
            
         }else {
+           
+            if (mCBFirst){
+                mCBFirst=false;
+                mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
+            }
             mMediaPlayer.start();
             if (!mHasBeginSycn) {
                 mHasBeginSycn=true;
                 mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
             }
         }
+     
     }
     
     private void prepareMP() {
@@ -540,43 +673,121 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         try {
             mMediaPlayer.reset();
 //            mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
-            mMediaPlayer.setDataSource(mEntityNow.getCourseUrl());
-            mMediaPlayer.setDisplay(mSurfaceHolder);
-            mMediaPlayer.setLooping(true);
-            mMediaPlayer.prepareAsync();
-            mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-                
-                @Override
-                public void onPrepared(IMediaPlayer mp) {
-                    mPrepareOk = true;
+//            mMediaPlayer.setDataSource("http://192.168.1.21:8080/test/test.mp4");
+            if (mDownloadController == null) {
+                mDownloadController=new DownloadController();
+            }
+            String cacheUrl = mDownloadController.findCourseCacheUrl(mEntityNow.getCourseID());
+            if (cacheUrl != null) {
+                Toast.makeText(mSelf, "已缓存完毕，为您零流量播放视频！", Toast.LENGTH_LONG).show();
+                mMediaPlayer.setDataSource(cacheUrl);
+                mMediaPlayer.setDisplay(mSurfaceHolder);
+                mMediaPlayer.setOnErrorListener(mOnErrorListenerCache);
+                mMediaPlayer.setLooping(false);
+                mMediaPlayer.prepareAsync();
+                mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+        
+                    @Override
+                    public void onPrepared(IMediaPlayer mp) {
+                        mMediaPlayer.pause();
+                        mPrepareOk = true;
 //                    mMediaPlayer.seekTo(currentPosition);
-                    //准备完成，可以播放了
-                    setVideoParams(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
-                    totalTime = mEntityNow.getCourseLength();
+                        //准备完成，可以播放了
+                        setVideoParams(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+                        totalTime = mEntityNow.getCourseLength();
 //                    totalTime = mMediaPlayer.getDuration();
-                    String totalTimeStr = TimeFormatUtil.formatLongToTimeStr((long) totalTime);
+                        String totalTimeStr = TimeFormatUtil.formatLongToTimeStr((long) totalTime);
 
 //                    mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
-                    mPbActivityVideoPlay.setMax(mEntityNow.getCourseLength());
-                    mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
-                    mMediaPlayer.start();
-                    if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
-                        mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
-                    }
-                    if (mHasStart) {
-                        if (!mHasBeginSycn) {
-                            mHasBeginSycn=true;
-                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                        mPbActivityVideoPlay.setMax(mEntityNow.getCourseLength());
+                        mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
+                        mTvDownloadActivityVideoPlay.setText("已缓存");
+                        
+                        if (mHasStart||mIsLoop) {
+                          
+                            Logger.e("准备玩。。。开始了");
+                            mMediaPlayer.start();
+                            if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
+//                                mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
+                                if (mIsLoop) {
+                                    mMediaPlayer.seekTo(0);
+                                }else{
+//                                    mMediaPlayer.seekTo(1000*60*4);
+                                    mMediaPlayer.seekTo( mEntityNow.getCourseStudy());
+        
+                                   
+                                }
+                            }
+                            if (!mHasBeginSycn) {
+                                mHasBeginSycn=true;
+                                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                            }
+                            mIsLoop=false;
                         }
-                      
-                    }
 //                   
-                    mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
-                    mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
-                    mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
-                    mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                        mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                        mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
+                        mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                        mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                    }
+                });
+            }else {
+                try {
+                    mMediaPlayer.setDataSource(mEntityNow.getCourseUrl());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
+                mMediaPlayer.setDisplay(mSurfaceHolder);
+                mMediaPlayer.setOnErrorListener(mOnErrorListener);
+                mMediaPlayer.setLooping(false);
+                mMediaPlayer.prepareAsync();
+                mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+        
+                    @Override
+                    public void onPrepared(IMediaPlayer mp) {
+                        mMediaPlayer.pause();
+                        mPrepareOk = true;
+//                    mMediaPlayer.seekTo(currentPosition);
+                        //准备完成，可以播放了
+                        setVideoParams(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+                        totalTime = mEntityNow.getCourseLength();
+//                    totalTime = mMediaPlayer.getDuration();
+                        String totalTimeStr = TimeFormatUtil.formatLongToTimeStr((long) totalTime);
+
+//                    mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
+                        mPbActivityVideoPlay.setMax(mEntityNow.getCourseLength());
+                        mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
+            
+            
+                        if (mHasStart||mIsLoop) {
+                         
+                            Logger.e("准备玩。。。开始了");
+                            mMediaPlayer.start();
+                            if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
+                                if (mIsLoop) {
+                                    mMediaPlayer.seekTo(0);
+                                }else{
+//                                    mMediaPlayer.seekTo(1000*60*4);
+                                    mMediaPlayer.seekTo( mEntityNow.getCourseStudy());
+                                    //mEntityNow.getCourseStudy()
+                                }
+                               
+                            }
+                            if (!mHasBeginSycn) {
+                                mHasBeginSycn=true;
+                                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                            }
+                            mIsLoop=false;
+                        }
+//                   
+                        mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                        mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
+                        mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
+                        mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                    }
+                });
+            }
+         
             
 //            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
 //                
@@ -588,6 +799,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
 //                }
 //            });
         } catch (Exception e) {
+            e.printStackTrace();
             Log.e("VideoPlayActivity", "line:210--VideoPlayActivity--Play--error");
             mPrepareOk = false;
         }
@@ -648,7 +860,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         }
         mSvActivityVideoPlay.setLayoutParams(layoutParams_sv);
     }
-    
+    private DownloadController mDownloadController;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -688,6 +900,29 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             case R.id.tv_share_activity_video_play:
                 ShareUtil.showShare(this);
                 break;
+            case R.id.tv_download_activity_video_play:
+                if (mEntityNow==null) {
+                    Toast.makeText(mSelf, "网络状态异常，请退出重试！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mDownloadController == null) {
+                    mDownloadController=new DownloadController();
+                }
+                String courseCacheUrl = mDownloadController.findCourseCacheUrl(mEntityNow.getCourseID());
+                if (courseCacheUrl != null) {
+                    Toast.makeText(mSelf, "该视频已缓存完毕，如需重新下载请先清除缓存！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                if (mDownloadController.findCourseCacheIng(mEntityNow.getCourseID())){
+                    Toast.makeText(mSelf, "视频正在努力缓存，请稍等！", Toast.LENGTH_SHORT).show();
+                    return;
+                    
+                }
+            
+                mDownloadController.addTasksToQueue(mEntityNow);
+                Toast.makeText(mSelf, "开始为您缓存该视频！", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
     
@@ -709,7 +944,8 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCbPlayorstopActivityVideoPlay.isChecked()) {
+        if (mHasStart&&mCbPlayorstopActivityVideoPlay.isChecked()) {
+            
             new Handler().postDelayed(new Runnable() {
                 public void run() {
                     if (isSurfaceCreated) {

@@ -7,10 +7,10 @@ import android.widget.RadioGroup;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.HistoryAllFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.HistoryDayFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.HistoryMonthFragment;
-import com.medicine.ssqy.ssqy.ui.fragment.HistoryWeekFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.courseHistory.HistoryAllFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.courseHistory.HistoryDayFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.courseHistory.HistoryMonthFragment;
+import com.medicine.ssqy.ssqy.ui.fragment.courseHistory.HistoryWeekFragment;
 
 import java.util.ArrayList;
 import java.util.List;

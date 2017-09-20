@@ -48,11 +48,18 @@ public class SSQYActivity extends KBaseActivity implements View.OnClickListener 
     private Button mBtJq3;
     private Button mBtJq4;
     
+    private Button mBtChun;
+    private Button mBtXia;
+    private Button mBtQiu;
+    private Button mBtDong;
+    
+
+    
     private List<Button> mButtons=new ArrayList<>();
     Button mButtonCheckedSL,mButtonCheckedYang;
     private JQ mNowJQ;
     private Yang mNowYang=Yang.sYangs.get(0);
-    
+    private OnCXQDClick mOnCXQDClick;
     @Override
     public int setRootView() {
         return R.layout.activity_ssqy;
@@ -87,6 +94,17 @@ public class SSQYActivity extends KBaseActivity implements View.OnClickListener 
         mBtJq3 = (Button) findViewById(R.id.bt_jq3);
         mBtJq4 = (Button) findViewById(R.id.bt_jq4);
     
+        mBtChun = (Button) findViewById(R.id.bt_chun);
+        mBtXia = (Button) findViewById(R.id.bt_xia);
+        mBtQiu = (Button) findViewById(R.id.bt_qiu);
+        mBtDong = (Button) findViewById(R.id.bt_dong);
+    
+        mOnCXQDClick=new OnCXQDClick();
+        mBtChun.setOnClickListener(mOnCXQDClick);
+        mBtXia.setOnClickListener(mOnCXQDClick);
+        mBtQiu.setOnClickListener(mOnCXQDClick);
+        mBtDong.setOnClickListener(mOnCXQDClick);
+        
         mButtonCheckedSL=mBtJqSsqlActivity;
         mButtonCheckedYang=mYangXin;
         mButtons.add(mBtJqSsqlActivity);
@@ -212,5 +230,31 @@ public class SSQYActivity extends KBaseActivity implements View.OnClickListener 
                 break;
         }
         
+    }
+    
+    private class  OnCXQDClick implements View.OnClickListener{
+    
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(mSelf,SSQYResultActivity.class);
+            intent.putExtra("cxqdMode",true);
+            switch (v.getId()) {
+                case R.id.bt_chun:
+                    intent.putExtra("cxqdType","chun");
+                    break;
+                case R.id.bt_xia:
+                    intent.putExtra("cxqdType","xia");
+                    break;
+                case R.id.bt_qiu:
+                    intent.putExtra("cxqdType","qiu");
+                    break;
+                case R.id.bt_dong:
+                    intent.putExtra("cxqdType","dong");
+                    break;
+            }
+           
+         
+            startActivity(intent);
+        }
     }
 }

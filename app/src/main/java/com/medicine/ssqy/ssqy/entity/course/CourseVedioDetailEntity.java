@@ -45,6 +45,13 @@ public class CourseVedioDetailEntity {
     
     private boolean courseLearned;
     private int courseStudy;
+    /**
+     * sha1 : 6A9D070100DF283C0B3AAB6F89085CB90230E946
+     * totalSize : 148925194
+     */
+    
+    private String sha1;
+    private int totalSize;
     
     public boolean isState() {
         return state;
@@ -140,5 +147,21 @@ public class CourseVedioDetailEntity {
     
     public void setCourseStudy(int courseStudy) {
         this.courseStudy = courseStudy;
+    }
+    
+    public String getSha1() {
+        return sha1;
+    }
+    
+    public void setSha1(String sha1) {
+        this.sha1 = sha1;
+    }
+    
+    public int getTotalSize() {
+        return totalSize;
+    }
+    
+    public void setTotalSize(int totalSize) {
+        this.totalSize = totalSize;
     }
 }

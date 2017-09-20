@@ -64,7 +64,7 @@ public class QuestionInterface {
         mNetForJson.addParam("birth",mNowUser.getBirthDay());
         mNetForJson.addParam("phone",mNowUser.getUseraccount());
         mNetForJson.addParam("job",mNowUser.getJob());
-        mNetForJson.addParam("studylevel",mNowUser.getStudyLevel());
+        mNetForJson.addParam("studylevel",mNowUser.getStudylevel());
         mNetForJson.addParam("isFirstLogin","false");
         mNetForJson.addParam("level",1);
         mNetForJson.excute();

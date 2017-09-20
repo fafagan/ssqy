@@ -223,7 +223,7 @@
             android:gravity="center"
             android:textColor="#fff"
             android:textStyle="bold"
-            android:text="3"
+            android:text="2"
             android:layout_width="20dp"
             android:layout_height="20dp"/>
     </LinearLayout>

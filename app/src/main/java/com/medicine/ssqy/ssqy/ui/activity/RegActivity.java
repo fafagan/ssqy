@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.sj.mylibrary.net.NetCallback;
 import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.EdtUtil;
+import com.example.sj.mylibrary.util.PhoneCheckUtil;
 import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
@@ -129,6 +130,10 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
             case R.id.bt_get_verifycode_reg:
                 if (StringEmptyUtil.isEmpty(mEdtPhoneReg.getText().toString())) {
                     Toast.makeText(mSelf, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!PhoneCheckUtil.isRight(mEdtPhoneReg.getText().toString())){
+                    Toast.makeText(mSelf, "请检查手机号格式", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Toast.makeText(mSelf, "正在获取，请稍等", Toast.LENGTH_SHORT).show();

@@ -8,7 +8,7 @@
               android:paddingLeft="@dimen/padding_first_login_left"
               android:paddingRight="@dimen/padding_first_login_left"
               android:paddingTop="@dimen/padding_first_login_top"
-              tools:context="com.medicine.ssqy.ssqy.ui.fragment.FirstLoginSexFragment">
+              tools:context="com.medicine.ssqy.ssqy.ui.fragment.first.FirstLoginSexFragment">
 
     <LinearLayout
         android:layout_width="@dimen/width_rg_first_login"

@@ -42,7 +42,19 @@
             android:text="个人资料管理"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/text_size_small"/>
-
+        <TextView
+            android:id="@+id/tv_clearCache_activity_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_information"
+            android:paddingLeft="@dimen/left_right_margin"
+            android:paddingTop="@dimen/padding_information"
+            android:text="清除系统缓存"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_small"/>
         <TextView
             android:id="@+id/tv_aboutus_activity_setting"
             android:layout_width="match_parent"

@@ -41,12 +41,31 @@
         android:layout_toRightOf="@+id/imgv_item_lv_pic_course"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <ImageView
-        android:id="@+id/imgv_learned_item_lv_pic_course"
-        android:src="@drawable/item_learned"
-        android:layout_alignParentRight="true"
+
+    <LinearLayout
+        android:paddingTop="10dp"
         android:layout_centerVertical="true"
-        android:layout_width="55dp"
-        android:layout_height="55dp"/>
+        android:id="@+id/layout_course_learned"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="-10dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/item_learned"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+          
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="#156b43"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:text="您已看完该养生图文"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </RelativeLayout>

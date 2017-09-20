@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePNotify;
 
+import org.xutils.common.util.DensityUtil;
+
 /**
  * Created by Amy on 2016/12/16.
  */
@@ -52,6 +54,7 @@ public class DigNotify extends Dialog{
     public void showSelf() {
         this.getWindow().setWindowAnimations(R.style.diganim);
         this.show();
+        this.getWindow().setLayout(DensityUtil.dip2px(330) , DensityUtil.dip2px(360));
     }
     
 }

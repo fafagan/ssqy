@@ -1,0 +1,35 @@
+<RelativeLayout android:id="@id/id_jbgl_root"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.medicine.ssqy.ssqy.ui.fragment.jbgl.XTListFragment">
+        <TextView
+            android:id="@+id/ts"
+            android:layout_marginBottom="7dp"
+            android:textSize="12sp"
+            android:textColor="@color/text_color_red"
+            android:text="温馨提示：左滑监测记录可进行相关操作呦！"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_below="@+id/ts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <include
+                    layout="@layout/layout_list_common"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    ></include>
+        </RelativeLayout>
+    
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_none_jl"
+            android:textSize="20sp"
+            android:textColor="@color/background_color_dark"
+            android:gravity="center"
+            android:text="您还没有相关记录呦！请前往'我的每日养生'记录今天的状态！"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+</RelativeLayout>
