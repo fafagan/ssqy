@@ -56,9 +56,9 @@ public class SSQYResultActivity extends KBaseActivity {
                     break;
             }
         }else {
-//            mNowJQ= (JQ) getIntent().getSerializableExtra("sl");
-//            mNowYang= (Yang) getIntent().getSerializableExtra("yang");
-//            mUrl= URLConstant.SSQY_URL+"?season24="+mNowJQ.index+"&feed7="+mNowYang.index;
+            mNowJQ= (JQ) getIntent().getSerializableExtra("sl");
+            mNowYang= (Yang) getIntent().getSerializableExtra("yang");
+            mUrl= URLConstant.SSQY_URL+"?season24="+mNowJQ.index+"&feed7="+mNowYang.index;
 //            setTitleCenter(mNowJQ.title+"  "+mNowYang.title);
             setTitleCenter("我的节气养生");
         }

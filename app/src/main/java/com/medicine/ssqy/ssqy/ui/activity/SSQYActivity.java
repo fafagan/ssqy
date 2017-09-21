@@ -58,7 +58,7 @@ public class SSQYActivity extends KBaseActivity implements View.OnClickListener 
     private List<Button> mButtons=new ArrayList<>();
     Button mButtonCheckedSL,mButtonCheckedYang;
     private JQ mNowJQ;
-    private Yang mNowYang=Yang.sYangs.get(0);
+    private Yang mNowYang;
     private OnCXQDClick mOnCXQDClick;
     @Override
     public int setRootView() {
@@ -142,6 +142,10 @@ public class SSQYActivity extends KBaseActivity implements View.OnClickListener 
         mYangYao.setTag(Yang.sYangs.get(5));
         mYangXin.setTag(Yang.sYangs.get(6));
     
+    
+        mYangResult.setText(mYangXin.getText());
+        mYangResult.setTag(mYangXin.getTag());
+        mNowYang= (Yang) mYangXin.getTag();
         mSsqyQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,8 +163,8 @@ public class SSQYActivity extends KBaseActivity implements View.OnClickListener 
         mNowJQ = _24SolarTerms.getNowJQObj();
         mBtJqSsqlActivity.setTag(mNowJQ);
         mBtJqSsqlActivity.setText(mNowJQ.title);
-        mSlResult.setText(mNowJQ.title);
-        mYangResult.setText(mNowYang.title);
+//        mSlResult.setText(mNowJQ.title);
+//        mYangResult.setText(mNowYang.title);
         List<JQ> near4JQObj = _24SolarTerms.getNear4JQObj();
         mBtJq1.setTag(near4JQObj.get(0));
         mBtJq2.setTag(near4JQObj.get(1));
