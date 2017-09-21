@@ -39,7 +39,22 @@ public class UtilTimeConvertS {
         }else {
             return  hour+"时"+minute+"分"+time2+"秒";
         }
-    
        
     }
+    
+    public static String getHour(long timeInS) {
+        timeInS=timeInS/1000;
+        long hour=timeInS/HOUR;
+        return hour+"";
     }
+    public static String getMins(long timeInS) {
+        timeInS=timeInS/1000;
+        long hour=timeInS/HOUR;
+        long time1=timeInS%HOUR;
+        
+        long minute=time1/MINUTE;
+        
+       return minute+"";
+        
+    }
+}

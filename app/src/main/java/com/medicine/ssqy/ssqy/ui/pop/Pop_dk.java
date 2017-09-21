@@ -17,11 +17,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.AnimatorString;
 import com.medicine.ssqy.ssqy.R;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
+import com.medicine.ssqy.ssqy.entity.DKEntity;
+import com.medicine.ssqy.ssqy.entity.DKRecordEntity;
 import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeCourseFragment;
 
 import org.xutils.common.util.DensityUtil;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/11/20.
@@ -48,12 +60,14 @@ public class Pop_dk extends PopupWindow{
     private RelativeLayout mLayoutSuccess;
     private TextView mTvDaysDk;
     private HomeCourseFragment mHomeCourseFragment;
-
-    
-    
-    
     
     private int mTvDKHeight=-1;
+    
+    private NetForJson mNetForJsonGetDKRecord;
+    private NetForJson mNetForJsonDK;
+    private List<TextView> mTextViewsDate=new ArrayList<>();
+    private  int mDays=0;
+    private  boolean mDKToday=true;
     public Pop_dk(Context context, HomeCourseFragment homeCourseFragment) {
         super(context);
         mHomeCourseFragment=homeCourseFragment;
@@ -66,6 +80,7 @@ public class Pop_dk extends PopupWindow{
         contentView = LayoutInflater.from(context).inflate(R.layout.dig_dk_frag, null);
         mContentDigDk = (RelativeLayout)contentView. findViewById(R.id.content_dig_dk);
         mTvDaysDk = (TextView)contentView.findViewById(R.id.tv_days_dk);
+
         mTv = (TextView) contentView.findViewById(R.id.tv);
         mLayoutBackPopDk = (FrameLayout)contentView.findViewById(R.id.layout_back_pop_dk);
         mLayoutBackPopDk.setOnClickListener(new View.OnClickListener() {
@@ -76,11 +91,6 @@ public class Pop_dk extends PopupWindow{
             }
         });
         this.setContentView(contentView);
-        
-        initDKTVs();
-    }
-    
-    private void initDKTVs() {
     
         mTvDkDay1 = (TextView)contentView.findViewById(R.id.tv_dk_day1);
         mTvDkDay2 = (TextView)contentView.findViewById(R.id.tv_dk_day2);
@@ -90,43 +100,143 @@ public class Pop_dk extends PopupWindow{
         mTvDkDay6 = (TextView)contentView.findViewById(R.id.tv_dk_day6);
         mTvDkToday = (TextView) contentView.findViewById(R.id.tv_dk_today);
         mLayoutSuccess = (RelativeLayout)contentView. findViewById(R.id.layout_success);
+        mTextViewsDate.add(mTvDkDay1);
+        mTextViewsDate.add(mTvDkDay2);
+        mTextViewsDate.add(mTvDkDay3);
+        mTextViewsDate.add(mTvDkDay4);
+        mTextViewsDate.add(mTvDkDay5);
+        mTextViewsDate.add(mTvDkDay6);
+        mTextViewsDate.add(mTvDkToday);
+        for (TextView textView : mTextViewsDate) {
+            setTvHeight(textView);
+            setDKNO(textView);
+        }
     
-        setTvHeight(mTvDkDay1);
-        setTvHeight(mTvDkDay2);
-        setTvHeight(mTvDkDay3);
-        setTvHeight(mTvDkDay4);
-        setTvHeight(mTvDkDay5);
-        setTvHeight(mTvDkDay6);
-    
-        mTvDkDay1.setText("9.07");
-        mTvDkDay2.setText("9.08");
-        mTvDkDay3.setText("9.09");
-        mTvDkDay4.setText("9.10");
-        mTvDkDay5.setText("9.12");
-        mTvDkDay6.setText("9.13");
-        mTvDkToday.setText("9.11");
-        setDKYES(mTvDkDay1);
-        setDKYES(mTvDkDay4);
-//        setDKYES(mTvDkDay5);
-        setDKNO(mTvDkDay2);
-        setDKNO(mTvDkDay3);
+        initNet();
+  
         mTvDkToday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Toast.makeText(mContext, "打卡成功！", Toast.LENGTH_SHORT).show();
+//                mLayoutSuccess.setVisibility(View.VISIBLE);
+//                setDKYES(mTvDkToday);
+//                mTvDaysDk.setText("3 天");
+//                mHomeCourseFragment.changeDaysTextFrag("已连吃 3 天");
+//                mTvDkToday.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(mContext, "您今天已经打过卡了哟！", Toast.LENGTH_SHORT).show();
+//                    
+//                    }
+//                });
+                if (mDKToday){
+    
+                    Toast.makeText(mContext, "您今天已经打过卡了哟！", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(mContext, "正在记录，请稍后", Toast.LENGTH_SHORT).show();
+                    mNetForJsonDK.excute();
+                }
+               
+            }
+        });
+    }
+    
+    private void initNet() {
+    
+        mNetForJsonGetDKRecord=new NetForJson(URLConstant.DK_RECORD_URL, new NetCallback<DKRecordEntity>() {
+            @Override
+            public void onSuccess(DKRecordEntity entity) {
+                
+                List<DKRecordEntity.DkHistoryEntity> dkHistory = entity.getDkHistory();
+                if (dkHistory != null&&dkHistory.size()>0) {
+                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM.dd");
+                    String today = simpleDateFormat.format(new Date());
+                    
+                    Collections.sort(dkHistory);
+                    int index=0;
+                    mDays=entity.getDays();
+                    for (DKRecordEntity.DkHistoryEntity dkHistoryEntity : dkHistory) {
+                        if (today.equals(dkHistoryEntity.getDate())){
+    
+                            mHomeCourseFragment.mTvDaysFragCourse.setText("已连吃 "+ mDays+" 天");
+                            mTvDaysDk.setText(mDays+" 天");
+                            mTvDkToday.setTag(dkHistoryEntity);
+                            mTvDkToday.setText(dkHistoryEntity.getDate());
+                            if (dkHistoryEntity.isIsRecord()) {
+                                setDKYES(mTvDkToday);
+                                mDKToday=true;
+                                mLayoutSuccess.setVisibility(View.VISIBLE);
+                            }else {
+                                setDKNO(mTvDkToday);
+                                mDKToday=false;
+                                mLayoutSuccess.setVisibility(View.GONE);
+                            }
+                        }else {
+                            mTextViewsDate.get(index).setTag(dkHistoryEntity);
+                            mTextViewsDate.get(index).setText(dkHistoryEntity.getDate());
+                            if (dkHistoryEntity.isIsRecord()) {
+                                setDKYES(mTextViewsDate.get(index));
+                            }else {
+                                setDKNO(mTextViewsDate.get(index));
+                            }
+                            index++;
+                        }
+                    }
+                    
+                    
+                }
+            }
+    
+            @Override
+            public void onError() {
+        
+            }
+    
+            @Override
+            public void onFinish() {
+        
+            }
+        },true);
+        
+        mNetForJsonGetDKRecord.addParam("uid",SharePLogin.getUid());
+        mNetForJsonGetDKRecord.excute();
+        mNetForJsonDK=new NetForJson(URLConstant.DK_URL, new NetCallback<DKEntity>() {
+            @Override
+            public void onSuccess(DKEntity entity) {
                 Toast.makeText(mContext, "打卡成功！", Toast.LENGTH_SHORT).show();
                 mLayoutSuccess.setVisibility(View.VISIBLE);
                 setDKYES(mTvDkToday);
-                mTvDaysDk.setText("3 天");
-                mHomeCourseFragment.changeDaysTextFrag("已连吃 3 天");
+                mTvDaysDk.setText(++mDays+" 天");
+                mHomeCourseFragment.changeDaysTextFrag("已连吃 "+ ++mDays+" 天");
                 mTvDkToday.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext, "您今天已经打过卡了哟！", Toast.LENGTH_SHORT).show();
-                         
+            
                     }
                 });
             }
-        });
+    
+            @Override
+            public void onError() {
+        
+            }
+    
+            @Override
+            public void onFinish() {
+        
+            }
+        },true);
+        mNetForJsonDK.addParam("uid", SharePLogin.getUid());
+        mNetForJsonDK.addParam("time",System.currentTimeMillis());
+    }
+    
+    private void initDKTVs() {
+    
+    
+    
+      
+      
     }
     
 
@@ -135,7 +245,7 @@ public class Pop_dk extends PopupWindow{
         tv.setTextColor(0xffffffff);
     }
     private  void setDKNO(TextView tv){
-        tv.setBackgroundResource(R.drawable.tv_dk_no);
+        tv.setBackgroundResource(R.drawable.tv_dk_futrue_selector);
         tv.setTextColor(0xff777777);
     }
     

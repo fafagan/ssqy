@@ -17,6 +17,7 @@ public class URLConstant {
     public static final String USERPWD_URL=BASE_URL+"pwdfind";
     
     
+    public static final String COURSE_HISTORY_URL=BASE_URL+"courseHistory";
     public static final String COURSE_LIST_URL=BASE_URL+"courseCount";
     
     
@@ -28,6 +29,9 @@ public class URLConstant {
     public static final String VIDEO_DETAIL_URL=BASE_URL+"courseVideoDetail";
     public static final String VIDEO_PROGRESS_URL=BASE_URL+"courseVideoRecord";
     
+    
+    public static final String DK_URL=BASE_URL+"daka";
+    public static final String DK_RECORD_URL=BASE_URL+"datarecord";
     
     public static final String PIC_LIST_URL=BASE_URL+"coursePic";
     public static final String PIC_DETAIL_URL=BASE_URL+"coursePicDetail";

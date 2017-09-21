@@ -54,7 +54,7 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
     private RelativeLayout mItemVedioToday;
     private RelativeLayout mItemAudioToday;
     private RelativeLayout mItemTwToday;
-    private TextView mTvDaysFragCourse;
+    public TextView mTvDaysFragCourse;
     private RelativeLayout mLayoutUnformllyFragHome;
     private TextView mTvUnformllyFragCourse;
     private ModifyPhonenumberDig mModifyPhonenumberDig;
@@ -105,7 +105,7 @@ public class HomeCourseFragment extends KBaseFragment implements View.OnClickLis
         mItemVedioToday.setOnClickListener(this);
         mItemAudioToday.setOnClickListener(this);
         mItemTwToday.setOnClickListener(this);
-    
+        mPop_dk = new Pop_dk(mActivity,this);
     
         mTvUnformllyFragCourse.setOnClickListener(new View.OnClickListener() {
             @Override

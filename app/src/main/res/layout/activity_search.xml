@@ -77,6 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <GridLayout
+        android:id="@+id/gl_suggestion"
         android:layout_margin="10dp"
         android:columnCount="3"
         android:layout_below="@+id/tv_cy"
@@ -89,7 +90,7 @@
             android:layout_height="30dp"
             android:textColor="@color/background_color_dark"
             android:layout_margin="10dp"
-            android:text="鸡 蛋"
+            android:text="小 米"
             />
         <Button
             android:background="@drawable/shape_welcome_bt_login"
@@ -107,7 +108,7 @@
             android:layout_height="30dp"
             android:textColor="@color/background_color_dark"
             android:layout_margin="10dp"
-            android:text="面 包"
+            android:text="馒 头"
             />
         <Button
             android:background="@drawable/shape_welcome_bt_login"
@@ -116,7 +117,7 @@
             android:layout_height="30dp"
             android:textColor="@color/background_color_dark"
             android:layout_margin="10dp"
-            android:text="猪 肉"
+            android:text="玉 米"
             />
         <Button
             android:background="@drawable/shape_welcome_bt_login"
@@ -125,7 +126,7 @@
             android:layout_height="30dp"
             android:textColor="@color/background_color_dark"
             android:layout_margin="10dp"
-            android:text="鸡 肉"
+            android:text="米 粥"
             />
         <Button
             android:background="@drawable/shape_welcome_bt_login"
@@ -134,7 +135,7 @@
             android:layout_height="30dp"
             android:textColor="@color/background_color_dark"
             android:layout_margin="10dp"
-            android:text="鱼 肉"
+            android:text="豆 浆"
             />
         <Button
             android:background="@drawable/shape_welcome_bt_login"
@@ -143,7 +144,7 @@
             android:layout_height="30dp"
             android:textColor="@color/background_color_dark"
             android:layout_margin="10dp"
-            android:text="海 虾"
+            android:text="腐 竹"
             />
         <Button
             android:background="@drawable/shape_welcome_bt_login"
@@ -152,8 +153,12 @@
             android:layout_height="30dp"
             android:textColor="@color/background_color_dark"
             android:layout_margin="10dp"
-            android:text="螃 蟹"
+            android:text="烧 饼"
             />
     </GridLayout>
-    
+    <ListView
+        android:id="@+id/lv_result"
+        android:layout_below="@+id/gl_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 </RelativeLayout>
