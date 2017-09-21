@@ -17,6 +17,7 @@ import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
+import com.medicine.ssqy.ssqy.entity.UserExistsEntity;
 import com.orhanobut.logger.Logger;
 
 import cn.smssdk.EventHandler;
@@ -123,7 +124,7 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
         },true);
         
     }
-    
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -136,11 +137,9 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
                     Toast.makeText(mSelf, "请检查手机号格式", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Toast.makeText(mSelf, "正在获取，请稍等", Toast.LENGTH_SHORT).show();
-                String phone=mEdtPhoneReg.getText().toString().trim();
-                if (!StringEmptyUtil.isEmpty(phone)){
-                    SMSSDK.getVerificationCode("86",phone);
-                }
+                
+                checkExists();
+             
                 break;
             case R.id.bt_confirm_reg:
                 if (StringEmptyUtil.isEmpty(mEdtPhoneReg.getText().toString())) {
@@ -170,6 +169,36 @@ public class RegActivity extends KBaseActivity implements View.OnClickListener {
                 break;
         
         }
+    }
+    
+    private void checkExists() {
+        
+        NetForJson netForJson=new NetForJson(URLConstant.USECHECK_URL, new NetCallback<UserExistsEntity>() {
+            @Override
+            public void onSuccess(UserExistsEntity entity) {
+                if (entity.isUserexists()) {
+                    Toast.makeText(mSelf, "用户已存在！", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(mSelf, "正在获取，请稍等", Toast.LENGTH_SHORT).show();
+                    String phone = mEdtPhoneReg.getText().toString().trim();
+                    if (!StringEmptyUtil.isEmpty(phone)) {
+                        SMSSDK.getVerificationCode("86", phone);
+                    }
+                }
+            }
+    
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "网络错误！", Toast.LENGTH_SHORT).show();
+            }
+    
+            @Override
+            public void onFinish() {
+        
+            }
+        },true);
+        netForJson.addParam("phone",mEdtPhoneReg.getText().toString());
+        netForJson.excute();
     }
     
     private void doNet() {

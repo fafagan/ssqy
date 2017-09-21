@@ -16,6 +16,7 @@ import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.entity.course.CoursePicDetailEntity;
 import com.medicine.ssqy.ssqy.entity.course.CoursePicListEntity;
+import com.medicine.ssqy.ssqy.util.ShareUtil;
 
 //http://3g.163.com/touch/article.html?channel=jiankang&offset=20&docid=C85SNS4P0038804V
 public class CourseDetailPicActivity extends KBaseActivity {
@@ -57,7 +58,13 @@ public class CourseDetailPicActivity extends KBaseActivity {
         setTitleRight("分享", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (url==null) {
+                    Toast.makeText(mSelf, "网络异常，请退出重试！", Toast.LENGTH_SHORT).show();
+                }
                 Toast.makeText(mSelf, "分享该课程", Toast.LENGTH_SHORT).show();
+                
+                ShareUtil.showShare(mSelf,url);
+                
             }
         });
         Toast.makeText(mSelf, "正在为您加载相关图文，请稍后", Toast.LENGTH_SHORT).show();
@@ -158,7 +165,7 @@ public class CourseDetailPicActivity extends KBaseActivity {
 
 //        mWv.canGoForward()
 //        mWv.goForward();
-        
+        Toast.makeText(mSelf, "恭喜您已学完该图文课程！", Toast.LENGTH_SHORT).show();
         super.onBackPressed();
     }
 }

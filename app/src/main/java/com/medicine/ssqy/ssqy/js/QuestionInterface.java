@@ -50,7 +50,7 @@ public class QuestionInterface {
         mNowUser.setIsFisrtLogin("false");
         TempUser.saveOrUpdateUser(mNowUser);
         mContext.startActivity(new Intent(mContext,IndexActivity.class));
-        Activity activity= (Activity) context;
+        Activity activity= (Activity) mContext;
         activity.finish();
     }
     @JavascriptInterface

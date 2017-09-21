@@ -95,11 +95,14 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
             
             @Override
             public void onSuccess(CoursePicListEntity entity) {
-                Toast.makeText(mSelf, "加载成功", Toast.LENGTH_SHORT).show();
+                
                 mPicCourseData = entity.getPicCourseData();
+                if (mPicCourseData == null || mPicCourseData.size() == 0) {
+                    Toast.makeText(mSelf, "您今天没有养生图文任务！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 mIsFirstRequest = false;
-                mPbLoadingCourseList.setVisibility(View.GONE);
-                mPbLoadingCourseList.stopSpinning();
+                
                 if (mItemLvPicCourseAdapter == null) {
                     mItemLvPicCourseAdapter = new ItemLvPicCourseAdapter(mSelf, mPicCourseData);
                     mSwipeTarget.setAdapter(mItemLvPicCourseAdapter);
@@ -116,17 +119,25 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
             @Override
             public void onFinish() {
                 mLayoutRefresh.setRefreshing(false);
+                mPbLoadingCourseList.setVisibility(View.GONE);
+                mPbLoadingCourseList.stopSpinning();
+                
+                
             }
         });
         mNetForJson.addParam("uid", SharePLogin.getUid());
         mNetForJson.addParam("startpos", "0");
         mNetForJson.addParam("count", "10");
-        mLayoutRefresh.setRefreshing(true);
         
         
     }
-
-//    private void tempData() {
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mLayoutRefresh.setRefreshing(true);
+    }
+    //    private void tempData() {
 //      
 //        mPicCourseDataEntities=new ArrayList<>();
 //        if (type==TYPE_TODAY){
@@ -236,7 +247,7 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
     }
     
     private void doNetRfresh() {
-        Toast.makeText(mSelf, "正在加载，请稍后", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mSelf, "正在加载，请稍后", Toast.LENGTH_SHORT).show();
 //        tempData();
         mNetForJson.excute();
         

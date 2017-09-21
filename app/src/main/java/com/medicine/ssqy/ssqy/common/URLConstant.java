@@ -15,6 +15,7 @@ public class URLConstant {
     public static final String LOGIN_URL=BASE_URL+"login";
     public static final String USERSET_URL=BASE_URL+"userset";
     public static final String USERPWD_URL=BASE_URL+"pwdfind";
+    public static final String USECHECK_URL=BASE_URL+"usercheck";
     
     
     public static final String COURSE_HISTORY_URL=BASE_URL+"courseHistory";
@@ -71,4 +72,7 @@ public class URLConstant {
     public static final String UTIL_FOODPL_QUERY_URL=BASE_URL+"foodPiaolingSearch";
     public static final String UTIL_FOODGAI_QUERY_URL=BASE_URL+"foodGaiSearch";
     public static final String UTIL_FOODSPORT_QUERY_URL=BASE_URL+"sportsSearch";
+    
+    
+    public static final String APP_UPDATE_URL=BASE_URL+"checkVersion";
 }

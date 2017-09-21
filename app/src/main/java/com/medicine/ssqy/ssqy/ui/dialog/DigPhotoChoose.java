@@ -40,6 +40,13 @@ public class DigPhotoChoose extends Dialog implements View.OnClickListener {
         this.setContentView(R.layout.dig_choose);
         initViews();
         initDatas();
+        String sdPath = Environment.getExternalStorageDirectory()
+                .getAbsolutePath();
+        File dir=new File(sdPath+"/"+mContext.getPackageName());
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        mOutputFile = new File(dir, System.currentTimeMillis() + ".tmp");
     }
     
     private void initViews() {
@@ -86,9 +93,8 @@ public class DigPhotoChoose extends Dialog implements View.OnClickListener {
             return;
         }
         //生成一个文件，存储我们将来拍照的照片
-        String sdPath = Environment.getExternalStorageDirectory()
-                .getAbsolutePath();
-        mOutputFile = new File(sdPath, System.currentTimeMillis() + ".tmp");
+   
+   
         Uri uri = Uri.fromFile(mOutputFile);
         
         //跳转到我们系统的相机界面

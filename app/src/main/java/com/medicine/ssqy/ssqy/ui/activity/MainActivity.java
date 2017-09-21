@@ -76,6 +76,7 @@ public class MainActivity extends KBaseActivity implements View.OnClickListener 
     
     @Override
     public void initViews() {
+        
         if (SharePFirst.isFirst()){
             goToActivity(FirstWelcomeActivity.class);
             finish();

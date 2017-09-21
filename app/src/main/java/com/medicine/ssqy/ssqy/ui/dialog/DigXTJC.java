@@ -79,7 +79,7 @@ public class DigXTJC extends Dialog implements View.OnClickListener {
                     public void onFinish() {
                         
                     }
-                });
+                },true);
             }else {
                 mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
                     @Override
@@ -102,7 +102,7 @@ public class DigXTJC extends Dialog implements View.OnClickListener {
                     public void onFinish() {
                         
                     }
-                });
+                },true);
             }
         }
     }

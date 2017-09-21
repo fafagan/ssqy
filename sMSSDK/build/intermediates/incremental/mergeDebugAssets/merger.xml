@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="E:\Users\Administrator\Desktop\11.5\SSQY\sMSSDK\src\main\assets"/><source path="E:\Users\Administrator\Desktop\11.5\SSQY\sMSSDK\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\Users\Administrator\Desktop\11.5\SSQY\sMSSDK\src\debug\assets"/></dataSet></merger>

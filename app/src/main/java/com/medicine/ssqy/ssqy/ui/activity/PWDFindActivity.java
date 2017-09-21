@@ -8,11 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.EdtUtil;
 import com.example.sj.mylibrary.util.PhoneCheckUtil;
 import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.entity.UserExistsEntity;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -125,8 +129,36 @@ public class PWDFindActivity extends KBaseActivity {
             Toast.makeText(mSelf, "请检查手机号格式", Toast.LENGTH_SHORT).show();
             return;
         }
-        Toast.makeText(mSelf, "正在获取验证码，请稍等。。", Toast.LENGTH_SHORT).show();
-        SMSSDK.getVerificationCode("86",phoneNum);
-        mBtnGetVerifycodeDigModifyPhonenumber.setOnClickListener(null);
+    
+        checkExists();
+    }
+    
+    private void checkExists() {
+        
+        NetForJson netForJson=new NetForJson(URLConstant.USECHECK_URL, new NetCallback<UserExistsEntity>() {
+            @Override
+            public void onSuccess(UserExistsEntity entity) {
+                if (!entity.isUserexists()) {
+                    Toast.makeText(mSelf, "抱歉，该用户并不存在！", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(mSelf, "正在获取验证码，请稍等。。", Toast.LENGTH_SHORT).show();
+                    SMSSDK.getVerificationCode("86",phoneNum);
+                    mBtnGetVerifycodeDigModifyPhonenumber.setOnClickListener(null);
+                    
+                }
+            }
+            
+            @Override
+            public void onError() {
+                Toast.makeText(mSelf, "网络错误！", Toast.LENGTH_SHORT).show();
+            }
+            
+            @Override
+            public void onFinish() {
+                
+            }
+        },true);
+        netForJson.addParam("phone",mEdtPhoneDigModifyPhonenumber.getText().toString());
+        netForJson.excute();
     }
 }

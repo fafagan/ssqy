@@ -155,12 +155,12 @@ public class Pop_dk extends PopupWindow{
                     Collections.sort(dkHistory);
                     int index=0;
                     mDays=entity.getDays();
+                    mHomeCourseFragment.mTvDaysFragCourse.setText("已连吃 "+ mDays+" 天");
+                    mTvDaysDk.setText(mDays+" 天");
+                    mDKToday=false;
                     for (DKRecordEntity.DkHistoryEntity dkHistoryEntity : dkHistory) {
                         if (today.equals(dkHistoryEntity.getDate())){
     
-                            mHomeCourseFragment.mTvDaysFragCourse.setText("已连吃 "+ mDays+" 天");
-                            mTvDaysDk.setText(mDays+" 天");
-                            mTvDkToday.setTag(dkHistoryEntity);
                             mTvDkToday.setText(dkHistoryEntity.getDate());
                             if (dkHistoryEntity.isIsRecord()) {
                                 setDKYES(mTvDkToday);
@@ -168,7 +168,6 @@ public class Pop_dk extends PopupWindow{
                                 mLayoutSuccess.setVisibility(View.VISIBLE);
                             }else {
                                 setDKNO(mTvDkToday);
-                                mDKToday=false;
                                 mLayoutSuccess.setVisibility(View.GONE);
                             }
                         }else {
@@ -206,8 +205,8 @@ public class Pop_dk extends PopupWindow{
                 Toast.makeText(mContext, "打卡成功！", Toast.LENGTH_SHORT).show();
                 mLayoutSuccess.setVisibility(View.VISIBLE);
                 setDKYES(mTvDkToday);
-                mTvDaysDk.setText(++mDays+" 天");
-                mHomeCourseFragment.changeDaysTextFrag("已连吃 "+ ++mDays+" 天");
+                mTvDaysDk.setText((mDays+1)+" 天");
+                mHomeCourseFragment.changeDaysTextFrag("已连吃 "+ (mDays+1)+" 天");
                 mTvDkToday.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

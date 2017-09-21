@@ -21,8 +21,9 @@
         android:paddingRight="20dp"
         android:paddingTop="20dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:clickable="true"
+            android:scaleType="centerCrop"
             android:id="@+id/imgv_head_activity_home"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -217,6 +218,7 @@
             android:textColor="@color/text_common_default"
             android:textSize="16sp"/>
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_pop_system_msg"
             android:background="@drawable/shape_red_pop"
             android:layout_marginLeft="10dp"

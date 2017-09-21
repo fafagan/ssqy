@@ -3,6 +3,7 @@ package com.medicine.ssqy.ssqy.ui.fragment.first;
 
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,6 +16,7 @@ import com.medicine.ssqy.ssqy.base.KBaseFragment;
 import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.js.QuestionInterface;
+import com.medicine.ssqy.ssqy.ui.dialog.DigNotifyQuestion;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -67,18 +69,30 @@ public class QuestionFragment extends KBaseFragment {
                 return true;
             }
         });
-        mWvAbout.setWebChromeClient(new WebChromeClient() {
-        
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-//                mProgressBar.setProgress(newProgress);
-            }
-        
-        });
+        mWvAbout.setWebChromeClient(new MywebChromeClient());
         
         mSettings.setJavaScriptEnabled(true);
         mWvAbout.addJavascriptInterface(new QuestionInterface(mActivity),"goHome");
         mSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+    }
+    
+    class MywebChromeClient extends WebChromeClient {
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message,
+                                 final JsResult result) {
+            // 弹窗处理  
+            final DigNotifyQuestion digNotifyQuestion=new DigNotifyQuestion(mActivity);
+            digNotifyQuestion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    result.confirm();
+                    digNotifyQuestion.cancel();
+                }
+            });
+            digNotifyQuestion.setCancelable(false);
+            digNotifyQuestion.show();
+            
+            return true;
+        }
     }
 }

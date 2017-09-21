@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.ui.activity.AudioCourseListActivity;
+import com.medicine.ssqy.ssqy.ui.activity.PicCourseListActivity;
 import com.medicine.ssqy.ssqy.ui.activity.VedioCourseListActivity;
 
 
@@ -55,9 +56,9 @@ public class DigCourseType extends Dialog implements View.OnClickListener {
             case R.id.layout_dig_course_audio:
                 AudioCourseListActivity.showAll(mContext);
                 break;
-//            case R.id.layout_dig_course_tw:
-//                PicCourseListActivity.showAll(mContext);
-//                break;
+            case R.id.layout_dig_course_tw:
+                PicCourseListActivity.showAll(mContext);
+                break;
         }
         this.cancel();
     }

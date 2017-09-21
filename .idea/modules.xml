@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/playerDemo/playerDemo.iml" filepath="$PROJECT_DIR$/playerDemo/playerDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/playerlib/playerlib.iml" filepath="$PROJECT_DIR$/playerlib/playerlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sMSSDK/sMSSDK.iml" filepath="$PROJECT_DIR$/sMSSDK/sMSSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shortMessageSDKGUI/shortMessageSDKGUI.iml" filepath="$PROJECT_DIR$/shortMessageSDKGUI/shortMessageSDKGUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
     </modules>
   </component>

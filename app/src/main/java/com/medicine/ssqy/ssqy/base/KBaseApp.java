@@ -28,12 +28,13 @@ public class KBaseApp extends BaseApplication {
         //三方登录
         PlatformConfig.setQQZone("1105746827", "akQQqkK7SdDHqnox");
         PlatformConfig.setSinaWeibo("3597239576", "5413f61575a155dc7075b65d00b903db");
+        //分享与短信验证
+//        MobSDK.init(this, "19f417b016350", "edfccec959e6034d6656c41e50cd2ea7");
         SMSSDK.initSDK(this, "19f417b016350", "edfccec959e6034d6656c41e50cd2ea7");
 //        UMShareAPI.get(this);
-        
-        
-        //分享与短信验证
+    
         ShareSDK.initSDK(this);
+   
         JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
     

@@ -124,6 +124,12 @@ public class CalendarActivity extends Activity {
         }, true);
         mNetForJson.addParam("uid", SharePLogin.getUid());
         mNetForJson.addParam("date", TimeFormatUtil.formatLongToNYR(System.currentTimeMillis()));
+    
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
         mNetForJson.excute();
     }
 }

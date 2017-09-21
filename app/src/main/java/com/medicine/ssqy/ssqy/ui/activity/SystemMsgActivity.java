@@ -105,7 +105,7 @@ public class SystemMsgActivity extends KBaseActivity implements OnRefreshListene
                 mLayoutRefresh.setRefreshing(false);
             }
         }, true);
-        mLayoutRefresh.setRefreshing(true);
+//        mLayoutRefresh.setRefreshing(true);
     }
     
     
@@ -139,7 +139,7 @@ public class SystemMsgActivity extends KBaseActivity implements OnRefreshListene
     }
     
     @Override
-    protected void onRestart() {
+    protected void onResume() {
         super.onRestart();
         mLayoutRefresh.setRefreshing(true);
     }

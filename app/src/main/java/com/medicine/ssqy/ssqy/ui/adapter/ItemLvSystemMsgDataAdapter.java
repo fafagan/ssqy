@@ -102,6 +102,12 @@ public class ItemLvSystemMsgDataAdapter extends BaseAdapter implements View.OnCl
                 viewHolder.tvDataTitleSystemMsg.setText("   "+entity.getMsgEntity().getTitle());
                 viewHolder.mLayoutRootItemDataSystem.setTag(entity.getMsgEntity());
                 viewHolder.mLayoutRootItemDataSystem.setOnClickListener(this);
+                if (entity.getMsgEntity().isCourseLearned()) {
+                    viewHolder.mDmd.setVisibility(View.GONE);
+                }else {
+                    
+                    viewHolder.mDmd.setVisibility(View.VISIBLE);
+                }
                 Glide.with(mContext).load(entity.getMsgEntity().getPushPic()).transform(mGlideCircleTransform).placeholder(R.drawable.ssqy).into(viewHolder.mImgvPicSystemMsg);
                 break;
         }
@@ -127,13 +133,17 @@ public class ItemLvSystemMsgDataAdapter extends BaseAdapter implements View.OnCl
         private LinearLayout mLayoutRootItemDataSystem;
         private ImageView mImgvPicSystemMsg;
     
-  
+    
+        private TextView mDmd;
+    
+ 
     
     
     
     
         public ViewHolder(View view) {
             try {
+                mDmd = (TextView)view. findViewById(R.id.dmd);
                 mImgvPicSystemMsg = (ImageView) view.findViewById(R.id.imgv_pic_system_msg);
                 tvDataTitleSystemMsg = (TextView) view.findViewById(R.id.tv_data_title_system_msg);
                 tvDataTimeSystemMsg = (TextView) view.findViewById(R.id.tv_data_time_system_msg);

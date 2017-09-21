@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="330dp"
+              android:layout_height="180dp"
+              android:gravity="center"
+              android:padding="15dp"
+              android:background="@drawable/cbg"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="友情提示您："
+        android:textColor="#f00"
+        android:textSize="@dimen/text_size_medium"/>
+
+    <RelativeLayout
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+             android:layout_centerInParent="true"
+             android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:text="请您填完所有问题后再提交哟！"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+    
+        <Button
+            android:id="@+id/bt_confirm"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_first_login_bt"
+            android:textStyle="bold"
+            android:text="继续答题"
+            android:textColor="#fff"
+            android:textSize="16sp"/>
+
+</LinearLayout>

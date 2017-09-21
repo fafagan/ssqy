@@ -161,6 +161,8 @@ public class SSQYActivity extends KBaseActivity implements View.OnClickListener 
     public void initDatas() {
     
         mNowJQ = _24SolarTerms.getNowJQObj();
+        mSlResult.setText(mNowJQ.title);
+        mSlResult.setTag(mNowJQ);
         mBtJqSsqlActivity.setTag(mNowJQ);
         mBtJqSsqlActivity.setText(mNowJQ.title);
 //        mSlResult.setText(mNowJQ.title);

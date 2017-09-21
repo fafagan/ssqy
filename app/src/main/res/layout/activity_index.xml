@@ -96,4 +96,9 @@
         android:src="@drawable/logo_dzm"
         android:layout_width="90dp"
         android:layout_height="90dp"/>
+    <!--<TextView-->
+        <!--android:textSize="80sp"-->
+        <!--android:text="我是专用测试版本！！！我是个新的！！！"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 </com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

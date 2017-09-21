@@ -45,7 +45,7 @@ public class TempUser {
                 dbManager.
                         update(userEntity, "birthDay", "headPicUrl", "job",
                                 "nickName", "phone", "regTime", "sex", "studylevel",
-                                "useraccount", "isMarried", "level", "state", "uid","isFisrtLogin");
+                                "useraccount", "isMarried", "level", "state", "uid","isFisrtLogin","headPicUrl");
             } else {
                 dbManager.saveBindingId(userEntity);
             }

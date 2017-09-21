@@ -56,6 +56,19 @@
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/text_size_small"/>
         <TextView
+            android:id="@+id/tv_update_activity_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_information"
+            android:paddingLeft="@dimen/left_right_margin"
+            android:paddingTop="@dimen/padding_information"
+            android:text="版本升级"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_small"/>
+        <TextView
             android:id="@+id/tv_aboutus_activity_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

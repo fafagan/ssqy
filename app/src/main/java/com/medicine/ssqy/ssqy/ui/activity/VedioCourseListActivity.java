@@ -99,8 +99,12 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
         mNetForJson = new NetForJson(URLConstant.VIDEO_LIST_URL, new NetCallback<CourseVedioEntity>() {
             @Override
             public void onSuccess(CourseVedioEntity entity) {
-                Toast.makeText(mSelf, "加载成功！", Toast.LENGTH_SHORT).show();
+                
                 mVideoCourseData = entity.getVideoCourseData();
+                if (mVideoCourseData == null ||mVideoCourseData.size()==0) {
+                    Toast.makeText(mSelf, "您今天没有养生视频任务！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 mCourseCount = entity.getCourseCount();
                 if (typeNet == TYPE_REFRESH) {
                     if (mItemLvVedioCourseAdapter == null) {
@@ -269,7 +273,7 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
     }
     
     private void doNetRfresh() {
-        Toast.makeText(mSelf, "正在加载，请稍等", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mSelf, "正在加载，请稍等", Toast.LENGTH_SHORT).show();
 //        tempData();
         typeNet = TYPE_REFRESH;
         mNetForJson.addParam("uid", SharePLogin.getUid());

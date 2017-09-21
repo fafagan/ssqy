@@ -70,7 +70,7 @@ public class LoginActivity extends KBaseActivity {
         
         mEdtPwdLogin.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
         EdtJava.makeEdtJava(mEdtPwdLogin);
-        
+        mEdtPhoneLogin.setText(SharePLogin.getLastPhone());
         setEdtFoucsChanged();
         setOnclick();
 
@@ -146,11 +146,13 @@ public class LoginActivity extends KBaseActivity {
         mNetForJson=new NetForJson(URLConstant.LOGIN_URL, new NetCallback<UserEntity>() {
             @Override
             public void onSuccess(UserEntity entity) {
-                if (!entity.isState()) {
+                if (StringEmptyUtil.isEmpty(entity.getUid())) {
                     Toast.makeText(mSelf, "用户名密码错误！", Toast.LENGTH_SHORT).show();
+                    mLoginBtClick.stopChangeText();
+                    return;
                 }
                 Toast.makeText(mSelf, "登录成功！", Toast.LENGTH_SHORT).show();
-    
+                SharePLogin.saveLastPhone(entity.getPhone()==null?entity.getUseraccount():entity.getPhone());
                 TempUser.saveOrUpdateUser(entity);
                 SharePLogin.saveUid(entity.getUid());
                 if (StringEmptyUtil.isEmpty(entity.isIsFisrtLogin())){
@@ -166,11 +168,13 @@ public class LoginActivity extends KBaseActivity {
             @Override
             public void onError() {
                 Toast.makeText(mSelf, "登录失败", Toast.LENGTH_SHORT).show();
+                mLoginBtClick.stopChangeText();
             }
     
             @Override
             public void onFinish() {
                 setLoging(false);
+                
             }
         },true);
     }
@@ -208,6 +212,7 @@ public class LoginActivity extends KBaseActivity {
         if (mIsLoging){
             //cancelLogin();
             mIsLoging=false;
+            mLoginBtClick.stopChangeText();
             return;
         }
         super.onBackPressed();

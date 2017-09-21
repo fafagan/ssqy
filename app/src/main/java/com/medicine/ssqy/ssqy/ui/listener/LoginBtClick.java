@@ -75,6 +75,12 @@ public class LoginBtClick extends BaseOnClick<LoginActivity> {
         mHandler.sendEmptyMessageDelayed(1,600);
     }
     
+    public void stopChangeText() {
+       
+        mHandler.removeMessages(1);
+        mButton.setText("登 录");
+    }
+    
     private void doNetCheck() {
         if (!mParent.isLoging()){
             startChangeText();

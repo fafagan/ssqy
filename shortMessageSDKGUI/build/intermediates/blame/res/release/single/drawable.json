@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_btn_enable.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_btn_enable.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_corners_bg_pre.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_corners_bg_pre.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_country_group_scroll_down.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_country_group_scroll_down.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_country_bg_selector.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_country_bg_selector.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_btn_disenable.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_btn_disenable.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_corners_bg_nor.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_corners_bg_nor.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_corners_bg.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_corners_bg.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_dialog_btn_back.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_dialog_btn_back.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_country_group_scroll_up.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_country_group_scroll_up.xml"
+    },
+    {
+        "merged": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\build\\intermediates\\res\\merged\\release\\drawable\\smssdk_edittext_bg_selector.xml",
+        "source": "E:\\Users\\Administrator\\Desktop\\11.5\\SSQY\\shortMessageSDKGUI\\src\\main\\res\\drawable\\smssdk_edittext_bg_selector.xml"
+    }
+]

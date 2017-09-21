@@ -66,29 +66,6 @@ public class DigXYJC extends Dialog implements View.OnClickListener {
         mWvDy = (WheelView) findViewById(R.id.wv_dy);
         mWvGy = (WheelView) findViewById(R.id.wv_gy);
     
-    
-        mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
-            @Override
-            public void onSuccess(JCEntity entity) {
-                if (entity.isState()) {
-                    Toast.makeText(getContext(), "记录成功！", Toast.LENGTH_SHORT).show();
-                    cancel();
-                }else {
-                    Toast.makeText(getContext(), "当天记录已存在，请查看我的疾病管理", Toast.LENGTH_SHORT).show();
-                
-                }
-            }
-        
-            @Override
-            public void onError() {
-                Toast.makeText(context, "记录失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
-            }
-        
-            @Override
-            public void onFinish() {
-            
-            }
-        });
         initWVDatas();
         mWvDy.setWheelAdapter(new TVWheelAdapter(context)); // 文本数据源
         WheelView.WheelViewStyle wheelViewStyle = new WheelView.WheelViewStyle();
@@ -183,7 +160,7 @@ public class DigXYJC extends Dialog implements View.OnClickListener {
                     public void onFinish() {
                         
                     }
-                });
+                },true);
             }else {
                 mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
                     @Override
@@ -206,7 +183,7 @@ public class DigXYJC extends Dialog implements View.OnClickListener {
                     public void onFinish() {
                         
                     }
-                });
+                },true);
             }
         }
     }

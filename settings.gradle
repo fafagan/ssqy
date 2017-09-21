@@ -1,1 +1,1 @@
-include ':app', ':library', ':json', ':test', ':playerlib', ':playerDemo'
+include ':app', ':library', ':json', ':test', ':playerlib', ':playerDemo', ':sMSSDK', ':shortMessageSDKGUI'

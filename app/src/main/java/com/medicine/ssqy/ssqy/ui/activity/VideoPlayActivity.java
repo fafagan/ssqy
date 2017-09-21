@@ -196,7 +196,11 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             {
 //                mMediaPlayer.release();
 //                mMediaPlayer = null;
-                mMediaPlayer.reset();
+                mMediaPlayer.release();
+                mMediaPlayer=null;
+                mTimerSyncLearnProgress.cancel();
+                mTimerSyncLearnProgress=new Timer();
+                mHasBeginSycn=false;
                 mHasStart=false;
                 mCbPlayorstopActivityVideoPlay.setChecked(false);
                 mPrepareOk=false;
@@ -424,10 +428,15 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 
             }
         });
-    
+        
         mBtReplayVedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long now=System.currentTimeMillis();
+                if (now-mLastReplayTime<2000){
+                    return;
+                }
+                mLastReplayTime=now;
                 if (mMediaPlayer!=null) {
                     try {
                         mMediaPlayer.seekTo(0);
@@ -475,6 +484,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         
         
     }
+    private long mLastReplayTime=0;
     private void  initMP(){
         //        mMediaPlayer = new MediaPlayer();
         mMediaPlayer = new KSYMediaPlayer.Builder(this).build();
@@ -667,6 +677,10 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private void prepareMP() {
         if (mEntityNow == null) {
             return;
+        }
+    
+        if (mMediaPlayer==null) {
+            initMP();
         }
         //获取res/raw文件夹下面的视频文件
 //        AssetFileDescriptor fileDescriptor = this.getResources().openRawResourceFd(R.raw.test);
@@ -972,6 +986,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     protected void onPause() {
         super.onPause();
         Pause();
+        mCbPlayorstopActivityVideoPlay.setChecked(false);
     }
     
     @Override

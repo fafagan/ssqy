@@ -109,11 +109,15 @@ public class AudioCourseListActivity extends KBaseActivity implements OnLoadMore
                 
                 if (entity.isState()) {
                     
-                    Toast.makeText(mSelf, "加载成功！", Toast.LENGTH_SHORT).show();
                     mCourseCount = entity.getCourseCount();
-                    
+                
                     if (typeNet == TYPE_REFRESH) {
                         mAudioCourseData = entity.getAudioCourseData();
+    
+                        if (mAudioCourseData == null ||mAudioCourseData.size()==0) {
+                            Toast.makeText(mSelf, "您今天没有养生音频任务！", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         if (mItemLvAudioCourseAdapter == null) {
                             mItemLvAudioCourseAdapter = new ItemLvAudioCourseAdapter(mSelf, entity.getAudioCourseData());
                             mSwipeTarget.setAdapter(mItemLvAudioCourseAdapter);

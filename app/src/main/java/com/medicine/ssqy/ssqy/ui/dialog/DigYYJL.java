@@ -18,6 +18,7 @@ import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.entity.JCEntity;
+import com.orhanobut.logger.Logger;
 
 import static com.umeng.socialize.utils.DeviceConfig.context;
 
@@ -86,7 +87,7 @@ public class DigYYJL extends Dialog implements View.OnClickListener {
                     public void onFinish() {
                         
                     }
-                });
+                },true);
             }else {
                 mNetForJson=new NetForJson(URLConstant.JBGL_ADD_URL, new NetCallback<JCEntity>() {
                     @Override
@@ -109,7 +110,7 @@ public class DigYYJL extends Dialog implements View.OnClickListener {
                     public void onFinish() {
                         
                     }
-                });
+                },true);
             }
         }
     }
@@ -121,6 +122,7 @@ public class DigYYJL extends Dialog implements View.OnClickListener {
             Toast.makeText(mContext, "请填写用药情况再保存！", Toast.LENGTH_SHORT).show();
             return;
         }
+        Logger.e("string-->"+string);
         Toast.makeText(mContext, "正在记录，请稍等", Toast.LENGTH_SHORT).show();
         initNet();
         if (mIsUpdateMode) {

@@ -42,4 +42,13 @@ public class SharePLogin {
         return SharedPrefrencesUtil.getData(KBaseApp.mContextGlobal,"ssqylogin","userpwd","");
         
     }
+    
+    public static void saveLastPhone(String phone){
+        SharedPrefrencesUtil.saveData(KBaseApp.mContextGlobal,"ssqylogin","LastPhone",phone);
+ 
+    }
+    public static String getLastPhone(){
+        return SharedPrefrencesUtil.getData(KBaseApp.mContextGlobal,"ssqylogin","LastPhone","");
+        
+    }
 }

@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,13 +18,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.StringEmptyUtil;
+import com.google.gson.Gson;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.base.KBaseFragment;
+import com.medicine.ssqy.ssqy.common.URLConstant;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.db.TempUser;
+import com.medicine.ssqy.ssqy.entity.SystemMsgEntity;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
+import com.medicine.ssqy.ssqy.entity.UserHeadEntity;
 import com.medicine.ssqy.ssqy.ui.dialog.DigCourseType;
 import com.medicine.ssqy.ssqy.ui.dialog.DigPhotoChoose;
 import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeCourseFragment;
@@ -31,10 +40,15 @@ import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeUtilFragment;
 import com.medicine.ssqy.ssqy.ui.views.DragLayout;
 import com.medicine.ssqy.ssqy.util.SaveBMUtil;
 
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.io.FileOutputStream;
+import java.util.List;
 
 import static com.medicine.ssqy.ssqy.ui.dialog.DigPhotoChoose.REQUEST_CODE_CLIP_PHOTO;
 
@@ -54,7 +68,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     
     private KBaseFragment[] mFragmentHome = {mHomeCourseFragment, mHomeUtilFragment, mHomeJCFragment};
     private DigCourseType mDigCourseType;
-    private CircleImageView mImgvHeadActivityHome;
+    private ImageView mImgvHeadActivityHome;
     private ImageView mImgvSexActivityHome;
     private TextView mTvUsernameActivityHome;
     private TextView mTvUserlevelActivityHome;
@@ -67,7 +81,12 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     private UserEntity mUserEntity;
     private DigPhotoChoose mDigPhotoChoose;
     private Bitmap mBMTX;
- 
+    private NetForJson mNetForJson;
+    private List<SystemMsgEntity> mSystemMsgEntities;
+    private TextView mTvPopSystemMsg;
+    
+    private boolean mHasBeiginUpload = false;
+    
     @Override
     public int setRootView() {
         return R.layout.activity_home;
@@ -86,14 +105,64 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         initTitles();
         mUserEntity = TempUser.getNowUser(SharePLogin.getUid());
         initSlide();
-        mDigPhotoChoose=new DigPhotoChoose(this);
-        
+        mDigPhotoChoose = new DigPhotoChoose(this);
         
         
     }
     
+    @Override
+    protected void onResume() {
+        super.onResume();
+        syncDatas();
+    }
+    
+    private void syncDatas() {
+        if (mNetForJson == null) {
+            
+            mNetForJson = new NetForJson(URLConstant.SYSTEM_MSG_URL, new NetCallback<List<SystemMsgEntity>>() {
+                
+                @Override
+                public void onSuccess(List<SystemMsgEntity> systemMsgEntities) {
+                    
+                    mSystemMsgEntities = systemMsgEntities;
+                    int num = 0;
+                    if (mSystemMsgEntities != null) {
+                        for (SystemMsgEntity systemMsgEntity : mSystemMsgEntities) {
+                            if (!systemMsgEntity.isCourseLearned()) {
+                                num++;
+                            }
+                        }
+                    }
+                    
+                    if (num == 0) {
+                        mTvPopSystemMsg.setVisibility(View.GONE);
+                    } else {
+                        mTvPopSystemMsg.setVisibility(View.VISIBLE);
+                        mTvPopSystemMsg.setText(num + "");
+                    }
+                    
+                }
+                
+                @Override
+                public void onError() {
+                    
+                }
+                
+                @Override
+                public void onFinish() {
+                }
+            }, true);
+            
+            
+        }
+        mNetForJson.addParam("uid", SharePLogin.getUid());
+        mNetForJson.addParam("startPos", 0);
+        mNetForJson.addParam("count", 50);
+        mNetForJson.excute();
+    }
+    
     private void initSlide() {
-        mImgvHeadActivityHome = (CircleImageView) findViewById(R.id.imgv_head_activity_home);
+        mImgvHeadActivityHome = (ImageView) findViewById(R.id.imgv_head_activity_home);
         mImgvSexActivityHome = (ImageView) findViewById(R.id.imgv_sex_activity_home);
         mTvUsernameActivityHome = (TextView) findViewById(R.id.tv_username_activity_home);
         mTvUserlevelActivityHome = (TextView) findViewById(R.id.tv_userlevel_activity_home);
@@ -103,48 +172,60 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         mLayoutItemUserbodyActivityHome = (LinearLayout) findViewById(R.id.layout_item_userbody_activity_home);
         mLayoutItemUsermsgActivityHome = (LinearLayout) findViewById(R.id.layout_item_usermsg_activity_home);
         mLayoutItemUsersettingActivityHome = (LinearLayout) findViewById(R.id.layout_item_usersetting_activity_home);
-        
+        mTvPopSystemMsg = (TextView) findViewById(R.id.tv_pop_system_msg);
         
         if (!StringEmptyUtil.isEmpty(mUserEntity.getHeadPicUrl())) {
-            Glide.with(this).load(mUserEntity.getHeadPicUrl()).dontAnimate().placeholder(R.drawable.avatar).into(mImgvHeadActivityHome);
-        }
-        
-        if (!StringEmptyUtil.isEmpty(mUserEntity.getSex())) {
-            if (mUserEntity.getSex().equals("woman")) {
-                mImgvSexActivityHome.setImageResource(R.drawable.sex_woman);
-                
+//            Glide.with(this).load(mUserEntity.getHeadPicUrl()).centerCrop().transform(new GlideCircleTransform(mSelf)).placeholder(R.drawable.avatar).into(mImgvHeadActivityHome);
+            Glide.with(mSelf).load(mUserEntity.getHeadPicUrl()).asBitmap().centerCrop().placeholder(R.drawable.avatar).into(new BitmapImageViewTarget(mImgvHeadActivityHome) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(mSelf.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    mImgvHeadActivityHome.setImageDrawable(circularBitmapDrawable);
+                }
+            });
+    
+            if (!StringEmptyUtil.isEmpty(mUserEntity.getSex())) {
+                if (mUserEntity.getSex().equals("woman")) {
+                    mImgvSexActivityHome.setImageResource(R.drawable.sex_woman);
+            
+                } else {
+                    mImgvSexActivityHome.setImageResource(R.drawable.sex_man);
+                }
+            }
+    
+            if (mUserEntity.getLevel() > 0) {
+                mTvUserlevelActivityHome.setText(" LV " + mUserEntity.getLevel());
             } else {
-                mImgvSexActivityHome.setImageResource(R.drawable.sex_man);
+                mTvUserlevelActivityHome.setText(" LV 1");
             }
-        }
-        
-        if (mUserEntity.getLevel() > 0) {
-            mTvUserlevelActivityHome.setText(" LV " + mUserEntity.getLevel());
-        } else {
-            mTvUserlevelActivityHome.setText(" LV 1");
-        }
-        
-        if (!StringEmptyUtil.isEmpty(mUserEntity.getNickName())) {
-            mTvUsernameActivityHome.setText(mUserEntity.getNickName());
-        } else {
-            mTvUsernameActivityHome.setText("美丽人生");
-        }
-        
-        
-        mLayoutItemUserdetailActivityHome.setOnClickListener(this);
-        mLayoutItemUserdoctorActivityHome.setOnClickListener(this);
-        mLayoutItemUsercourseActivityHome.setOnClickListener(this);
-        mLayoutItemUserbodyActivityHome.setOnClickListener(this);
-        mLayoutItemUsermsgActivityHome.setOnClickListener(this);
-        mLayoutItemUsersettingActivityHome.setOnClickListener(this);
-        mImgvHeadActivityHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDigPhotoChoose.show();
-        
+    
+            if (!StringEmptyUtil.isEmpty(mUserEntity.getNickName())) {
+                mTvUsernameActivityHome.setText(mUserEntity.getNickName());
+            } else {
+                mTvUsernameActivityHome.setText("美丽人生");
             }
-        });
-        
+    
+    
+            mLayoutItemUserdetailActivityHome.setOnClickListener(this);
+            mLayoutItemUserdoctorActivityHome.setOnClickListener(this);
+            mLayoutItemUsercourseActivityHome.setOnClickListener(this);
+            mLayoutItemUserbodyActivityHome.setOnClickListener(this);
+            mLayoutItemUsermsgActivityHome.setOnClickListener(this);
+            mLayoutItemUsersettingActivityHome.setOnClickListener(this);
+            mImgvHeadActivityHome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mHasBeiginUpload) {
+                        Toast.makeText(mSelf, "正在同步您的头像，请稍后重试！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    mDigPhotoChoose.show();
+            
+                }
+            });
+        }
     }
     
     private void initTitles() {
@@ -176,12 +257,11 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         });
         mRgTitleHome.setOnCheckedChangeListener(this);
         boolean record = this.getIntent().getBooleanExtra("record", false);
-        if(record){
+        if (record) {
             mRbHomeJc.setChecked(true);
-        }else {
+        } else {
             mRbHomeCourse.setChecked(true);
         }
-        
         
         
     }
@@ -267,7 +347,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-  
+        
         if (resultCode == RESULT_OK) {
             //处理裁剪结果
             if (requestCode == DigPhotoChoose.REQUEST_CODE_CLIP_PHOTO) {
@@ -275,10 +355,10 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
                 return;
             }
             
-            if (requestCode == DigPhotoChoose.REQUEST_CODE_TAKE_PHOTO){
+            if (requestCode == DigPhotoChoose.REQUEST_CODE_TAKE_PHOTO) {
                 clipPhoto(Uri.fromFile(mDigPhotoChoose.mOutputFile));
                 return;
-            }else {
+            } else {
                 //针对4.4前后的路径不一致问题：http://blog.csdn.net/tempersitu/article/details/20557383
                 //以下处理选择图片结果
                 //---
@@ -286,20 +366,25 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
                 Uri uri = data.getData();
                 ContentResolver cr = this.getContentResolver();
                 try {
-                    mBMTX = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.RGB_565;
+                    options.inSampleSize = 2;
+                    mBMTX = BitmapFactory.decodeStream(cr.openInputStream(uri), null, options);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 //保存图片到本地，随后准备上传
                 mDigPhotoChoose.mOutputFile = SaveBMUtil.saveMyBitmap(mBMTX, "tx" + System.currentTimeMillis());
+                mBMTX.recycle();
+                mBMTX = null;
+                System.gc();
                 //---
                 //选择并截取
                 clipPhoto(Uri.fromFile(mDigPhotoChoose.mOutputFile));
             }
             
             
-            
-        }else {
+        } else {
             Toast.makeText(mSelf, "图片处理失败，请重试！", Toast.LENGTH_SHORT).show();
         }
         
@@ -315,8 +400,8 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 720);
-        intent.putExtra("outputY", 720);
+        intent.putExtra("outputX", 960);
+        intent.putExtra("outputY", 960);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 Uri.fromFile(new File(mDigPhotoChoose.mOutputFile.getAbsoluteFile() + "tmp")));
         startActivityForResult(intent, REQUEST_CODE_CLIP_PHOTO);
@@ -333,9 +418,108 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
                     .show();
         } else {
             //此处可替换成ImageLoader处理
-            Bitmap bm = BitmapFactory.decodeFile(mDigPhotoChoose.mOutputFile.getAbsolutePath()
-                    + "tmp");
-            mImgvHeadActivityHome.setImageBitmap(bm);
+            File file = new File(mDigPhotoChoose.mOutputFile.getAbsoluteFile() + "tmp");
+            if (!file.exists()) {
+                Toast.makeText(mSelf, "头像设置失败", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
+            if (bm == null) {
+                Toast.makeText(mSelf, "头像设置失败", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            final File fileCom = compressBM(file, bm);
+            
+            if (fileCom == null || !fileCom.exists()) {
+                Toast.makeText(mSelf, "头像设置失败", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+//            mImgvHeadActivityHome.setImageBitmap(bm);
+            Glide.with(mSelf).load(fileCom).asBitmap().centerCrop().placeholder(R.drawable.avatar).into(new BitmapImageViewTarget(mImgvHeadActivityHome) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(mSelf.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    mImgvHeadActivityHome.setImageDrawable(circularBitmapDrawable);
+                }
+    
+            });
+//           
+    
+            RequestParams requestParams=new RequestParams(URLConstant.BASE_URL + "userhead");
+            requestParams.addParameter("uid",SharePLogin.getUid());
+            requestParams.addBodyParameter("headfile",fileCom);
+            x.http().post(requestParams, new Callback.CommonCallback<String>() {
+    
+                @Override
+                public void onSuccess(String result) {
+                    System.out.println("result-->"+result);
+                    Gson gson=new Gson();
+                    UserHeadEntity userHeadEntity = gson.fromJson(result, UserHeadEntity.class);
+                    if (userHeadEntity.isState()) {
+                        Toast.makeText(mSelf, "头像上传成功！", Toast.LENGTH_SHORT).show();
+    
+                        UserEntity nowUser = TempUser.getNowUser(SharePLogin.getUid());
+                        nowUser.setHeadPicUrl(userHeadEntity.getHeadPicUrl());
+                        TempUser.saveOrUpdateUser(nowUser);
+                    }else {
+                        Toast.makeText(mSelf, "头像同步服务器失败，请检查网络状态！", Toast.LENGTH_SHORT).show();
+                    }
+                  
+                }
+    
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Toast.makeText(mSelf, "头像同步服务器失败，请检查网络状态！", Toast.LENGTH_SHORT).show();
+                }
+    
+                @Override
+                public void onCancelled(CancelledException cex) {
+        
+                }
+    
+                @Override
+                public void onFinished() {
+                    mHasBeiginUpload = false;
+                }
+            });
         }
     }
+    
+    private File compressBM(File file, Bitmap bm) {
+        File comFile = new File(file.getAbsolutePath() + "comp");
+        if (comFile.exists()) {
+            comFile.delete();
+        }
+        
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(comFile);
+            int bl = 100;
+            while (true) {
+                
+                bm.compress(Bitmap.CompressFormat.JPEG, bl, byteArrayOutputStream);
+                if (byteArrayOutputStream.size() < 150 * 1024) {
+                    break;
+                }
+                if (bl <= 20) {
+                    break;
+                }
+                bl -= 5;
+                byteArrayOutputStream.reset();
+            }
+            
+            //把BitMap保存到文件中
+            bm.compress(Bitmap.CompressFormat.JPEG, bl, fOut);
+            return comFile;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(mSelf, "头像设置失败！", Toast.LENGTH_SHORT).show();
+        }
+        return null;
+    }
+    
 }

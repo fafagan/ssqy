@@ -32,7 +32,7 @@
             android:digits="0123456789"
             android:maxLength="16"
             android:hint="请输入手机号"
-            android:text="18293105137"
+            android:text=""
             android:textSize="@dimen/edt_text_size_common"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_edt_height"/>
@@ -71,7 +71,7 @@
             android:singleLine="true"
             android:inputType="textPassword"
             android:hint="请输入密码"
-            android:text="123456"
+            android:text=""
             android:maxLength="16"
             android:textSize="@dimen/edt_text_size_common"
             android:layout_width="0dp"

@@ -21,6 +21,11 @@ public class SystemMsgEntity {
      */
     
     private String pushPic;
+    /**
+     * courseLearned : false
+     */
+    
+    private boolean courseLearned;
     
     public String getTitle() {
         return title;
@@ -52,5 +57,13 @@ public class SystemMsgEntity {
     
     public void setPushPic(String pushPic) {
         this.pushPic = pushPic;
+    }
+    
+    public boolean isCourseLearned() {
+        return courseLearned;
+    }
+    
+    public void setCourseLearned(boolean courseLearned) {
+        this.courseLearned = courseLearned;
     }
 }
