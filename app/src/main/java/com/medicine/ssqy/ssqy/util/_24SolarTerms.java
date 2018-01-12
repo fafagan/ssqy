@@ -15,6 +15,11 @@ public class _24SolarTerms {
     public static final int DAY=1000*60*60*24;
     private static String sJQNow=null;
     private static long sLastConfirmTime=0;
+    
+    public static void clear(){
+        sJQNow=null;
+        
+    }
     public static String getNowJQ(){
         if (!StringEmptyUtil.isEmpty(sJQNow)) {
             //定时更新
@@ -26,7 +31,7 @@ public class _24SolarTerms {
         long time=System.currentTimeMillis();
         String jq=null;
         while (true){
-            time=time-DAY;
+           
             Calendar calendar=Calendar.getInstance();
             calendar.setTimeInMillis(time);;
             int year = calendar.get(Calendar.YEAR);
@@ -42,6 +47,7 @@ public class _24SolarTerms {
             if (jq!=null){
                 break;
             }
+            time=time-DAY;
         }
         sLastConfirmTime=System.currentTimeMillis();
         sJQNow=jq;

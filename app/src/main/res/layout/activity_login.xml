@@ -138,6 +138,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+        android:visibility="invisible"
         android:id="@+id/layout_other_login"
         android:clickable="true"
         android:layout_marginTop="10dp"
@@ -205,5 +206,35 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-    
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/layout_setting"
+        android:layout_toLeftOf="@+id/imgv_logo1"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/imgv_logo2"
+        android:src="@drawable/logo_kpzx"
+        android:layout_marginRight="10dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"/>
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/layout_setting"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:id="@+id/imgv_logo1"
+        android:src="@drawable/logo_dzm"
+        android:layout_width="90dp"
+        android:layout_height="90dp"/>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/title_index"
+        android:layout_width="50dp"
+        android:layout_height="120dp"/>
 </RelativeLayout>

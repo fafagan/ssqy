@@ -79,7 +79,7 @@
         android:layout_marginTop="@dimen/title_content_space"
         android:lineSpacingExtra="@dimen/content_content_space"
         android:text="暂无相关内容介绍。。。"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/tv_size_introduce2"/>
     <ImageView android:id="@+id/imgv_activity_audio_play"
                android:layout_width="match_parent"
                android:layout_height="230dp"

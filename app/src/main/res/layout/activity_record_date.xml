@@ -19,7 +19,7 @@
           android:background="@drawable/record_title_back_bt"
           android:textColor="#fff"
           android:layout_centerVertical="true"
-          android:layout_width="75dp"
+          android:layout_width="@dimen/width_back_record"
           android:layout_height="45dp"/>
       <TextView
           android:textStyle="bold"

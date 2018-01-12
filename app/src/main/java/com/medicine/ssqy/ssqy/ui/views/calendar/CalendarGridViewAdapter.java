@@ -96,10 +96,10 @@ public class CalendarGridViewAdapter extends BaseAdapter {
         // 显示日期day
         TextView textDay = new TextView(mContext);// 日期
         LinearLayout.LayoutParams text_params = new LinearLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT,90);
+                LayoutParams.MATCH_PARENT,mContext.getResources().getDimensionPixelOffset(R.dimen.tv_size_calendar_gl));
         textDay.setGravity(Gravity.CENTER);
         int day = myDate.getDate(); // 日期
-        textDay.setTextSize(15);
+        textDay.setTextSize(mContext.getResources().getDimensionPixelOffset(R.dimen.text_size_calendar_gl));
         textDay.setText(String.valueOf(day));
         textDay.setId(position + DEFAULT_ID);
         itemLayout.addView(textDay, text_params);
@@ -107,9 +107,9 @@ public class CalendarGridViewAdapter extends BaseAdapter {
         // 显示农历
         TextView chineseDay = new TextView(mContext);
         LinearLayout.LayoutParams chinese_params = new LinearLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT, 60);
+                LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.tv_size_calendar_nl));
         chineseDay.setGravity(Gravity.CENTER);
-        chineseDay.setTextSize(12);
+        chineseDay.setTextSize(mContext.getResources().getDimensionPixelOffset(R.dimen.text_size_calendar_nl));
         CalendarUtil calendarUtil = new CalendarUtil(calCalendar);
         chineseDay.setText(calendarUtil.toString());
         itemLayout.addView(chineseDay, chinese_params);//把农历添加在公历下面

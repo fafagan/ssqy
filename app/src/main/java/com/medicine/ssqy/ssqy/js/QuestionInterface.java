@@ -15,8 +15,6 @@ import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.entity.UsersetEntity;
 import com.medicine.ssqy.ssqy.ui.activity.IndexActivity;
 
-import static com.umeng.socialize.utils.DeviceConfig.context;
-
 /**
  * Created by Administrator on 2017-09-10.
  */
@@ -47,11 +45,15 @@ public class QuestionInterface {
     }
     
     private void onSaveOk(){
-        mNowUser.setIsFisrtLogin("false");
-        TempUser.saveOrUpdateUser(mNowUser);
-        mContext.startActivity(new Intent(mContext,IndexActivity.class));
-        Activity activity= (Activity) mContext;
-        activity.finish();
+        try {
+            mNowUser.setIsFisrtLogin("false");
+            TempUser.saveOrUpdateUser(mNowUser);
+            mContext.startActivity(new Intent(mContext,IndexActivity.class));
+            Activity activity= (Activity) mContext;
+            activity.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @JavascriptInterface
     public void goToIndexActivity(){

@@ -33,11 +33,12 @@
     <RelativeLayout
         android:id="@+id/content_dig_dk"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dig_dk_main_height"
+        android:layout_height="@dimen/height_dk_layout"
         android:background="@drawable/bg_jc2"
         android:orientation="vertical"
         android:padding="@dimen/padding_dk_root"
-        android:visibility="gone">
+        android:visibility="gone"
+       >
 
         <TextView
             android:id="@+id/tv"
@@ -53,8 +54,8 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/layout_tv"
             android:layout_below="@+id/tv"
-            android:layout_width="160dp"
-            android:layout_height="@dimen/height_pop_dk_back"
+            android:layout_width="240dp"
+            android:layout_height="170dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_pop_dk">
@@ -80,7 +81,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="15dp"
-            android:layout_weight="1"
             android:background="@drawable/tv_dk_futrue_selector"
             android:clickable="true"
             android:text="今 天"

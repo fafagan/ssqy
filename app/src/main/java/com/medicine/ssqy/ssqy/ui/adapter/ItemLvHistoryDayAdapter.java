@@ -72,9 +72,9 @@ public class ItemLvHistoryDayAdapter extends BaseAdapter {
     }
 
     protected class ViewHolder {
-        private ImageView imgvItemLvHistoryDay;
-    private TextView tvTitleItemLvHistoryDay;
-    private NumberProgressBar pbItemLvAudioCourse;
+         private ImageView imgvItemLvHistoryDay;
+         private TextView tvTitleItemLvHistoryDay;
+         private NumberProgressBar pbItemLvAudioCourse;
 
         public ViewHolder(View view) {
             imgvItemLvHistoryDay = (ImageView) view.findViewById(R.id.imgv_item_lv_history_day);

@@ -35,9 +35,10 @@ public abstract class BaseActivity extends FragmentActivity {
     
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ActivityController.remove(this.getClass());
-    }
+        super.onDestroy();
+    
+}
     
     public void killSelf(){
         this.finish();

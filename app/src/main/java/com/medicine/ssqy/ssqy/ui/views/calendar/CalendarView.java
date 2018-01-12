@@ -11,9 +11,11 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.medicine.ssqy.ssqy.R;
+import com.medicine.ssqy.ssqy.ui.views.MeasureGridView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,15 +72,15 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
     /**
      * 上一月
      */
-    private GridView gView1;
+    private MeasureGridView gView1;
     /**
      * 当月
      */
-    private GridView gView2;
+    private MeasureGridView gView2;
     /**
      * 下一月
      */
-    private GridView gView3;
+    private MeasureGridView gView3;
 
     boolean bIsSelection = false;// 是否是选择事件发生
     private Calendar calStartDate = null;// 当前显示的日历
@@ -263,8 +266,8 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
      */
     private void generateWeekGirdView() {
         GridView gridView = new GridView(mContext);
-        LayoutParams params = new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        AbsListView.LayoutParams params = new  AbsListView.LayoutParams(
+                AbsListView.LayoutParams.MATCH_PARENT,  AbsListView.LayoutParams.WRAP_CONTENT);
         gridView.setLayoutParams(params);
         gridView.setNumColumns(7);// 设置每行列数
         gridView.setGravity(Gravity.CENTER_VERTICAL);// 位置居中

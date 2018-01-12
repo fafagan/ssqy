@@ -39,6 +39,7 @@ import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeJCFragment;
 import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeUtilFragment;
 import com.medicine.ssqy.ssqy.ui.views.DragLayout;
 import com.medicine.ssqy.ssqy.util.SaveBMUtil;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -173,7 +174,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
         mLayoutItemUsermsgActivityHome = (LinearLayout) findViewById(R.id.layout_item_usermsg_activity_home);
         mLayoutItemUsersettingActivityHome = (LinearLayout) findViewById(R.id.layout_item_usersetting_activity_home);
         mTvPopSystemMsg = (TextView) findViewById(R.id.tv_pop_system_msg);
-        
+        Logger.e("mUserEntity.getHeadPicUrl()-->"+mUserEntity.getHeadPicUrl());
         if (!StringEmptyUtil.isEmpty(mUserEntity.getHeadPicUrl())) {
 //            Glide.with(this).load(mUserEntity.getHeadPicUrl()).centerCrop().transform(new GlideCircleTransform(mSelf)).placeholder(R.drawable.avatar).into(mImgvHeadActivityHome);
             Glide.with(mSelf).load(mUserEntity.getHeadPicUrl()).asBitmap().centerCrop().placeholder(R.drawable.avatar).into(new BitmapImageViewTarget(mImgvHeadActivityHome) {
@@ -489,7 +490,7 @@ public class HomeActivity extends KBaseActivity implements RadioGroup.OnCheckedC
     }
     
     private File compressBM(File file, Bitmap bm) {
-        File comFile = new File(file.getAbsolutePath() + "comp");
+        File comFile = new File(file.getAbsolutePath() + System.currentTimeMillis());
         if (comFile.exists()) {
             comFile.delete();
         }

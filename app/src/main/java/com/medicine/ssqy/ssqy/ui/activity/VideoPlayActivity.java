@@ -53,8 +53,6 @@ import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
 import com.medicine.ssqy.ssqy.util.UtilGetDiscussTime;
 import com.orhanobut.logger.Logger;
 
-import org.xutils.common.util.DensityUtil;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
@@ -105,16 +103,17 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     boolean scrolling = false;
     
     private boolean firstPlay = true;
-//    private MediaPlayer mMediaPlayer;
-        private KSYMediaPlayer mMediaPlayer;
+    //    private MediaPlayer mMediaPlayer;
+    private KSYMediaPlayer mMediaPlayer;
     private SurfaceHolder mSurfaceHolder;
     private boolean isSurfaceCreated = false;        //surface是否已经创建好
     //视频进度
     private int curIndex = 0;
     int totalTime;
-    public static final int PlAYTIME_CHANGE = 1;
+    public static final int  PlAYTIME_CHANGE = 1;
     public static final int BRIGHTNESS_CHANGE = 2;
     private boolean mPrepareOk = false;
+    private boolean mHasBeginTimeChange=false;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -128,6 +127,8 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                         mTvPlaytimeActivityVideoPlay.setText(timeStr);
                         mPbActivityVideoPlay.setProgress((int) currentPosition);
                         mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                    }else {
+                        mHasBeginTimeChange=false;
                     }
                     break;
                 default:
@@ -145,40 +146,40 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     private boolean mHasStart = false;
     private CourseVedioDetailEntity mEntityNow;
     private TextView mTvDownloadActivityVideoPlay;
-
     
+    private String mDateNow;
     private IMediaPlayer.OnSeekCompleteListener mOnSeekCompletedListener = new IMediaPlayer.OnSeekCompleteListener() {
         @Override
         public void onSeekComplete(IMediaPlayer mp) {
-       
+            
         }
     };
     
     private IMediaPlayer.OnCompletionListener mOnCompletionListener = new IMediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(IMediaPlayer mp) {
-         Toast.makeText(mSelf, "当前养生视频播放完毕!", Toast.LENGTH_LONG).show();
+            Toast.makeText(mSelf, "当前养生视频播放完毕!", Toast.LENGTH_LONG).show();
             mCbPlayorstopActivityVideoPlay.setChecked(false);
             mBtPlayActivityVideoPlay.setVisibility(View.VISIBLE);
             mTvPlaytimeActivityVideoPlay.setText(mTvTotaltimeActivityVideoPlay.getText());
-            mIsLoop=true;
+            mIsLoop = true;
 //           videoPlayEnd();
         }
     };
-    private boolean mCBFirst =true;
-    
+    private boolean mCBFirst = true;
+    private String mCourseID;
     private void videoPlayEnd() {
-        if(mMediaPlayer != null)
-        {
+        if (mMediaPlayer != null) {
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
         
     }
-    private boolean mIsLoop=false;
+    
+    private boolean mIsLoop = false;
     private IMediaPlayer.OnErrorListener mOnErrorListener = new IMediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(IMediaPlayer mp, int what, int extra) {
+        @Override
+        public boolean onError(IMediaPlayer mp, int what, int extra) {
 //            switch (what)
 //            {
 //                case KSYMediaPlayer.MEDIA_ERROR_UNKNOWN:
@@ -190,20 +191,19 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
 //            
 //            videoPlayEnd();
 //            
-    
+            
             Toast.makeText(mSelf, "网络异常，请检查您的网络状态！", Toast.LENGTH_LONG).show();
-            if(mMediaPlayer != null)
-            {
+            if (mMediaPlayer != null) {
 //                mMediaPlayer.release();
 //                mMediaPlayer = null;
-                mMediaPlayer.release();
-                mMediaPlayer=null;
                 mTimerSyncLearnProgress.cancel();
-                mTimerSyncLearnProgress=new Timer();
-                mHasBeginSycn=false;
-                mHasStart=false;
+                mMediaPlayer.release();
+                mMediaPlayer = null;
+                mTimerSyncLearnProgress = new Timer();
+                mHasBeginSycn = false;
+                mHasStart = false;
                 mCbPlayorstopActivityVideoPlay.setChecked(false);
-                mPrepareOk=false;
+                mPrepareOk = false;
                 
             }
             return false;
@@ -215,17 +215,18 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         public boolean onError(IMediaPlayer mp, int what, int extra) {
 //            
             
-//            Toast.makeText(mSelf, "网络异常，请检查您的网络状态！", Toast.LENGTH_LONG).show();
-            if(mMediaPlayer != null)
-            {
+            Toast.makeText(mSelf, "网络异常，请检查您的网络状态，并退出重试！", Toast.LENGTH_LONG).show();
+            if (mMediaPlayer != null) {
 //                mMediaPlayer.release();
-//                mMediaPlayer = null;
+//                mMediaPlayer = null;.
+                mCbPlayorstopActivityVideoPlay.setChecked(false);
                 mMediaPlayer.reset();
-                mPrepareOk=false;
-            }else {
-                mMediaPlayer=new KSYMediaPlayer.Builder(mSelf).build();
+                mPrepareOk = false;
+           
+            }  /* else {
+                mMediaPlayer = new KSYMediaPlayer.Builder(mSelf).build();
             }
-    
+            
             try {
                 mMediaPlayer.setDataSource(mEntityNow.getCourseUrl());
             } catch (IOException e) {
@@ -236,7 +237,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             mMediaPlayer.setLooping(false);
             mMediaPlayer.prepareAsync();
             mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-        
+                
                 @Override
                 public void onPrepared(IMediaPlayer mp) {
                     mMediaPlayer.pause();
@@ -251,26 +252,26 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
 //                    mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
                     mPbActivityVideoPlay.setMax(mEntityNow.getCourseLength());
                     mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
-            
-            
+                    
+                    
                     if (mHasStart) {
                         Logger.e("准备玩。。。开始了");
                         mMediaPlayer.start();
-                        if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
+                        if (mEntityNow.getCourseStudy() != 0 && mEntityNow.getCourseStudy() < mEntityNow.getCourseLength()) {
 //                            mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
                             if (mIsLoop) {
                                 mMediaPlayer.seekTo(0);
-                            }else{
+                            } else {
 //                                    mMediaPlayer.seekTo(1000*60*4);
-                                mMediaPlayer.seekTo( mEntityNow.getCourseStudy());
+                                mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
                                 //mEntityNow.getCourseStudy()
                             }
                         }
                         if (!mHasBeginSycn) {
-                            mHasBeginSycn=true;
-                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                            mHasBeginSycn = true;
+                            mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress, 5000, 5000);
                         }
-                
+                        
                     }
 //                   
                     mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
@@ -279,6 +280,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                     mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
                 }
             });
+            */
             return false;
         }
     };
@@ -315,43 +317,51 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     
     private Button mBtReplayVedio;
     
-    private Timer mTimerSyncLearnProgress=new Timer();
-    private TimerTask mTimerTaskSyncLearnProgress=new TimerTask() {
+    private Timer mTimerSyncLearnProgress = new Timer();
+    private TimerTask mTimerTaskSyncLearnProgress = new TimerTask() {
         @Override
         public void run() {
-            mNetForJsonSyncLearnProgress.addParam("uid",SharePLogin.getUid());
-            mNetForJsonSyncLearnProgress.addParam("type","video");
-            mNetForJsonSyncLearnProgress.addParam("courseID",mEntityNow.getCourseID());
-            mNetForJsonSyncLearnProgress.addParam("learnProgress",mMediaPlayer.getCurrentPosition());
-            if (!mEntityNow.isCourseLearned()) {
-                if (mMediaPlayer.getCurrentPosition()>=mEntityNow.getCourseLength()*0.94){
-                    mNetForJsonSyncLearnProgress.addParam("courseLearned","true");
-                }else {
-                    mNetForJsonSyncLearnProgress.addParam("courseLearned","false");
-                }
+            Logger.e("mTimerTaskSyncLearnProgress--->" + SharePLogin.getUid());
+            mNetForJsonSyncLearnProgress.addParam("uid", SharePLogin.getUid());
+            mNetForJsonSyncLearnProgress.addParam("type", "video");
+            mNetForJsonSyncLearnProgress.addParam("courseID", mEntityNow.getCourseID());
+            if (mDateNow==null) {
+                mNetForJsonSyncLearnProgress.addParam("date", TimeFormatUtil.formatLongToNYR(System.currentTimeMillis()));
             }else {
-                mNetForJsonSyncLearnProgress.addParam("courseLearned","true");
+                mNetForJsonSyncLearnProgress.addParam("date", mDateNow);
+            }
+
+            mNetForJsonSyncLearnProgress.addParam("learnProgress", mMediaPlayer.getCurrentPosition());
+            if (!mEntityNow.isCourseLearned()) {
+                if (mMediaPlayer.getCurrentPosition()>= mEntityNow.getCourseLength() * 0.94) {
+                    mNetForJsonSyncLearnProgress.addParam("courseLearned", "true");
+                } else {
+                    mNetForJsonSyncLearnProgress.addParam("courseLearned", "false");
+                }
+            } else {
+                mNetForJsonSyncLearnProgress.addParam("courseLearned", "true");
             }
             mNetForJsonSyncLearnProgress.excute();
         }
     };
-    private boolean mHasBeginSycn=false;
-    private NetForJson mNetForJsonSyncLearnProgress=new NetForJson(URLConstant.VIDEO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
+    private boolean mHasBeginSycn = false;
+    private NetForJson mNetForJsonSyncLearnProgress = new NetForJson(URLConstant.VIDEO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
         @Override
         public void onSuccess(CourseVideoProgressEntity entity) {
-        
+            
         }
-    
+        
         @Override
         public void onError() {
             
         }
-    
+        
         @Override
         public void onFinish() {
-        
+            
         }
-    },true);
+    }, true);
+    
     @Override
     public int setRootView() {
         return R.layout.activity_video_play;
@@ -364,6 +374,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     
     @Override
     public void initViews() {
+        mDateNow=this.getIntent().getStringExtra("date");
         mTvDownloadActivityVideoPlay = (TextView) findViewById(R.id.tv_download_activity_video_play);
         mTvShareActivityVideoPlay = (TextView) findViewById(R.id.tv_share_activity_video_play);
         mSvActivityVideoPlay = (SurfaceView) findViewById(R.id.sv_activity_video_play);
@@ -390,7 +401,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mLlSvbottombarActivityVideoPlay = (LinearLayout) findViewById(R.id.ll_svbottombar_activity_video_play);
         mRlContentActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_content_activity_video_play);
         mRlActivityVideoPlay = (RelativeLayout) findViewById(R.id.rl_activity_video_play);
-    
+        
         mBtReplayVedio = (Button) findViewById(R.id.bt_replay_vedio);
         mBtPlayActivityVideoPlay.setOnClickListener(this);
         mTvShareActivityVideoPlay.setOnClickListener(this);
@@ -398,7 +409,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mCbPlayorstopActivityVideoPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mMediaPlayer==null) {
+                if (mMediaPlayer == null) {
                     Toast.makeText(mSelf, "网络异常，请退出重试", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -413,9 +424,21 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                         if (!mPrepareOk) {
                             return;
                         }
-                        mMediaPlayer.start();
+                        if (mIsLoop) {
+                            mMediaPlayer.release();
+                            initMP();
+                            mMediaPlayer.setDisplay(mSurfaceHolder);
+                            prepareMP();
+        
+                        }else {
+                            mMediaPlayer.start();
+                        }
+                  
                         mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
-                        mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                        if (!mHasBeginTimeChange){
+                            mHasBeginTimeChange=true;
+                            mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE,300);
+                        }
                         mBtPlayActivityVideoPlay.setVisibility(View.INVISIBLE);
                     }
                 } else {
@@ -432,18 +455,18 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mBtReplayVedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long now=System.currentTimeMillis();
-                if (now-mLastReplayTime<2000){
+                long now = System.currentTimeMillis();
+                if (now - mLastReplayTime < 2000) {
                     return;
                 }
-                mLastReplayTime=now;
-                if (mMediaPlayer!=null) {
+                mLastReplayTime = now;
+                if (mMediaPlayer != null) {
                     try {
                         mMediaPlayer.seekTo(0);
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
                     }
-    
+                    
                 }
             }
         });
@@ -467,6 +490,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             @Override
             public void onConfirm(String content) {
                 DiscussEntity discussEntity = new DiscussEntity();
+                
                 discussEntity.setDetail(content);
                 discussEntity.setNickName(TempUser.getNowUser(SharePLogin.getUid()).getNickName());
                 discussEntity.setHeadUrl(TempUser.getNowUser(SharePLogin.getUid()).getHeadPicUrl());
@@ -484,8 +508,10 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         
         
     }
-    private long mLastReplayTime=0;
-    private void  initMP(){
+    
+    private long mLastReplayTime = 0;
+    
+    private void initMP() {
         //        mMediaPlayer = new MediaPlayer();
         mMediaPlayer = new KSYMediaPlayer.Builder(this).build();
 //        mMediaPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
@@ -501,13 +527,14 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         mMediaPlayer.setDecodeMode(KSYMediaPlayer.KSYDecodeMode.KSY_DECODE_MODE_AUTO);
         TelephonyManager tmgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         if (mPhoneStateListener != null) {
-           
+            
             tmgr.listen(mPhoneStateListener, 0);
         }
         
         mPhoneStateListener = new MyPhoneStateListener(this, mMediaPlayer);
         tmgr.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
+    
     @Override
     public void initDatas() {
         initMP();
@@ -521,20 +548,32 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         
         mMyVolumeReceiver = new MyVolumeReceiver();
         registerReceiver(mMyVolumeReceiver, new IntentFilter("android.media.VOLUME_CHANGED_ACTION"));
-        
-        CourseVedioEntity.VideoCourseDataEntity videoCourseDataEntity = (CourseVedioEntity.VideoCourseDataEntity) this.getIntent().getSerializableExtra("vd");
-        mTvVideotitleActivityVideoPlay.setText("四时七养--"+videoCourseDataEntity.getCourseTitle());
+        mCourseID=this.getIntent().getStringExtra("courseid");
+        CourseVedioEntity.VideoCourseDataEntity videoCourseDataEntity =null;
+        if (mCourseID==null) {
+        videoCourseDataEntity=(CourseVedioEntity.VideoCourseDataEntity) this.getIntent().getSerializableExtra("vd");
+        mTvVideotitleActivityVideoPlay.setText("四时七养--" + videoCourseDataEntity.getCourseTitle());
         mTvTotaltimeActivityVideoPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) videoCourseDataEntity.getCourseLength()));
-        mTvVedionameActivityVideoPlay.setText("四时七养--"+videoCourseDataEntity.getCourseTitle());
+        mTvVedionameActivityVideoPlay.setText("四时七养--" + videoCourseDataEntity.getCourseTitle());
+        }
 //        mTvVedionameActivityVideoPlay.setText();
         mNetForJson = new NetForJson(URLConstant.VIDEO_DETAIL_URL, new NetCallback<CourseVedioDetailEntity>() {
             
             
             @Override
             public void onSuccess(CourseVedioDetailEntity entity) {
-                mLoadOk = true;
+                System.out.println("VideoPlayActivity.onSuccess");
+                 mLoadOk = true;
                 mEntityNow = entity;
-                mTvVideocontentActivityVideoPlay.setText("视频简介： "+entity.getCourseDetail());
+                if (mEntityNow==null) {
+                    Toast.makeText(mSelf, "抱歉，您的课程已下架！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+    
+                mTvVideotitleActivityVideoPlay.setText("四时七养--" + mEntityNow.getCourseTitle());
+                mTvTotaltimeActivityVideoPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) mEntityNow.getCourseLength()));
+                mTvVedionameActivityVideoPlay.setText("四时七养--" + mEntityNow.getCourseTitle());
+                mTvVideocontentActivityVideoPlay.setText("视频简介： " + entity.getCourseDetail());
                 if (!mPrepareOk) {
                     prepareMP();
                 }
@@ -551,10 +590,22 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 
             }
         }, true);
-        
-        mNetForJson.addParam("courseID", videoCourseDataEntity.getCourseID());
+        if (mCourseID==null) {
+            if (videoCourseDataEntity==null){
+                return;
+            }
+            mNetForJson.addParam("courseID", videoCourseDataEntity.getCourseID());
+        }else {
+            mNetForJson.addParam("courseID", mCourseID);
+        }
+      
         mNetForJson.addParam("uid", SharePLogin.getUid());
         mNetForJson.addParam("type", "video");
+        if (mDateNow==null) {
+            mNetForJson.addParam("date", TimeFormatUtil.formatLongToNYR(System.currentTimeMillis()));
+        }else {
+            mNetForJson.addParam("date", mDateNow);
+        }
         mNetForJson.excute();
     }
     
@@ -613,10 +664,10 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 isSurfaceCreated = false;
                 if (mPhoneStateListener.isCalling()) {
                     curIndex = mPhoneStateListener.getCurPosition();
+                    mMediaPlayer.pause();
                 } else {
                     if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                         curIndex = (int) mMediaPlayer.getCurrentPosition();
-                        mMediaPlayer.stop();
                         mPrepareOk = false;
                     }
                 }
@@ -630,7 +681,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 if (mMediaPlayer != null) {
                     mMediaPlayer.setDisplay(mSurfaceHolder);//页面创建好了以后再展示  
                 }
-
+                
             }
             
             @Override
@@ -644,42 +695,48 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     
     private void play(final int currentPosition) {
         Logger.e("play--->");
-        if (mIsLoop){
+        if (!mHasBeginTimeChange){
+            mHasBeginTimeChange=true;
+            mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE,300);
+        }
+        mHasStart = true;
+        if (mIsLoop) {
             mMediaPlayer.release();
             initMP();
             mMediaPlayer.setDisplay(mSurfaceHolder);
             prepareMP();
-         
+            
         }
-        mHasStart = !mHasStart;
+      
         if (!mLoadOk) {
+            mCbPlayorstopActivityVideoPlay.setChecked(false);
             return;
         }
         if (!mPrepareOk) {
             Toast.makeText(mSelf, "正在缓冲视频，请稍等", Toast.LENGTH_SHORT).show();
             prepareMP();
-           
-        }else {
-           
-            if (mCBFirst){
-                mCBFirst=false;
+            
+        } else {
+            
+            if (mCBFirst) {
+                mCBFirst = false;
                 mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
             }
             mMediaPlayer.start();
             if (!mHasBeginSycn) {
-                mHasBeginSycn=true;
-                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                mHasBeginSycn = true;
+                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress, 5000, 5000);
             }
         }
-     
+        
     }
     
     private void prepareMP() {
         if (mEntityNow == null) {
             return;
         }
-    
-        if (mMediaPlayer==null) {
+        
+        if (mMediaPlayer == null) {
             initMP();
         }
         //获取res/raw文件夹下面的视频文件
@@ -689,7 +746,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
 //            mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
 //            mMediaPlayer.setDataSource("http://192.168.1.21:8080/test/test.mp4");
             if (mDownloadController == null) {
-                mDownloadController=new DownloadController();
+                mDownloadController = new DownloadController();
             }
             String cacheUrl = mDownloadController.findCourseCacheUrl(mEntityNow.getCourseID());
             if (cacheUrl != null) {
@@ -700,10 +757,10 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 mMediaPlayer.setLooping(false);
                 mMediaPlayer.prepareAsync();
                 mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-        
+                    
                     @Override
                     public void onPrepared(IMediaPlayer mp) {
-                        mMediaPlayer.pause();
+//                        mMediaPlayer.pause();
                         mPrepareOk = true;
 //                    mMediaPlayer.seekTo(currentPosition);
                         //准备完成，可以播放了
@@ -717,35 +774,37 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                         mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
                         mTvDownloadActivityVideoPlay.setText("已缓存");
                         
-                        if (mHasStart||mIsLoop) {
-                          
+                        if (mHasStart || mIsLoop) {
+                            
                             Logger.e("准备玩。。。开始了");
                             mMediaPlayer.start();
-                            if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
+                            if (mEntityNow.getCourseStudy() != 0 && mEntityNow.getCourseStudy() < mEntityNow.getCourseLength()) {
 //                                mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
                                 if (mIsLoop) {
                                     mMediaPlayer.seekTo(0);
-                                }else{
-//                                    mMediaPlayer.seekTo(1000*60*4);
-                                    mMediaPlayer.seekTo( mEntityNow.getCourseStudy());
-        
-                                   
+                                } else {
+                                    //mMediaPlayer.seekTo(1000*60*15);
+                                 mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
+                                    
                                 }
                             }
                             if (!mHasBeginSycn) {
-                                mHasBeginSycn=true;
-                                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                                mHasBeginSycn = true;
+                                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress, 5000, 5000);
                             }
-                            mIsLoop=false;
+                            mIsLoop = false;
                         }
 //                   
                         mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                         mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
                         mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
-                        mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                        if (!mHasBeginTimeChange){
+                            mHasBeginTimeChange=true;
+                            mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE,300);
+                        }
                     }
                 });
-            }else {
+            } else {
                 try {
                     mMediaPlayer.setDataSource(mEntityNow.getCourseUrl());
                 } catch (IOException e) {
@@ -756,7 +815,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 mMediaPlayer.setLooping(false);
                 mMediaPlayer.prepareAsync();
                 mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-        
+                    
                     @Override
                     public void onPrepared(IMediaPlayer mp) {
                         mMediaPlayer.pause();
@@ -771,38 +830,42 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
 //                    mPbActivityVideoPlay.setMax(mMediaPlayer.getDuration());
                         mPbActivityVideoPlay.setMax(mEntityNow.getCourseLength());
                         mTvTotaltimeActivityVideoPlay.setText(totalTimeStr);
-            
-            
-                        if (mHasStart||mIsLoop) {
-                         
+                        
+                        
+                        if (mHasStart || mIsLoop) {
+                            
                             Logger.e("准备玩。。。开始了");
                             mMediaPlayer.start();
-                            if (mEntityNow.getCourseStudy()!=0&&mEntityNow.getCourseStudy()<mEntityNow.getCourseLength()){
+                            if (mEntityNow.getCourseStudy() != 0 && mEntityNow.getCourseStudy() < mEntityNow.getCourseLength()) {
                                 if (mIsLoop) {
                                     mMediaPlayer.seekTo(0);
-                                }else{
-//                                    mMediaPlayer.seekTo(1000*60*4);
-                                    mMediaPlayer.seekTo( mEntityNow.getCourseStudy());
+                                } else {
+//                                mMediaPlayer.seekTo((long) (1000*60*14.9));
+                                    mMediaPlayer.seekTo(mEntityNow.getCourseStudy());
                                     //mEntityNow.getCourseStudy()
                                 }
-                               
+                                
                             }
                             if (!mHasBeginSycn) {
-                                mHasBeginSycn=true;
-                                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress,5000,5000);
+                                mHasBeginSycn = true;
+                                mTimerSyncLearnProgress.schedule(mTimerTaskSyncLearnProgress, 5000, 5000);
                             }
-                            mIsLoop=false;
+                            mIsLoop = false;
                         }
 //                   
                         mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
                         mLlSvbottombarActivityVideoPlay.setVisibility(View.GONE);
                         mRlSvtopbarActivityVideoPlay.setVisibility(View.GONE);
-                        mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE, 1000);
+                     
+                        if (!mHasBeginTimeChange){
+                            mHasBeginTimeChange=true;
+                            mHandler.sendEmptyMessageDelayed(PlAYTIME_CHANGE,300);
+                        }
                     }
                 });
             }
-         
-            
+
+
 //            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
 //                
 //                @Override
@@ -824,7 +887,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
      */
     private void releasePlayer() {
         if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
+//            mMediaPlayer.stop();
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
@@ -856,9 +919,11 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
             mRlContentActivityVideoPlay.setVisibility(View.VISIBLE);
             ViewGroup.LayoutParams layoutParams = mRlActivityVideoPlay.getLayoutParams();
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            layoutParams.height = DensityUtil.dip2px(220);
+//            layoutParams.height = DensityUtil.dip2px(220);
+            layoutParams.height =getResources().getDimensionPixelOffset(R.dimen.dimen_vedio_out_normal_height);
             mRlActivityVideoPlay.setLayoutParams(layoutParams);
-            screenHeight=DensityUtil.dip2px(220);
+//            screenHeight = DensityUtil.dip2px(220);
+            layoutParams.height =getResources().getDimensionPixelOffset(R.dimen.dimen_vedio_out_normal_height);
         }
         float videoWidth = mMediaPlayer.getVideoWidth();
         float videoHeight = mMediaPlayer.getVideoHeight();
@@ -874,14 +939,16 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
         }
         mSvActivityVideoPlay.setLayoutParams(layoutParams_sv);
     }
+    
     private DownloadController mDownloadController;
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             //播放
             case R.id.bt_play_activity_video_play:
-                firstPlay = false;
-                play(curIndex);
+//                firstPlay = false;
+//                play(curIndex);
                 mCbPlayorstopActivityVideoPlay.setChecked(true);
                 mBtPlayActivityVideoPlay.setVisibility(View.INVISIBLE);
                 break;
@@ -915,12 +982,12 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                 ShareUtil.showShare(this);
                 break;
             case R.id.tv_download_activity_video_play:
-                if (mEntityNow==null) {
+                if (mEntityNow == null) {
                     Toast.makeText(mSelf, "网络状态异常，请退出重试！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (mDownloadController == null) {
-                    mDownloadController=new DownloadController();
+                    mDownloadController = new DownloadController();
                 }
                 String courseCacheUrl = mDownloadController.findCourseCacheUrl(mEntityNow.getCourseID());
                 if (courseCacheUrl != null) {
@@ -928,12 +995,12 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
                     return;
                 }
                 
-                if (mDownloadController.findCourseCacheIng(mEntityNow.getCourseID())){
+                if (mDownloadController.findCourseCacheIng(mEntityNow.getCourseID())) {
                     Toast.makeText(mSelf, "视频正在努力缓存，请稍等！", Toast.LENGTH_SHORT).show();
                     return;
                     
                 }
-            
+                
                 mDownloadController.addTasksToQueue(mEntityNow);
                 Toast.makeText(mSelf, "开始为您缓存该视频！", Toast.LENGTH_SHORT).show();
                 break;
@@ -958,16 +1025,16 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        if (mHasStart&&mCbPlayorstopActivityVideoPlay.isChecked()) {
-            
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    if (isSurfaceCreated) {
-                        play(curIndex);
-                    }
-                }
-            }, 10);
-        }
+//        if (mHasStart && mCbPlayorstopActivityVideoPlay.isChecked()) {
+//            
+//            new Handler().postDelayed(new Runnable() {
+//                public void run() {
+//                    if (isSurfaceCreated) {
+//                        play(curIndex);
+//                    }
+//                }
+//            }, 10);
+//        }
     }
     
     /**
@@ -985,7 +1052,7 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
-        Pause();
+//        Pause();
         mCbPlayorstopActivityVideoPlay.setChecked(false);
     }
     
@@ -997,11 +1064,14 @@ public class VideoPlayActivity extends KBaseActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mHandler.removeMessages(1);
         TelephonyManager tmgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         tmgr.listen(mPhoneStateListener, 0);
+        mTimerSyncLearnProgress.cancel();
         releasePlayer();
         this.unregisterReceiver(mMyVolumeReceiver);
-        mTimerSyncLearnProgress.cancel();
+       
+        
     }
     
     /**

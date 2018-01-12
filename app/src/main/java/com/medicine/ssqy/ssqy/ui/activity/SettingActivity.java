@@ -112,6 +112,7 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
                                 if (mAlertDialogUpdate == null) {
                                     mAlertDialogUpdate = new AlertDialog.Builder(mSelf).
                                             setTitle("四时七养版本升级")
+                                            
                                             .setMessage("检测到最新版本： " + entity.getNewVersionCode() + ".0，是否为您升级？").
                                                     setPositiveButton("升级", new DialogInterface.OnClickListener() {
                                                         @Override
@@ -164,7 +165,12 @@ public class SettingActivity extends KBaseActivity implements View.OnClickListen
         downloadAPKEntity.setSha1(entity.getSha1());
         downloadAPKEntity.setTotalSize(entity.getTotalSize());
         downloadAPKEntity.setUrl(entity.getAppurl());
-        downloadAPKEntity.setVersioncode(Integer.parseInt(entity.getNewVersionCode()));
+        try {
+            downloadAPKEntity.setVersioncode(Integer.parseInt(entity.getNewVersionCode()));
+        } catch (NumberFormatException e) {
+            Toast.makeText(mSelf, "服务器版本异常，请联系管理人员！", Toast.LENGTH_SHORT).show();
+            return;
+        }
         DownloadAPK.addNewTask(downloadAPKEntity);
         if (mProgressDialog==null) {
             mProgressDialog=new ProgressDialog(mSelf);

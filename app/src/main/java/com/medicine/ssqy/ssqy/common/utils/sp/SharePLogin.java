@@ -30,6 +30,10 @@ public class SharePLogin {
         saveIsFree(true);
         
     }
+    
+    public static void removeUid(){
+        SharedPrefrencesUtil.saveData(KBaseApp.mContextGlobal,"ssqylogin","uid","");
+    }
     public static String getUid(){
         return SharedPrefrencesUtil.getData(KBaseApp.mContextGlobal,"ssqylogin","uid","");
         

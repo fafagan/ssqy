@@ -1,28 +1,48 @@
 package com.medicine.ssqy.ssqy.ui.activity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.sj.mylibrary.net.NetCallback;
+import com.example.sj.mylibrary.net.NetForJson;
 import com.example.sj.mylibrary.util.StringEmptyUtil;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
+import com.medicine.ssqy.ssqy.base.KBaseApp;
 import com.medicine.ssqy.ssqy.brodcast.ConnectionChangeReceiver;
+import com.medicine.ssqy.ssqy.common.URLConstant;
+import com.medicine.ssqy.ssqy.common.utils.SizeUtil;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePFirst;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePJQ;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogo;
 import com.medicine.ssqy.ssqy.common.utils.sp.SharePNotify;
+import com.medicine.ssqy.ssqy.entity.AppCheckEntity;
 import com.medicine.ssqy.ssqy.entity.UserEntity;
 import com.medicine.ssqy.ssqy.task.download.controller.DownloadController;
 import com.medicine.ssqy.ssqy.task.download.model.DownloadTask;
 import com.medicine.ssqy.ssqy.ui.dialog.DigCourseType;
 import com.medicine.ssqy.ssqy.ui.dialog.DigNotify;
 import com.medicine.ssqy.ssqy.ui.views.CircleMenuLayout;
+import com.medicine.ssqy.ssqy.util.DownMsg;
+import com.medicine.ssqy.ssqy.util.DownloadAPK;
+import com.medicine.ssqy.ssqy.util.DownloadAPKEntity;
 import com.medicine.ssqy.ssqy.util.UtilGetJQPic;
 import com.medicine.ssqy.ssqy.util._24SolarTerms;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
 
 import static com.medicine.ssqy.ssqy.util.UtilGetJQPic.getLogoRes;
 import static com.medicine.ssqy.ssqy.util._24SolarTerms.getNowJQ;
@@ -58,6 +78,7 @@ public class IndexActivity extends KBaseActivity {
     
     private ConnectionChangeReceiver myReceiver;
     private DownloadController mDownloadController;
+    private NetForJson mNetForJsonUpdate;
     
     private void registerReceiver() {
         if (myReceiver == null) {
@@ -77,6 +98,8 @@ public class IndexActivity extends KBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver();
+        _24SolarTerms.clear();
+        EventBus.getDefault().unregister(this);
     }
     
     @Override
@@ -275,7 +298,12 @@ public class IndexActivity extends KBaseActivity {
 //    }
     @Override
     public void initDatas() {
-        
+        try {
+            mVersionNow = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        checkUpdate();
     }
     
     @Override
@@ -310,4 +338,106 @@ public class IndexActivity extends KBaseActivity {
 //        }
     
     //   }
+    private AlertDialog mAlertDialogUpdate;
+    private ProgressDialog mProgressDialog;
+    
+    
+    private void doUpdate(AppCheckEntity entity) {
+        DownloadAPKEntity downloadAPKEntity=new DownloadAPKEntity();
+        downloadAPKEntity.setName(entity.getFilename());
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + KBaseApp.mContextGlobal.getPackageName() + "/update/");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        
+        downloadAPKEntity.setPath(   dir.getAbsolutePath() + "/" + downloadAPKEntity.getName());
+        downloadAPKEntity.setSha1(entity.getSha1());
+        downloadAPKEntity.setTotalSize(entity.getTotalSize());
+        downloadAPKEntity.setUrl(entity.getAppurl());
+        try {
+            downloadAPKEntity.setVersioncode(Integer.parseInt(entity.getNewVersionCode()));
+        } catch (NumberFormatException e) {
+            Toast.makeText(mSelf, "服务器版本异常，请联系管理人员！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        DownloadAPK.addNewTask(downloadAPKEntity);
+        if (mProgressDialog==null) {
+            mProgressDialog=new ProgressDialog(mSelf);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.setTitle("为您升级APP中，共 "+ SizeUtil.formatSize(entity.getTotalSize()));
+            mProgressDialog.setMax(100);
+            mProgressDialog.setProgress(0);
+            mProgressDialog.setCancelable(false);
+            
+            
+        }
+        EventBus.getDefault().register(this);
+        mProgressDialog.show();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(DownMsg downMsg){
+        if (downMsg.mustStop) {
+            mProgressDialog.cancel();
+            return;
+        }
+        if (downMsg.mDownloadAPKEntity.getState()==DownloadAPKEntity.STATE_DONE){
+            mProgressDialog.cancel();
+            EventBus.getDefault().unregister(this);
+            return;
+        }
+        mProgressDialog.setProgress(downMsg.percent);
+        
+        
+    }
+    
+    private void checkUpdate(){
+        if (mNetForJsonUpdate == null) {
+            mNetForJsonUpdate = new NetForJson(URLConstant.APP_UPDATE_URL, new NetCallback<AppCheckEntity>() {
+                @Override
+                public void onSuccess(final AppCheckEntity entity) {
+                    if (entity.isNeedUpdate()) {
+                        if (mAlertDialogUpdate == null) {
+                            mAlertDialogUpdate = new AlertDialog.Builder(mSelf).
+                                    setTitle("四时七养版本升级")
+                                
+                                    .setMessage("当前版本："+mVersionNow+".0，检测到最新版本： " + entity.getNewVersionCode() + ".0，必须升级才可继续使用呦！！").
+                                            setPositiveButton("升级", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Toast.makeText(mSelf, "开始为您升级", Toast.LENGTH_SHORT).show();
+                                                    doUpdate(entity);
+                                                    dialog.cancel();
+                                                }
+                                            })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            
+                                            dialog.cancel();
+//                                            System.exit(0);
+                                        }
+                                    }).
+                                            create();
+                        }
+                        mAlertDialogUpdate.show();
+                    } else {
+                        Toast.makeText(mSelf, "您当前已是最新版本！", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            
+                @Override
+                public void onError() {
+                    Toast.makeText(mSelf, "网络错误", Toast.LENGTH_SHORT).show();
+                }
+            
+                @Override
+                public void onFinish() {
+                
+                }
+            });
+        }
+        mNetForJsonUpdate.addParam("versioncode",mVersionNow);
+        mNetForJsonUpdate.excute();
+    }
+    private int mVersionNow;
 }

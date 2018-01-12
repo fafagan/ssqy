@@ -17,6 +17,7 @@ import com.medicine.ssqy.ssqy.entity.course.CourseAudioEntity;
 import com.medicine.ssqy.ssqy.entity.course.CourseVideoProgressEntity;
 import com.medicine.ssqy.ssqy.eventBus.MusicSoldier;
 import com.medicine.ssqy.ssqy.ui.listener.MyPhoneStateListener;
+import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
 import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,6 +47,11 @@ public class MusicService extends Service {
             mNetForJsonSyncLearnProgress.addParam("uid", SharePLogin.getUid());
             mNetForJsonSyncLearnProgress.addParam("type", "audio");
             mNetForJsonSyncLearnProgress.addParam("courseID", courseID);
+            if (mDateNow==null) {
+                mNetForJsonSyncLearnProgress.addParam("date", TimeFormatUtil.formatLongToNYR(System.currentTimeMillis()));
+            }else {
+                mNetForJsonSyncLearnProgress.addParam("date", mDateNow);
+            }
             if (mp != null) {
                 mNetForJsonSyncLearnProgress.addParam("learnProgress", mp.getCurrentPosition());
                 mNetForJsonSyncLearnProgress.excute();
@@ -86,6 +92,7 @@ public class MusicService extends Service {
         }
     }, true);
     private int courseStudy;
+    private String mDateNow;
     
     public MusicService() {
     }
@@ -104,6 +111,7 @@ public class MusicService extends Service {
         mCourseUrl = intent.getStringExtra("courseUrl");
         courseID = intent.getStringExtra("courseID");
         courseStudy = intent.getIntExtra("courseStudy", 0);
+        mDateNow=intent.getStringExtra("date");
         mCourseAudioEntity = (CourseAudioEntity) intent.getSerializableExtra("courseEntity");
         mp = new MediaPlayer();
         if (mCourseUrl != null && courseID != null) {
@@ -113,6 +121,7 @@ public class MusicService extends Service {
         
         return super.onStartCommand(intent, flags, startId);
     }
+    
     
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(MusicSoldier event) {

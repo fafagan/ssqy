@@ -72,6 +72,7 @@ public class LogoutDig extends Dialog implements View.OnClickListener {
     private void doLogOut() {
         SharePLogin.saveIsFree(false);
 //        Logger.e("xx"+SharePLogin.isFree());
+        SharePLogin.removeUid();
         TempUser.reset();
         Intent intent = new Intent(mContext, LoginActivity.class);
         mContext.startActivity(intent);

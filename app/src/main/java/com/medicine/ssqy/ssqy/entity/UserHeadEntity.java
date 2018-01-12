@@ -12,7 +12,7 @@ public class UserHeadEntity {
      * userexists : null
      */
     
-    private String headPicUrl;
+    private String headPicUrl; 
     private String uid;
     private boolean state;
     private boolean userexists;

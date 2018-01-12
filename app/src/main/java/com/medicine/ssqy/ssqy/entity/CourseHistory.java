@@ -69,7 +69,7 @@ public class CourseHistory {
         private int courseLength;
         private String courseID;
         private String courseType;
-        private long courseDay;
+//        private long courseDay;
         private String courseDetail;
         private boolean courseLearned;
         
@@ -113,13 +113,13 @@ public class CourseHistory {
             this.courseType = courseType;
         }
         
-        public long getCourseDay() {
-            return courseDay;
-        }
-        
-        public void setCourseDay(long courseDay) {
-            this.courseDay = courseDay;
-        }
+//        public long getCourseDay() {
+//            return courseDay;
+//        }
+//        
+//        public void setCourseDay(long courseDay) {
+//            this.courseDay = courseDay;
+//        }
         
         public String getCourseDetail() {
             return courseDetail;

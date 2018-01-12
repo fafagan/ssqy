@@ -3,7 +3,6 @@
               xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:padding="20dp"
-
               android:layout_width="match_parent"
               android:layout_height="110dp">
     <!--
@@ -17,8 +16,9 @@
         android:scaleType="fitXY"
         android:layout_width="60dp"
         android:layout_height="60dp"/>
+    <!--android:layout_toLeftOf="@+id/imgv_learned_item_lv_pic_course"-->
     <TextView
-        android:layout_toLeftOf="@+id/imgv_learned_item_lv_pic_course"
+     
         android:id="@+id/tv_title_item_lv_pic_course"
         android:textColor="@color/text_common_default"
         android:textSize="16sp"
@@ -28,9 +28,9 @@
         android:layout_toRightOf="@+id/imgv_item_lv_pic_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
+<!-- android:layout_toLeftOf="@+id/imgv_learned_item_lv_pic_course"-->
     <TextView
-        android:layout_toLeftOf="@+id/imgv_learned_item_lv_pic_course"
+       
         android:layout_below="@+id/tv_title_item_lv_pic_course"
         android:id="@+id/tv_learned_item_lv_pic_course"
         android:textColor="@color/text_common_default"

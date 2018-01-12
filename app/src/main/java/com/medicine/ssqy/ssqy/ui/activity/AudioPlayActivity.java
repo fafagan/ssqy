@@ -81,8 +81,8 @@ public class AudioPlayActivity extends KBaseActivity {
     private CourseAudioListEntity.AudioCourseDataEntity mCourse;
     private boolean mNetOk=false;
     private CourseAudioEntity mEntity;
-    
- 
+    private String mCourseID;
+    private String mDateNow;
     @Override
     public int setRootView() {
         return R.layout.activity_audio_play;
@@ -90,6 +90,7 @@ public class AudioPlayActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
+        mDateNow=this.getIntent().getStringExtra("date");
         mTvAudiotitleActivityAudioPlay = (TextView) findViewById(R.id.tv_audiotitle_activity_audio_play);
         mLlAudiobarActivityAudioPlay = (LinearLayout) findViewById(R.id.ll_audiobar_activity_audio_play);
         mCbPlayorpauseActivityAudioPlay = (CheckBox) findViewById(R.id.cb_playorpause_activity_audio_play);
@@ -140,9 +141,14 @@ public class AudioPlayActivity extends KBaseActivity {
 //                mDigDiscuss.show();
 //            }
 //        });
+        mCourseID=this.getIntent().getStringExtra("courseid");
+        if (mCourseID==null) {
+            mCourse = (CourseAudioListEntity.AudioCourseDataEntity) this.getIntent().getSerializableExtra("course");
+            mTvAudiotitleActivityAudioPlay.setText("当前正在播放："+mCourse.getCourseTitle());
+        }
+       
     
-        mCourse = (CourseAudioListEntity.AudioCourseDataEntity) this.getIntent().getSerializableExtra("course");
-        mTvAudiotitleActivityAudioPlay.setText("当前正在播放："+mCourse.getCourseTitle());
+   
     
     }
     
@@ -163,10 +169,15 @@ public class AudioPlayActivity extends KBaseActivity {
             public void onSuccess(CourseAudioEntity entity) {
                 mNetOk=true;
                 mEntity = entity;
-    
+                if (mEntity==null||!entity.isState()) {
+                    Toast.makeText(mSelf, "抱歉，您的课程已下架！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mTvAudiotitleActivityAudioPlay.setText("当前正在播放："+mEntity.getCourseTitle());
                 mTvTotaltimeActivityAudioPlay.setText(TimeFormatUtil.formatLongToTimeStr((long) entity.getCourseLength()));
                 mSbActivityAudioPlay.setMax(entity.getCourseLength());
                 mTvAudiocontentActivityAudioPlay.setText("音频简介： "+mEntity.getCourseDetail());
+                
             }
     
             @Override
@@ -180,16 +191,31 @@ public class AudioPlayActivity extends KBaseActivity {
         
             }
         });
+    
+      
         mNetForJson.addParam("uid", SharePLogin.getUid());
-        mNetForJson.addParam("courseID", mCourse.getCourseID());
+        if (mCourseID==null) {
+            if (mCourse==null) {
+                return;
+            }
+            mNetForJson.addParam("courseID", mCourse.getCourseID());
+        }else {
+            mNetForJson.addParam("courseID", mCourseID);
+        }
+     
         mNetForJson.addParam("type", "audio");
+        if (mDateNow==null) {
+            mNetForJson.addParam("date", TimeFormatUtil.formatLongToNYR(System.currentTimeMillis()));
+        }else {
+            mNetForJson.addParam("date", mDateNow);
+        }
         mNetForJson.excute();
         mCbPlayorpauseActivityAudioPlay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Logger.e("ischecked"+isChecked);
                 if (mCbPlayorpauseActivityAudioPlay.isChecked()){
-                    if (mEntity==null||mCourse==null){
+                    if (mEntity==null){
                         Toast.makeText(mSelf, "正在准备音频，请稍后重试噢！", Toast.LENGTH_SHORT).show();
                         mCbPlayorpauseActivityAudioPlay.setChecked(false);
                         return;
@@ -209,6 +235,7 @@ public class AudioPlayActivity extends KBaseActivity {
                     intent.putExtra("courseID",mEntity.getCourseID());
                     intent.putExtra("courseStudy",mEntity.getCourseStudy());
                     intent.putExtra("courseEntity",mEntity);
+                    intent.putExtra("date",mDateNow);
                     startService(intent);
                     firstPlay = false;
                 } else {

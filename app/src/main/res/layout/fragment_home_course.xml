@@ -10,13 +10,13 @@
     
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp">
+        android:layout_height="@dimen/height_home_course_welcome">
 
     <RelativeLayout
         android:clickable="true"
         android:id="@+id/layout_chiyao_frag_home"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="@dimen/height_home_course_welcome"
         android:background="@drawable/bg_slide">
 
         <TextView
@@ -57,7 +57,7 @@
         android:clickable="true"
         android:id="@+id/layout_unformlly_frag_home"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="@dimen/height_home_course_welcome"
         android:background="@drawable/bg_slide">
 
         <TextView
@@ -159,6 +159,7 @@
                 
             </LinearLayout>
             <TextView
+                android:textSize="@dimen/text_size_course_frag"
                 android:id="@+id/tv_title_vedio_frag_home"
                 android:layout_margin="15dp"
                 android:text="太极生两仪，两仪生四象，不急不躁"
@@ -232,6 +233,8 @@
 
             </LinearLayout>
             <TextView
+
+                android:textSize="@dimen/text_size_course_frag"
                 android:id="@+id/tv_title_audio_frag_home"
                 android:layout_margin="15dp"
                 android:text="大梵般若，聆听美妙音乐，纵享轻松生活"
@@ -304,6 +307,7 @@
 
             </LinearLayout>
             <TextView
+                android:textSize="@dimen/text_size_course_frag"
                 android:id="@+id/tv_title_tw_frag_home"
                 android:layout_margin="15dp"
                 android:text="坚持锻炼，老大爷活了130岁！有图有真相！"

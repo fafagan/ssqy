@@ -69,7 +69,7 @@ public class CourseAudioListEntity {
         private int courseLength;
         private String courseID;
         private String courseType;
-        private long courseDay;
+//        private long courseDay;
         private boolean courseLearned;
         
         public String getCourseTitle() {
@@ -112,13 +112,13 @@ public class CourseAudioListEntity {
             this.courseType = courseType;
         }
         
-        public long getCourseDay() {
-            return courseDay;
-        }
-        
-        public void setCourseDay(long courseDay) {
-            this.courseDay = courseDay;
-        }
+//        public long getCourseDay() {
+//            return courseDay;
+//        }
+//        
+//        public void setCourseDay(long courseDay) {
+//            this.courseDay = courseDay;
+//        }
         
         public boolean isCourseLearned() {
             return courseLearned;

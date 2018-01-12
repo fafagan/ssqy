@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_root"
+    tools:context="com.medicine.ssqy.ssqy.ui.activity.HomeActivity">
+    <!--<include-->
+        <!--layout="@layout/layout_home_slide"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--</include>-->
+        <!--<ImageView-->
+            <!--android:layout_toLeftOf="@+id/title_indext"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:background="@drawable/bg_index_top"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_lt_index"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_rt_index"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_rb_index"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_lb_index"/>
+
+        <ImageView
+            android:id="@+id/imgv_logo_index"
+            android:layout_width="120dp"
+            android:layout_height="200dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/title_index"/>
+
+        <FrameLayout
+            android:layout_marginTop="120dp"
+            android:layout_marginLeft="-300dp"
+            android:layout_width="750dp"
+            android:layout_height="750dp">
+            <com.medicine.ssqy.ssqy.ui.views.CircleMenuLayout
+                android:id="@+id/id_menulayout"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <RelativeLayout
+                    android:background="@drawable/bailuimg"
+                    android:clipChildren="true"
+                    android:id="@id/id_circle_menu_item_center"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp" >
+
+                </RelativeLayout>
+            </com.medicine.ssqy.ssqy.ui.views.CircleMenuLayout>
+
+        </FrameLayout>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/imgv_logo2"
+        android:src="@drawable/logo_kpzx"
+        android:layout_marginRight="10dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"/>+
+    <ImageView
+        android:layout_toRightOf="@+id/imgv_logo2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/imgv_logo1"
+        android:src="@drawable/logo_dzm"
+        android:layout_width="120dp"
+        android:layout_height="120dp"/>
+    <!--<TextView-->
+        <!--android:textSize="80sp"-->
+        <!--android:text="我是专用测试版本！！！我是个新的！！！"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

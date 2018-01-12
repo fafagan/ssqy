@@ -113,7 +113,7 @@ public class ItemLvPicCourseAdapter extends BaseAdapter {
             try {
                 
                 imgvItemLvPicCourse = (ImageView) view.findViewById(R.id.imgv_item_lv_pic_course);
-                imgvItemLvLearned = (ImageView) view.findViewById(R.id.imgv_learned_item_lv_pic_course);
+//                imgvItemLvLearned = (ImageView) view.findViewById(R.id.imgv_learned_item_lv_pic_course);
                 tvTitleItemLvPicCourse = (TextView) view.findViewById(R.id.tv_title_item_lv_pic_course);
                 tvLearnedItemLvPicCourse = (TextView) view.findViewById(R.id.tv_learned_item_lv_pic_course);
                 mTextViewDivider = (TextView) view.findViewById(R.id.tv_time_divider_pic);

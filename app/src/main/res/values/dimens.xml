@@ -70,4 +70,37 @@
     <dimen name="title_content_space">10dp</dimen>
     <dimen name="content_content_space">10dp</dimen>
     <dimen name="padding_information">15dp</dimen>
+    
+    
+    <dimen name="dimen_vedio_normal_height">200dp</dimen>
+    <dimen name="dimen_vedio_out_normal_height">220dp</dimen>
+
+    <dimen name="tv_size_introduce1">18sp</dimen>
+    <dimen name="tv_size_introduce2">16sp</dimen>
+    
+    
+    <dimen name="text_size_calendar_gl">6sp</dimen>
+    <dimen name="text_size_calendar_nl">4sp</dimen>
+
+    <dimen name="tv_size_calendar_gl">34dp</dimen>
+    <dimen name="tv_size_calendar_nl">16dp</dimen>
+    
+    <dimen name="width_back_record">75dp</dimen>
+    
+    
+    <dimen name="size_zp_item">50dp</dimen>
+    <dimen name="text_size_zp_item">16sp</dimen>
+    <dimen name="text_size_course_frag">14sp</dimen>
+    <dimen name="height_ssql_item">60dp</dimen>
+    <dimen name="height_ssql_confirm">30dp</dimen>
+    <dimen name="width_imgv_logo_ssql">110dp</dimen>
+    <dimen name="height_imgv_logo_ssql">150dp</dimen>
+    <dimen name="width_result_ssql">70dp</dimen>
+    
+    
+    <dimen name="tv_size_ssql1">14sp</dimen>
+    <dimen name="tv_size_ssql2">16sp</dimen>
+    <dimen name="height_dk_layout">385dp</dimen>
+    <dimen name="height_home_course_welcome">90dp</dimen>
+
 </resources>

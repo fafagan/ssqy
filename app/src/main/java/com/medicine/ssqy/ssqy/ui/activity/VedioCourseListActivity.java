@@ -99,7 +99,8 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
         mNetForJson = new NetForJson(URLConstant.VIDEO_LIST_URL, new NetCallback<CourseVedioEntity>() {
             @Override
             public void onSuccess(CourseVedioEntity entity) {
-                
+                if (entity.isState()) {
+                    
                 mVideoCourseData = entity.getVideoCourseData();
                 if (mVideoCourseData == null ||mVideoCourseData.size()==0) {
                     Toast.makeText(mSelf, "您今天没有养生视频任务！", Toast.LENGTH_SHORT).show();
@@ -129,7 +130,9 @@ public class VedioCourseListActivity extends KBaseActivity implements OnLoadMore
                         mItemLvVedioCourseAdapter.addEntities(mVideoCourseData);
                     }
                 }
-               
+                }else {
+                    Toast.makeText(mSelf, "加载失败，请检查您的网络状态！", Toast.LENGTH_SHORT).show();
+                }
             }
             
             @Override

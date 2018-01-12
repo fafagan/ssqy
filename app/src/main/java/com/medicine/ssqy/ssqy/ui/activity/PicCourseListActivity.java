@@ -95,7 +95,7 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
             
             @Override
             public void onSuccess(CoursePicListEntity entity) {
-                
+                if (entity.isState()) {
                 mPicCourseData = entity.getPicCourseData();
                 if (mPicCourseData == null || mPicCourseData.size() == 0) {
                     Toast.makeText(mSelf, "您今天没有养生图文任务！", Toast.LENGTH_SHORT).show();
@@ -108,6 +108,9 @@ public class PicCourseListActivity extends KBaseActivity implements OnLoadMoreLi
                     mSwipeTarget.setAdapter(mItemLvPicCourseAdapter);
                 } else {
                     mItemLvPicCourseAdapter.setEntities(mPicCourseData);
+                }
+                }else {
+                    Toast.makeText(mSelf, "加载失败，请下拉重试", Toast.LENGTH_SHORT).show();
                 }
             }
             

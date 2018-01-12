@@ -19,6 +19,7 @@ public class URLConstant {
     
     
     public static final String COURSE_HISTORY_URL=BASE_URL+"courseHistory";
+    public static final String COURSE_HISTORY_URL_ONEDAY=BASE_URL+"courseHistoryOneDay";
     public static final String COURSE_LIST_URL=BASE_URL+"courseCount";
     
     

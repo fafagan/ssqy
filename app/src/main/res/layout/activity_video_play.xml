@@ -11,13 +11,13 @@
     <RelativeLayout
         android:id="@+id/rl_activity_video_play"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="@dimen/dimen_vedio_out_normal_height"
         android:background="@color/colorBlack">
 
         <SurfaceView
             android:id="@+id/sv_activity_video_play"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/dimen_vedio_normal_height"
             android:layout_centerInParent="true"/>
 
         <LinearLayout
@@ -221,7 +221,7 @@
             android:layout_marginRight="@dimen/left_right_margin"
             android:layout_marginTop="@dimen/title_content_space"
             android:text="当前正在播放："
-            android:textSize="18sp"
+            android:textSize="@dimen/tv_size_introduce1"
             android:textStyle="bold"/>
 
         <ScrollView
@@ -241,7 +241,7 @@
                 android:lineSpacingExtra="@dimen/content_content_space"
                 android:paddingBottom="15dp"
                 android:text="视频简介："
-                android:textSize="14sp"/>
+                android:textSize="@dimen/tv_size_introduce2"/>
         </ScrollView>
     </RelativeLayout>
 </com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

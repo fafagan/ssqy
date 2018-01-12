@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -41,8 +41,8 @@ public class WeekGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView week = new TextView(mContext);
-        LayoutParams week_params = new LayoutParams(
-                LayoutParams.MATCH_PARENT,
+        AbsListView. LayoutParams week_params = new  AbsListView. LayoutParams(
+                AbsListView.LayoutParams.MATCH_PARENT,
                 90);
         week.setLayoutParams(week_params);
         week.setPadding(0, 0, 0, 0);

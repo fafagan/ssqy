@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/title_ssqy"
         android:padding="5dp">
 
@@ -28,14 +28,14 @@
             android:layout_height="wrap_content">
         <TextView
             android:id="@+id/sl_result"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/width_result_ssql"
+            android:layout_height="@dimen/height_ssql_confirm"
             android:layout_weight="1"
             android:gravity="center"
             android:background="@drawable/shape_ssqy_choose"
             android:text="白 露"
             android:textColor="#fff"
-            android:textSize="14sp"
+            android:textSize="@dimen/tv_size_ssql1"
             android:textStyle="bold"/>
         
         <TextView
@@ -49,14 +49,14 @@
 
             <TextView
                 android:id="@+id/yang_result"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/width_result_ssql"
+                android:layout_height="@dimen/height_ssql_confirm"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:background="@drawable/shape_ssqy_choose"
                 android:text="心 养"
                 android:textColor="#fff"
-                android:textSize="14sp"
+                android:textSize="@dimen/tv_size_ssql1"
                 android:textStyle="bold"/>
         </LinearLayout>
         
@@ -65,16 +65,15 @@
             android:text="点击查阅"
             android:textColor="#fff"
             android:textStyle="bold"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/shape_login_bt"
             android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            android:layout_height="@dimen/height_ssql_confirm"/>
     </LinearLayout>
 
     <ImageView
         android:id="@+id/title_ssqy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/width_imgv_logo_ssql"
+        android:layout_height="@dimen/height_imgv_logo_ssql"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
@@ -90,7 +89,7 @@
         <TextView
             android:layout_alignBottom="@+id/bt_jq_ssql_activity"
             android:id="@+id/tv_jq_welcome"
-            android:textSize="16sp"
+            android:textSize="@dimen/tv_size_ssql2"
             android:gravity="center"
             android:layout_marginRight="5dp"
             android:textColor="#000"
@@ -103,13 +102,14 @@
             android:layout_toRightOf="@+id/tv_jq_welcome"
             android:id="@+id/bt_jq_ssql_activity"
             android:layout_width="70dp"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="15dp"
             android:textStyle="bold"
             android:background="@drawable/shape_ssqy_choose"
             android:text="立 秋"
             android:textColor="#fff"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/tv_size_ssql2"
+            android:layout_alignParentTop="true"/>
         <TextView
             android:layout_below="@+id/bt_jq_ssql_activity"
             android:id="@+id/choose_sl"
@@ -118,12 +118,12 @@
             android:layout_marginBottom="10dp"
             android:text="或者您可以选择以下邻近节气养生："
             android:textColor="#000"
-            android:textSize="14sp"
+            android:textSize="@dimen/tv_size_ssql1"
             android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/height_ssql_item"
             android:layout_below="@+id/choose_sl"
             android:padding="10dp">
             <Button
@@ -135,7 +135,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="立 冬"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/bt_jq2"
@@ -146,7 +146,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="立 夏"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/bt_jq3"
@@ -157,7 +157,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="立 春"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/bt_jq4"
@@ -168,7 +168,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="立 秋"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -195,7 +195,7 @@
         <LinearLayout
             android:id="@+id/layout_yang_1"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/height_ssql_item"
             android:layout_below="@+id/choose_yang"
             android:padding="10dp">
 
@@ -208,7 +208,7 @@
                 android:background="@drawable/shape_ssqy_choose"
                 android:text="心 养"
                 android:textColor="#fff"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/yang_qi"
@@ -219,7 +219,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="气 养"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/yang_dong"
@@ -230,7 +230,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="动 养"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
          
             <Button
@@ -242,13 +242,13 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="术 养"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_yang_2"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/height_ssql_item"
             android:layout_below="@+id/layout_yang_1"
             android:padding="10dp">
         
@@ -261,7 +261,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="药 养"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/yang_shi"
@@ -272,7 +272,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="食 养"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/yang_ju"
@@ -283,7 +283,7 @@
                 android:background="@drawable/shape_ssqy"
                 android:text="居 养"
                 android:textColor="@color/text_color_red"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -309,7 +309,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/height_ssql_item"
             android:layout_below="@+id/tv_cxqd_welcome"
             android:padding="10dp">
             <Button
@@ -322,7 +322,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/shape_ssqy_choose"
                 android:text="春季养生"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/bt_xia"
@@ -334,7 +334,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/shape_ssqy_choose"
                 android:text="夏季养生"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/bt_qiu"
@@ -346,7 +346,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/shape_ssqy_choose"
                 android:text="秋季养生"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
             <Button
                 android:id="@+id/bt_dong"
@@ -358,7 +358,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/shape_ssqy_choose"
                 android:text="冬季养生"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/tv_size_ssql2"/>
 
         </LinearLayout>
     </RelativeLayout>

@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@id/id_circle_menu_item_image"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/size_zp_item"
         android:visibility="gone"
         android:layout_marginBottom="3dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/size_zp_item" />
 
     <TextView
         android:id="@id/id_circle_menu_item_text"
@@ -18,8 +18,9 @@
         android:visibility="gone"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:gravity="center_vertical"
         android:textColor="#800"
         android:text="四时七养"
-        android:textSize="16sp" />
+        android:textSize="@dimen/text_size_zp_item" />
 
 </LinearLayout>

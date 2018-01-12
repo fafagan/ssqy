@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/activity_ssqyresult"
+<com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.medicine.ssqy.ssqy.ui.activity.SSQYResultActivity">
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+
+    <LinearLayout
+        android:id="@+id/activity_ssqyresult"
         android:layout_width="match_parent"
-        android:layout_height="25dp"/>
-    <WebView
-        android:id="@+id/webView_ssqy_result"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
+
+        <WebView
+            android:id="@+id/webView_ssqy_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></WebView>
+    
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="#fff"
+        android:id="@+id/layout_error"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgv_error_wv"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgv_error_wv"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/error_wv"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+</com.medicine.ssqy.ssqy.ui.views.LayoutRootCommon>

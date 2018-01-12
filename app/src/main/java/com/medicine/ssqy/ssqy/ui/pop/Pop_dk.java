@@ -26,6 +26,7 @@ import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.entity.DKEntity;
 import com.medicine.ssqy.ssqy.entity.DKRecordEntity;
 import com.medicine.ssqy.ssqy.ui.fragment.coursehome.HomeCourseFragment;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.util.DensityUtil;
 
@@ -228,6 +229,8 @@ public class Pop_dk extends PopupWindow{
         },true);
         mNetForJsonDK.addParam("uid", SharePLogin.getUid());
         mNetForJsonDK.addParam("time",System.currentTimeMillis());
+        Logger.e("time-->"+System.currentTimeMillis());
+        Logger.e("uid-->"+SharePLogin.getUid());
     }
     
     private void initDKTVs() {
@@ -367,6 +370,7 @@ public class Pop_dk extends PopupWindow{
         }
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height=mTvDKHeight;
+        layoutParams.width=mTvDKHeight;
         tv.setLayoutParams(layoutParams);
     }
 }

@@ -1,12 +1,19 @@
 package com.medicine.ssqy.ssqy.ui.activity;
 
+import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.medicine.ssqy.ssqy.R;
 import com.medicine.ssqy.ssqy.base.KBaseActivity;
 import com.medicine.ssqy.ssqy.common.URLConstant;
@@ -24,6 +31,12 @@ public class SSQYResultActivity extends KBaseActivity {
     private WebSettings mSettings;
     private JQ mNowJQ;
     private Yang mNowYang;
+    
+    
+    private RelativeLayout mLayoutError;
+    private ImageView mImgvErrorWv;
+    private boolean mLoadError=false;
+    
     @Override
     public int setRootView() {
         return R.layout.activity_ssqyresult;
@@ -31,6 +44,18 @@ public class SSQYResultActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
+        mLayoutError = (RelativeLayout) findViewById(R.id.layout_error);
+        mImgvErrorWv = (ImageView) findViewById(R.id.imgv_error_wv);
+        mLayoutError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+               
+//                mWebViewSsqyResult.loadUrl(mUrl);
+                mWebViewSsqyResult.reload();
+        
+            }
+        });
         Toast.makeText(mSelf, "正在加载，请稍后", Toast.LENGTH_SHORT).show();
         boolean isCxqdMode =  getIntent().getBooleanExtra("cxqdMode",false);
     
@@ -62,8 +87,8 @@ public class SSQYResultActivity extends KBaseActivity {
 //            setTitleCenter(mNowJQ.title+"  "+mNowYang.title);
             setTitleCenter("我的节气养生");
         }
-     
-      
+    
+        
       
         
         mWebViewSsqyResult = (WebView) findViewById(R.id.webView_ssqy_result);
@@ -72,6 +97,26 @@ public class SSQYResultActivity extends KBaseActivity {
         mWebViewSsqyResult.loadUrl(mUrl);
         //设置在当前APP打卡mUrl指向的网页
         mWebViewSsqyResult.setWebViewClient(new WebViewClient() {
+    
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+    
+             
+            }
+    
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                mLoadError=true;
+            }
+    
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                mLoadError=true;
+            }
+    
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String mUrl) {
                 super.shouldOverrideUrlLoading(view, mUrl);
@@ -87,7 +132,24 @@ public class SSQYResultActivity extends KBaseActivity {
             
                 mProgressBar.setProgress(newProgress);
             }
-        
+    
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                if (title != null&&(title.contains("无法")||title.contains("error")||title.contains("错误"))) {
+                    mLoadError=true;
+                }else{
+                    mLoadError=false;
+                }
+    
+    
+                if (mLoadError) {
+                    Glide.with(mSelf).load("file:///android_asset/temp/wb_error.gif").asGif().into(mImgvErrorWv);
+                    mLayoutError.setVisibility(View.VISIBLE);
+                }else {
+                    mLayoutError.setVisibility(View.GONE);
+                }
+            }
         });
     
         mSettings.setJavaScriptEnabled(true);

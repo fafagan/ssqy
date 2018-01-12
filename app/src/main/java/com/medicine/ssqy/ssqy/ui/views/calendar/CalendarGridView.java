@@ -3,8 +3,9 @@ package com.medicine.ssqy.ssqy.ui.views.calendar;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
-import android.widget.GridView;
 import android.widget.LinearLayout;
+
+import com.medicine.ssqy.ssqy.ui.views.MeasureGridView;
 
 /**
  *
@@ -13,7 +14,7 @@ import android.widget.LinearLayout;
  * @author nanchen
  * @date 16-8-10 上午11:35
  */
-public class CalendarGridView extends GridView {
+public class CalendarGridView extends MeasureGridView {
     /**
      * 当前操作的上下文对象
      */

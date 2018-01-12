@@ -17,6 +17,7 @@ import com.medicine.ssqy.ssqy.common.utils.sp.SharePLogin;
 import com.medicine.ssqy.ssqy.entity.course.CoursePicDetailEntity;
 import com.medicine.ssqy.ssqy.entity.course.CoursePicListEntity;
 import com.medicine.ssqy.ssqy.util.ShareUtil;
+import com.medicine.ssqy.ssqy.util.TimeFormatUtil;
 
 //http://3g.163.com/touch/article.html?channel=jiankang&offset=20&docid=C85SNS4P0038804V
 public class CourseDetailPicActivity extends KBaseActivity {
@@ -29,6 +30,8 @@ public class CourseDetailPicActivity extends KBaseActivity {
     
     public static final int TYPE_XJ=110;
     private int type=-1;
+    private String mCourseID;
+    private String mDateNow;
 //    private NetForJson mNetForJsonSyncLearnProgress=new NetForJson(URLConstant.VIDEO_PROGRESS_URL, new NetCallback<CourseVideoProgressEntity>() {
 //        @Override
 //        public void onSuccess(CourseVideoProgressEntity entity) {
@@ -52,7 +55,7 @@ public class CourseDetailPicActivity extends KBaseActivity {
     
     @Override
     public void initViews() {
-        
+        mDateNow=this.getIntent().getStringExtra("date");
         type=this.getIntent().getIntExtra("type",-1);
 
         setTitleRight("分享", new View.OnClickListener() {
@@ -68,7 +71,11 @@ public class CourseDetailPicActivity extends KBaseActivity {
             }
         });
         Toast.makeText(mSelf, "正在为您加载相关图文，请稍后", Toast.LENGTH_SHORT).show();
-        pc= (CoursePicListEntity.PicCourseDataEntity) this.getIntent().getSerializableExtra("pc");
+        mCourseID=this.getIntent().getStringExtra("courseid");
+        if (mCourseID==null) {
+            pc= (CoursePicListEntity.PicCourseDataEntity) this.getIntent().getSerializableExtra("pc");
+        }
+      
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
     
         mWv = (WebView) findViewById(R.id.wv);
@@ -116,7 +123,7 @@ public class CourseDetailPicActivity extends KBaseActivity {
                         url=entity.getCoursehtmlUrl();
                         loadWV();
                     }else {
-                        Toast.makeText(mSelf, "加载异常，请退出重试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mSelf, "抱歉，您的课程已下架！！", Toast.LENGTH_SHORT).show();
                     }
             
                 }
@@ -133,8 +140,19 @@ public class CourseDetailPicActivity extends KBaseActivity {
             });
     
             mNetForJson.addParam("uid", SharePLogin.getUid());
-            mNetForJson.addParam("courseID", pc.getCourseID());
+            if (mCourseID==null) {
+                
+                mNetForJson.addParam("courseID", pc.getCourseID());
+            }else {
+                mNetForJson.addParam("courseID", mCourseID);
+            }
+     
             mNetForJson.addParam("type", "pic");
+            if (mDateNow==null) {
+                mNetForJson.addParam("date", TimeFormatUtil.formatLongToNYR(System.currentTimeMillis()));
+            }else {
+                mNetForJson.addParam("date", mDateNow);
+            }
             mNetForJson.excute();
     
 //    
